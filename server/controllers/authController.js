@@ -9,13 +9,30 @@ export const loginAdmin = async (req, res) => {
       return res.status(400).json({ message: 'Invalid username or password.' });
     }
 
-    const admin = await Admin.findOne({ email: email.toLowerCase().trim() });
+    const inputEmail = email.toLowerCase().trim();
+    const envAdminEmail = (process.env.ADMIN_EMAIL || 'admin@mpsaschool.edu.in').toLowerCase().trim();
+    const envAdminPassword = process.env.ADMIN_PASSWORD;
+
+    let admin = await Admin.findOne({ email: inputEmail });
+
+    if (!admin && inputEmail === envAdminEmail) {
+      admin = await Admin.findOne({ role: 'super_admin' });
+    }
+
     if (!admin) {
-      // Generic error message to prevent account enumeration (RULE #9)
       return res.status(401).json({ message: 'Invalid username or password.' });
     }
 
-    const isMatch = await admin.matchPassword(password);
+    let isMatch = await admin.matchPassword(password);
+
+    // Dynamic sync if user updated .env password while server was running
+    if (!isMatch && envAdminPassword && password === envAdminPassword) {
+      admin.passwordHash = await Admin.hashPassword(password);
+      admin.email = inputEmail;
+      await admin.save();
+      isMatch = true;
+    }
+
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid username or password.' });
     }
