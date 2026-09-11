@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Award, 
@@ -28,17 +28,47 @@ import AchievementCard from '../components/AchievementCard';
 import GalleryCard from '../components/GalleryCard';
 import Lightbox from '../components/Lightbox';
 
-import { SCHOOL_CONFIG } from '../data/config';
-import { teachersData } from '../data/teachers';
-import { facilitiesData } from '../data/facilities';
-import { noticesData } from '../data/notices';
-import { upcomingEvents } from '../data/events';
-import { achievementsData } from '../data/achievements';
-import { galleryData } from '../data/gallery';
+import { SCHOOL_CONFIG as defaultConfig } from '../data/config';
+import { teachersData as defaultTeachers } from '../data/teachers';
+import { facilitiesData as defaultFacilities } from '../data/facilities';
+import { noticesData as defaultNotices } from '../data/notices';
+import { upcomingEvents as defaultEvents } from '../data/events';
+import { achievementsData as defaultAchievements } from '../data/achievements';
+import { galleryData as defaultGallery } from '../data/gallery';
+
+import { apiService } from '../services/api';
 
 export default function Home() {
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
   const [selectedNotice, setSelectedNotice] = useState(null);
+
+  const [teachers, setTeachers] = useState(defaultTeachers);
+  const [facilities, setFacilities] = useState(defaultFacilities);
+  const [notices, setNotices] = useState(defaultNotices);
+  const [events, setEvents] = useState(defaultEvents);
+  const [achievements, setAchievements] = useState(defaultAchievements);
+  const [gallery, setGallery] = useState(defaultGallery);
+
+  useEffect(() => {
+    async function loadHomeData() {
+      const [tData, fData, nData, eData, aData, gData] = await Promise.all([
+        apiService.getTeachers(),
+        apiService.getFacilities(),
+        apiService.getNotices(),
+        apiService.getEvents(),
+        apiService.getAchievements(),
+        apiService.getGallery()
+      ]);
+
+      if (tData && tData.length > 0) setTeachers(tData);
+      if (fData && fData.length > 0) setFacilities(fData);
+      if (nData && nData.length > 0) setNotices(nData);
+      if (eData && eData.length > 0) setEvents(eData);
+      if (aData && aData.length > 0) setAchievements(aData);
+      if (gData && gData.length > 0) setGallery(gData);
+    }
+    loadHomeData();
+  }, []);
 
   return (
     <div className="home-page">
@@ -248,8 +278,8 @@ export default function Home() {
           />
 
           <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
-            {facilitiesData.slice(0, 3).map((facility) => (
-              <FacilityCard key={facility.id} facility={facility} />
+            {facilities.slice(0, 3).map((facility) => (
+              <FacilityCard key={facility._id || facility.id} facility={facility} />
             ))}
           </div>
 
@@ -323,9 +353,9 @@ export default function Home() {
           />
 
           <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
-            {noticesData.slice(0, 3).map((notice) => (
+            {notices.slice(0, 3).map((notice) => (
               <NoticeCard 
-                key={notice.id} 
+                key={notice._id || notice.id} 
                 notice={notice} 
                 onSelectNotice={(n) => setSelectedNotice(n)}
               />
@@ -350,8 +380,8 @@ export default function Home() {
           />
 
           <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
-            {achievementsData.slice(0, 3).map((achievement) => (
-              <AchievementCard key={achievement.id} achievement={achievement} />
+            {achievements.slice(0, 3).map((achievement) => (
+              <AchievementCard key={achievement._id || achievement.id} achievement={achievement} />
             ))}
           </div>
 
@@ -373,8 +403,8 @@ export default function Home() {
           />
 
           <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
-            {upcomingEvents.slice(0, 3).map((event) => (
-              <EventCard key={event.id} event={event} />
+            {events.slice(0, 3).map((event) => (
+              <EventCard key={event._id || event.id} event={event} />
             ))}
           </div>
 
@@ -396,9 +426,9 @@ export default function Home() {
           />
 
           <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
-            {galleryData.slice(0, 6).map((item) => (
+            {gallery.slice(0, 6).map((item) => (
               <GalleryCard 
-                key={item.id} 
+                key={item._id || item.id} 
                 item={item} 
                 onClick={(g) => setSelectedGalleryItem(g)}
               />

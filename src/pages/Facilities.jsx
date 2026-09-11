@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
 import FacilityCard from '../components/FacilityCard';
-import { facilitiesData } from '../data/facilities';
+import { facilitiesData as defaultFacilities } from '../data/facilities';
+import { apiService } from '../services/api';
 
 export default function Facilities() {
+  const [facilities, setFacilities] = useState(defaultFacilities);
+
+  useEffect(() => {
+    async function loadFacilities() {
+      const data = await apiService.getFacilities();
+      if (data && data.length > 0) setFacilities(data);
+    }
+    loadFacilities();
+  }, []);
+
   return (
     <div className="facilities-page">
       {/* Banner */}
@@ -31,8 +42,8 @@ export default function Facilities() {
           />
 
           <div className="gallery-grid">
-            {facilitiesData.map(facility => (
-              <FacilityCard key={facility.id} facility={facility} />
+            {facilities.map(facility => (
+              <FacilityCard key={facility._id || facility.id} facility={facility} />
             ))}
           </div>
         </div>

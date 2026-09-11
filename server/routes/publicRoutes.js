@@ -28,5 +28,6 @@ router.get('/facilities', getPublicFacilities);
 router.get('/academics', getPublicAcademics);
 router.get('/admissions', getPublicAdmissions);
 router.get('/contact-settings', getPublicContactSettings);
+router.get('/site-settings', getPublicContactSettings);
 
 export default router;

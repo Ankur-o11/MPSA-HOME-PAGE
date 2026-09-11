@@ -1,25 +1,35 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Bell, X, Download, Calendar } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import NoticeCard from '../components/NoticeCard';
-import { noticesData } from '../data/notices';
+import { noticesData as defaultNotices } from '../data/notices';
+import { apiService } from '../services/api';
 
 export default function Notices() {
+  const [notices, setNotices] = useState(defaultNotices);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeNotice, setActiveNotice] = useState(null);
 
+  useEffect(() => {
+    async function loadNotices() {
+      const data = await apiService.getNotices();
+      if (data && data.length > 0) setNotices(data);
+    }
+    loadNotices();
+  }, []);
+
   const categories = ['All', 'Admissions', 'Examination', 'Academic', 'General', 'Event', 'Holiday'];
 
   const filteredNotices = useMemo(() => {
-    return noticesData.filter(notice => {
+    return notices.filter(notice => {
       const matchesSearch = notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             notice.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCat = selectedCategory === 'All' || notice.category === selectedCategory;
       return matchesSearch && matchesCat;
     });
-  }, [searchTerm, selectedCategory]);
+  }, [notices, searchTerm, selectedCategory]);
 
   return (
     <div className="notices-page">

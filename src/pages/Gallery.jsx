@@ -1,21 +1,31 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
 import GalleryCard from '../components/GalleryCard';
 import Lightbox from '../components/Lightbox';
-import { galleryCategories, galleryData } from '../data/gallery';
+import { galleryCategories, galleryData as defaultGallery } from '../data/gallery';
+import { apiService } from '../services/api';
 
 export default function Gallery() {
+  const [galleryItems, setGalleryItems] = useState(defaultGallery);
   const [activeTab, setActiveTab] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
+  useEffect(() => {
+    async function loadGallery() {
+      const data = await apiService.getGallery();
+      if (data && data.length > 0) setGalleryItems(data);
+    }
+    loadGallery();
+  }, []);
+
   const filteredItems = useMemo(() => {
-    if (activeTab === 'All') return galleryData;
-    return galleryData.filter(item => item.category === activeTab);
-  }, [activeTab]);
+    if (activeTab === 'All') return galleryItems;
+    return galleryItems.filter(item => item.category === activeTab);
+  }, [galleryItems, activeTab]);
 
   const handleOpenLightbox = (item) => {
-    const idx = filteredItems.findIndex(i => i.id === item.id);
+    const idx = filteredItems.findIndex(i => (i._id || i.id) === (item._id || item.id));
     if (idx !== -1) setLightboxIndex(idx);
   };
 

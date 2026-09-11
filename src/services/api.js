@@ -95,7 +95,19 @@ export const apiService = {
     return fetchWithFallback(`${API_BASE_URL}/public/facilities`, facilitiesData);
   },
 
+  async getAcademics() {
+    return fetchWithFallback(`${API_BASE_URL}/public/academics`, null);
+  },
+
+  async getAdmissions() {
+    return fetchWithFallback(`${API_BASE_URL}/public/admissions`, null);
+  },
+
   async getContactSettings() {
     return fetchWithFallback(`${API_BASE_URL}/public/contact-settings`, SCHOOL_CONFIG);
+  },
+
+  async getSiteSettings() {
+    return fetchWithFallback(`${API_BASE_URL}/public/site-settings`, SCHOOL_CONFIG);
   }
 };

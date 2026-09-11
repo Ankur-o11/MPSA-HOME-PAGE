@@ -1,18 +1,28 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
 import AchievementCard from '../components/AchievementCard';
-import { achievementsData } from '../data/achievements';
+import { achievementsData as defaultAchievements } from '../data/achievements';
+import { apiService } from '../services/api';
 
 export default function Achievements() {
+  const [achievements, setAchievements] = useState(defaultAchievements);
   const [activeCategory, setActiveCategory] = useState('All');
+
+  useEffect(() => {
+    async function loadAchievements() {
+      const data = await apiService.getAchievements();
+      if (data && data.length > 0) setAchievements(data);
+    }
+    loadAchievements();
+  }, []);
 
   const categories = ['All', 'Academic', 'Sports', 'Competition', 'School Award'];
 
   const filteredAchievements = useMemo(() => {
-    if (activeCategory === 'All') return achievementsData;
-    return achievementsData.filter(a => a.category === activeCategory);
-  }, [activeCategory]);
+    if (activeCategory === 'All') return achievements;
+    return achievements.filter(a => a.category === activeCategory);
+  }, [achievements, activeCategory]);
 
   return (
     <div className="achievements-page">

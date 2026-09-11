@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   MapPin, 
@@ -12,9 +12,11 @@ import {
 } from 'lucide-react';
 
 import SectionTitle from '../components/SectionTitle';
-import { SCHOOL_CONFIG } from '../data/config';
+import { SCHOOL_CONFIG as defaultConfig } from '../data/config';
+import { apiService } from '../services/api';
 
 export default function Contact() {
+  const [contactSettings, setContactSettings] = useState(defaultConfig);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +26,24 @@ export default function Contact() {
   });
 
   const [isSent, setIsSent] = useState(false);
+
+  useEffect(() => {
+    async function loadContact() {
+      const data = await apiService.getContactSettings();
+      if (data) setContactSettings(data);
+    }
+    loadContact();
+  }, []);
+
+  const schoolAddress = contactSettings.address || defaultConfig.address;
+  const schoolLandmark = contactSettings.landmark || defaultConfig.landmark;
+  const phonePrimary = contactSettings.phonePrimary || defaultConfig.phonePrimary;
+  const phoneSecondary = contactSettings.phoneSecondary || defaultConfig.phoneSecondary;
+  const emailGeneral = contactSettings.emailGeneral || defaultConfig.emailGeneral;
+  const emailAdmissions = contactSettings.emailAdmissions || defaultConfig.emailAdmissions;
+  const timingOffice = contactSettings.timingOffice || defaultConfig.timingOffice;
+  const mapEmbedUrl = contactSettings.googleMapsEmbedUrl || defaultConfig.GOOGLE_MAPS_EMBED_URL;
+  const mapDirectionUrl = contactSettings.googleMapsDirectionUrl || defaultConfig.GOOGLE_MAPS_DIRECTION_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,9 +91,9 @@ export default function Contact() {
                   <div className="why-icon-box" style={{ margin: 0, flexShrink: 0 }}><MapPin size={24} /></div>
                   <div>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>School Campus Address</h4>
-                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>{SCHOOL_CONFIG.address}</p>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>{schoolAddress}</p>
                     <p style={{ fontSize: '0.85rem', color: 'var(--accent-gold)', marginTop: '0.25rem', fontWeight: '600' }}>
-                      Landmark: {SCHOOL_CONFIG.landmark}
+                      Landmark: {schoolLandmark}
                     </p>
                   </div>
                 </div>
@@ -83,8 +103,8 @@ export default function Contact() {
                   <div>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>Phone Lines</h4>
                     <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>
-                      Admission Helpline: {SCHOOL_CONFIG.phonePrimary}<br />
-                      Office Desk: {SCHOOL_CONFIG.phoneSecondary}
+                      Admission Helpline: {phonePrimary}<br />
+                      Office Desk: {phoneSecondary}
                     </p>
                   </div>
                 </div>
@@ -94,8 +114,8 @@ export default function Contact() {
                   <div>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>Email Support</h4>
                     <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>
-                      General Inquiries: {SCHOOL_CONFIG.emailGeneral}<br />
-                      Admissions Desk: {SCHOOL_CONFIG.emailAdmissions}
+                      General Inquiries: {emailGeneral}<br />
+                      Admissions Desk: {emailAdmissions}
                     </p>
                   </div>
                 </div>
@@ -104,7 +124,7 @@ export default function Contact() {
                   <div className="why-icon-box" style={{ margin: 0, flexShrink: 0 }}><Clock size={24} /></div>
                   <div>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>School Office Timings</h4>
-                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>{SCHOOL_CONFIG.timingOffice}</p>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>{timingOffice}</p>
                   </div>
                 </div>
               </div>
@@ -206,7 +226,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Google Maps / Visit Our School Section (RULE #22 MANDATORY) */}
+      {/* Google Maps / Visit Our School Section */}
       <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
         <div className="container">
           <SectionTitle 
@@ -216,10 +236,10 @@ export default function Contact() {
           />
 
           <div className="maps-container-box">
-            {SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL ? (
+            {mapEmbedUrl ? (
               <div style={{ width: '100%', height: '420px' }}>
                 <iframe 
-                  src={SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL}
+                  src={mapEmbedUrl}
                   width="100%" 
                   height="100%" 
                   style={{ border: 0 }} 
@@ -234,19 +254,14 @@ export default function Contact() {
                   <MapPin size={36} />
                 </div>
                 <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-navy)', marginBottom: '0.5rem' }}>
-                  {SCHOOL_CONFIG.fullName}
+                  MAHARANA PRATAP SCIENCE ACADEMY
                 </h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '650px', margin: '0 auto 1.5rem auto' }}>
-                  {SCHOOL_CONFIG.address}
+                  {schoolAddress}
                 </p>
 
-                <div className="placeholder-notice" style={{ maxWidth: '680px', margin: '0 auto 1.5rem auto', textAlign: 'left' }}>
-                  <AlertCircle size={18} style={{ display: 'inline', marginRight: '0.35rem' }} />
-                  <strong>Editable Google Maps Variables:</strong> The school address string <code>SCHOOL_ADDRESS</code>, embed iframe URL <code>GOOGLE_MAPS_EMBED_URL</code>, and directions link <code>GOOGLE_MAPS_DIRECTION_URL</code> are cleanly defined in <code>src/data/config.js</code>.
-                </div>
-
                 <a 
-                  href={SCHOOL_CONFIG.GOOGLE_MAPS_DIRECTION_URL} 
+                  href={mapDirectionUrl} 
                   target="_blank" 
                   rel="noreferrer"
                   className="btn btn-secondary btn-lg"
