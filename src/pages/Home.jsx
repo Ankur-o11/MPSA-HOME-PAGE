@@ -49,17 +49,21 @@ export default function Home() {
   const [achievements, setAchievements] = useState(defaultAchievements);
   const [gallery, setGallery] = useState(defaultGallery);
   const [siteSettings, setSiteSettings] = useState(SCHOOL_CONFIG);
+  const [principal, setPrincipal] = useState(null);
+  const [founder, setFounder] = useState(null);
 
   useEffect(() => {
     async function loadHomeData() {
-      const [tData, fData, nData, eData, aData, gData, sData] = await Promise.all([
+      const [tData, fData, nData, eData, aData, gData, sData, pData, fndData] = await Promise.all([
         apiService.getTeachers(),
         apiService.getFacilities(),
         apiService.getNotices(),
         apiService.getEvents(),
         apiService.getAchievements(),
         apiService.getGallery(),
-        apiService.getContactSettings()
+        apiService.getContactSettings(),
+        apiService.getPrincipal(),
+        apiService.getFounder()
       ]);
 
       if (tData && tData.length > 0) setTeachers(tData);
@@ -69,11 +73,23 @@ export default function Home() {
       if (aData && aData.length > 0) setAchievements(aData);
       if (gData && gData.length > 0) setGallery(gData);
       if (sData) setSiteSettings(sData);
+      if (pData) setPrincipal(pData);
+      if (fndData) setFounder(fndData);
     }
     loadHomeData();
   }, []);
 
   const schoolConfig = siteSettings || SCHOOL_CONFIG;
+  const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
+  const pDesignation = principal?.designation || 'Principal, MPSA School';
+  const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
+  const pPhoto = principal?.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop';
+  const pQuote = principal?.messageQuote || 'Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential in a supportive environment.';
+
+  const fName = founder?.name || 'Shri [Founder Name Placeholder]';
+  const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
+  const fPhoto = founder?.photo || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop';
+  const fQuote = founder?.visionQuote || founder?.intro || 'A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance.';
 
   return (
     <div className="home-page">
@@ -184,23 +200,25 @@ export default function Home() {
             <div className="leadership-card">
               <div className="leadership-card-header">
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" 
-                  alt="Principal Placeholder" 
+                  src={pPhoto} 
+                  alt={pName} 
                   className="leadership-img"
                 />
                 <div className="leadership-info">
-                  <h3>Dr. [Principal Name Placeholder]</h3>
-                  <p className="leadership-designation">Principal, MPSA School</p>
-                  <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>Ph.D., M.Sc., B.Ed.</p>
+                  <h3>{pName}</h3>
+                  <p className="leadership-designation">{pDesignation}</p>
+                  {pQualifications && <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>{pQualifications}</p>}
                 </div>
               </div>
 
               <div className="leadership-card-body">
-                <div className="placeholder-notice">
-                  <strong>Notice:</strong> Principal details are set to professional placeholders until official records are uploaded.
-                </div>
+                {(!principal?.name || principal.name.includes('[Placeholder]')) && (
+                  <div className="placeholder-notice">
+                    <strong>Notice:</strong> Principal details are set to professional placeholders until official records are uploaded.
+                  </div>
+                )}
                 <blockquote className="leadership-quote">
-                  "Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential in a supportive environment."
+                  "{pQuote}"
                 </blockquote>
                 <Link to="/principal-message" className="btn btn-outline btn-sm">
                   Read Full Principal Message <ChevronRight size={16} />
@@ -212,23 +230,24 @@ export default function Home() {
             <div className="leadership-card">
               <div className="leadership-card-header">
                 <img 
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop" 
-                  alt="Founder Placeholder" 
+                  src={fPhoto} 
+                  alt={fName} 
                   className="leadership-img"
                 />
                 <div className="leadership-info">
-                  <h3>Shri [Founder Name Placeholder]</h3>
-                  <p className="leadership-designation">Founder & Visionary Chairman</p>
-                  <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>MPSA Founding Patron</p>
+                  <h3>{fName}</h3>
+                  <p className="leadership-designation">{fDesignation}</p>
                 </div>
               </div>
 
               <div className="leadership-card-body">
-                <div className="placeholder-notice">
-                  <strong>Notice:</strong> Founder biography & quotes are set to placeholders.
-                </div>
+                {(!founder?.name || founder.name.includes('[Placeholder]')) && (
+                  <div className="placeholder-notice">
+                    <strong>Notice:</strong> Founder biography & quotes are set to placeholders.
+                  </div>
+                )}
                 <blockquote className="leadership-quote">
-                  "A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance."
+                  "{fQuote}"
                 </blockquote>
                 <Link to="/founder" className="btn btn-primary btn-sm">
                   Explore Founder & Inspiration Story <ChevronRight size={16} />
