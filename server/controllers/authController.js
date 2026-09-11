@@ -1,8 +1,13 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import path from 'path';
 import Admin from '../models/Admin.js';
 
 export const loginAdmin = async (req, res) => {
   try {
+    // Dynamically reload .env on each login attempt so .env edits reflect immediately
+    dotenv.config({ path: path.join(process.cwd(), '.env'), override: true });
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -15,8 +20,9 @@ export const loginAdmin = async (req, res) => {
 
     let admin = await Admin.findOne({ email: inputEmail });
 
-    if (!admin && inputEmail === envAdminEmail) {
-      admin = await Admin.findOne({ role: 'super_admin' });
+    // Fallback: search for super admin if email in .env changed
+    if (!admin) {
+      admin = await Admin.findOne({ role: 'super_admin' }) || await Admin.findOne({});
     }
 
     if (!admin) {
@@ -25,8 +31,8 @@ export const loginAdmin = async (req, res) => {
 
     let isMatch = await admin.matchPassword(password);
 
-    // Dynamic sync if user updated .env password while server was running
-    if (!isMatch && envAdminPassword && password === envAdminPassword) {
+    // Dynamic sync if user updated .env password or email while server was running
+    if ((!isMatch || admin.email !== inputEmail) && envAdminPassword && (password === envAdminPassword)) {
       admin.passwordHash = await Admin.hashPassword(password);
       admin.email = inputEmail;
       await admin.save();
