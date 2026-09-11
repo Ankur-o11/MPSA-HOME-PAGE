@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "start": "node server/server.js",
     "dev": "concurrently \"vite\" \"node server/server.js\"",
     "client": "vite",
     "server": "node server/server.js",
