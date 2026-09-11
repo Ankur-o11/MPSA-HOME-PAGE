@@ -59,7 +59,12 @@ const seedDatabase = async () => {
 
     let admin = await Admin.findOne({ email: adminEmail });
     if (!admin) {
-      const passwordHash = await Admin.hashPassword(adminPassword);
+      admin = await Admin.findOne({ role: 'super_admin' });
+    }
+
+    const passwordHash = await Admin.hashPassword(adminPassword);
+
+    if (!admin) {
       admin = new Admin({
         name: adminName,
         email: adminEmail,
@@ -69,7 +74,11 @@ const seedDatabase = async () => {
       await admin.save();
       console.log(`[Admin] Initial Super Admin created successfully.`);
     } else {
-      console.log(`[Admin] Super Admin account already exists.`);
+      admin.name = adminName;
+      admin.email = adminEmail;
+      admin.passwordHash = passwordHash;
+      await admin.save();
+      console.log(`[Admin] Super Admin credentials synchronized with .env successfully.`);
     }
 
     // 2. Seed Teachers
