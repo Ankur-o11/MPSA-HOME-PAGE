@@ -85,6 +85,11 @@ export default function Footer() {
               <li className="footer-link-item"><Link to="/notices"><ChevronRight size={14} /> Latest Notices</Link></li>
               <li className="footer-link-item"><Link to="/events"><ChevronRight size={14} /> Events & Activities</Link></li>
               <li className="footer-link-item"><Link to="/contact"><ChevronRight size={14} /> Contact Us</Link></li>
+              <li className="footer-link-item" style={{ marginTop: '0.2rem' }}>
+                <Link to="/admin/login" style={{ opacity: 0.75 }} title="Authorized Administrator Portal">
+                  <ChevronRight size={14} /> Admin Login
+                </Link>
+              </li>
             </ul>
           </div>
 
