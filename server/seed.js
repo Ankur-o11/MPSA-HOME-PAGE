@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
+import dns from 'dns';
 
 import Admin from './models/Admin.js';
 import Teacher from './models/Teacher.js';
@@ -25,11 +26,31 @@ import { SCHOOL_CONFIG } from '../src/data/config.js';
 
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
+// Fix Windows DNS resolution issue for MongoDB Atlas SRV lookup
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (e) {
+  // fallback if setServers not supported
+}
+
 const seedDatabase = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mpsa_school_db';
-    await mongoose.connect(mongoUri);
-    console.log('Seed Database: Connected to MongoDB.');
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+      console.error('Seed Error: MONGODB_URI environment variable is missing.');
+      process.exit(1);
+    }
+
+    const conn = await mongoose.connect(mongoUri, { dbName: 'mpsa_home_page' });
+    console.log(`[Seed Script] Connected to MongoDB Atlas.`);
+    console.log(`[Seed Script] Active Database Target: "${conn.connection.name}"`);
+
+    if (conn.connection.name !== 'mpsa_home_page') {
+      console.warn(`[Seed Warning] Target database is "${conn.connection.name}" instead of "mpsa_home_page".`);
+    }
 
     // 1. Seed Super Admin
     const adminEmail = (process.env.ADMIN_EMAIL || 'admin@mpsaschool.edu.in').toLowerCase().trim();
@@ -46,9 +67,9 @@ const seedDatabase = async () => {
         role: 'super_admin'
       });
       await admin.save();
-      console.log(`Created default Super Admin account: ${adminEmail}`);
+      console.log(`[Admin] Initial Super Admin created successfully.`);
     } else {
-      console.log(`Super Admin account already exists: ${adminEmail}`);
+      console.log(`[Admin] Super Admin account already exists.`);
     }
 
     // 2. Seed Teachers
@@ -72,7 +93,7 @@ const seedDatabase = async () => {
         isActive: true
       }));
       await Teacher.insertMany(formattedTeachers);
-      console.log(`Seeded ${formattedTeachers.length} initial faculty members.`);
+      console.log(`[Teachers] Seeded ${formattedTeachers.length} initial faculty members.`);
     }
 
     // 3. Seed Principal
@@ -88,7 +109,7 @@ const seedDatabase = async () => {
         fullMessage: 'Dear Parents, Guardians, and Dearest Students,\n\nIt is my privilege to welcome you to MAHARANA PRATAP SCIENCE ACADEMY (MPSA School). As an educational institution focused on scientific excellence, our fundamental purpose is to foster an environment where curiosity thrives and excellence becomes a habit.',
         educationalVision: 'Fostering conceptual clarity, laboratory research, athletic endeavors, and moral discipline across all classes.'
       });
-      console.log('Seeded initial Principal profile.');
+      console.log('[Principal] Seeded initial Principal profile.');
     }
 
     // 4. Seed Founder
@@ -112,21 +133,21 @@ const seedDatabase = async () => {
           { title: 'Foundation Ceremony', image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop', caption: 'Foundation Ceremony', date: 'Milestone Year' }
         ]
       });
-      console.log('Seeded initial Founder profile & timeline.');
+      console.log('[Founder] Seeded initial Founder profile.');
     }
 
     // 5. Seed Gallery
     const galleryCount = await Gallery.countDocuments();
     if (galleryCount === 0) {
       await Gallery.insertMany(galleryData);
-      console.log(`Seeded ${galleryData.length} initial gallery items.`);
+      console.log(`[Gallery] Seeded ${galleryData.length} initial gallery items.`);
     }
 
     // 6. Seed Notices
     const noticesCount = await Notice.countDocuments();
     if (noticesCount === 0) {
       await Notice.insertMany(noticesData);
-      console.log(`Seeded ${noticesData.length} initial notices.`);
+      console.log(`[Notices] Seeded ${noticesData.length} initial notices.`);
     }
 
     // 7. Seed Events
@@ -137,28 +158,28 @@ const seedDatabase = async () => {
         ...previousEvents.map(e => ({ ...e, isUpcoming: false }))
       ];
       await Event.insertMany(allEvents);
-      console.log(`Seeded ${allEvents.length} initial events.`);
+      console.log(`[Events] Seeded ${allEvents.length} initial events.`);
     }
 
     // 8. Seed Achievements
     const achievementsCount = await Achievement.countDocuments();
     if (achievementsCount === 0) {
       await Achievement.insertMany(achievementsData);
-      console.log(`Seeded ${achievementsData.length} initial achievements.`);
+      console.log(`[Achievements] Seeded ${achievementsData.length} initial achievements.`);
     }
 
     // 9. Seed Facilities
     const facilityCount = await Facility.countDocuments();
     if (facilityCount === 0) {
       await Facility.insertMany(facilitiesData);
-      console.log(`Seeded ${facilitiesData.length} initial facilities.`);
+      console.log(`[Facilities] Seeded ${facilitiesData.length} initial facilities.`);
     }
 
     // 10. Seed Academics
     const academicsCount = await Academics.countDocuments();
     if (academicsCount === 0) {
       await Academics.create({});
-      console.log('Seeded initial Academics record.');
+      console.log('[Academics] Seeded initial Academics record.');
     }
 
     // 11. Seed Admissions
@@ -180,7 +201,7 @@ const seedDatabase = async () => {
           'Passport Photographs'
         ]
       });
-      console.log('Seeded initial Admissions record.');
+      console.log('[Admissions] Seeded initial Admissions record.');
     }
 
     // 12. Seed Contact Settings
@@ -200,13 +221,13 @@ const seedDatabase = async () => {
         googleMapsEmbedUrl: SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL,
         googleMapsDirectionUrl: SCHOOL_CONFIG.GOOGLE_MAPS_DIRECTION_URL
       });
-      console.log('Seeded initial Contact Settings record.');
+      console.log('[ContactSettings] Seeded initial Contact Settings record.');
     }
 
-    console.log('Seed Database: Completed successfully.');
+    console.log('[Seed Script] Database setup completed successfully.');
     process.exit(0);
   } catch (error) {
-    console.error('Seed Database Error:', error);
+    console.error('[Seed Error] Failed to seed database:', error.message);
     process.exit(1);
   }
 };
