@@ -34,10 +34,15 @@ export default function Footer() {
           {/* Column 1: School Identity */}
           <div className="footer-col">
             <div className="footer-brand-logo">
-              <GraduationCap size={32} color="#D4A72C" />
+              {contactSettings.logoUrl ? (
+                <img src={contactSettings.logoUrl} alt="School Logo" style={{ width: '42px', height: '42px', objectFit: 'contain', borderRadius: '50%', border: '2px solid var(--accent-gold)' }} />
+              ) : (
+                <GraduationCap size={32} color="#D4A72C" />
+              )}
               <h3 className="footer-brand-title">
-                MAHARANA PRATAP<br />
-                <span>SCIENCE ACADEMY</span>
+                {contactSettings.schoolFullName ? contactSettings.schoolFullName : (
+                  <>MAHARANA PRATAP<br /><span>SCIENCE ACADEMY</span></>
+                )}
               </h3>
             </div>
             <p className="footer-desc">

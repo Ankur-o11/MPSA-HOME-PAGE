@@ -18,15 +18,31 @@ import {
   GraduationCap
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { apiService } from '../../services/api';
 
 export default function AdminSidebar({ mobileOpen, onCloseMobile }) {
   const { logout } = useAuth();
+  const [logoUrl, setLogoUrl] = React.useState('');
+
+  React.useEffect(() => {
+    async function loadSidebarLogo() {
+      try {
+        const data = await apiService.getContactSettings();
+        if (data?.logoUrl) setLogoUrl(data.logoUrl);
+      } catch (err) {}
+    }
+    loadSidebarLogo();
+  }, []);
 
   return (
     <aside className={`admin-sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
       <div className="admin-sidebar-header">
         <div className="admin-brand-icon">
-          <GraduationCap size={22} />
+          {logoUrl ? (
+            <img src={logoUrl} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+          ) : (
+            <GraduationCap size={22} />
+          )}
         </div>
         <div className="admin-brand-title">
           MPSA School

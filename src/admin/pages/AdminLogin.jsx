@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { GraduationCap, Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -7,12 +7,27 @@ export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [logoUrl, setLogoUrl] = useState('');
 
   const { login, loading, error, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/admin/dashboard';
+
+  // Fetch site logo for branding
+  useEffect(() => {
+    async function fetchLogo() {
+      try {
+        const res = await fetch('http://localhost:5000/api/public/contact-settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.logoUrl) setLogoUrl(data.logoUrl);
+        }
+      } catch (err) {}
+    }
+    fetchLogo();
+  }, []);
 
   // If already authenticated, redirect to dashboard
   React.useEffect(() => {
@@ -67,7 +82,11 @@ export default function AdminLogin() {
               border: '2px solid var(--accent-gold)'
             }}
           >
-            <GraduationCap size={36} />
+            {logoUrl ? (
+              <img src={logoUrl} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+            ) : (
+              <GraduationCap size={36} />
+            )}
           </div>
 
           <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)', fontWeight: '800' }}>

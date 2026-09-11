@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Compass, GraduationCap } from 'lucide-react';
 import { SCHOOL_CONFIG } from '../data/config';
+import { apiService } from '../services/api';
 
 export default function Hero() {
+  const [contactSettings, setContactSettings] = useState(SCHOOL_CONFIG);
+
+  useEffect(() => {
+    async function loadHeroContact() {
+      const data = await apiService.getContactSettings();
+      if (data) setContactSettings(data);
+    }
+    loadHeroContact();
+  }, []);
+
+  const schoolFullName = contactSettings.schoolFullName || SCHOOL_CONFIG.fullName;
+
   return (
     <section className="hero-section">
       <div className="container">
         <div className="hero-content">
           <div className="hero-welcome-badge">
-            <GraduationCap size={18} />
-            <span>Welcome to {SCHOOL_CONFIG.fullName}</span>
+            {contactSettings.logoUrl ? (
+              <img src={contactSettings.logoUrl} alt="School Logo" style={{ width: '22px', height: '22px', objectFit: 'contain', borderRadius: '50%' }} />
+            ) : (
+              <GraduationCap size={18} />
+            )}
+            <span>Welcome to {schoolFullName}</span>
           </div>
           
           <h1 className="hero-title">

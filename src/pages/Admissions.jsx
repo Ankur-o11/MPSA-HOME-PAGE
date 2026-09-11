@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  CheckCircle2, 
-  HelpCircle, 
-  FileText, 
-  Send, 
-  Calendar, 
-  AlertCircle, 
-  Phone, 
+import {
+  CheckCircle2,
+  HelpCircle,
+  FileText,
+  Send,
+  Calendar,
+  AlertCircle,
+  Phone,
   ChevronRight,
   Sparkles
 } from 'lucide-react';
@@ -57,7 +57,7 @@ export default function Admissions() {
 
       {/* Admission Open Status Banner */}
       <section className="container" style={{ marginTop: '3rem' }}>
-        <div 
+        <div
           style={{
             backgroundColor: 'var(--accent-gold-light)',
             border: '2px solid var(--accent-gold)',
@@ -75,7 +75,7 @@ export default function Admissions() {
             <div>
               <span className="category-tag">Session {SCHOOL_CONFIG.admissionSession}</span>
               <h3 style={{ fontSize: '1.35rem', color: 'var(--primary-navy)', marginTop: '0.2rem' }}>
-                Online Registration & Admission Open (Classes 1st – 11th Science)
+                Online Registration & Admission Open (Classes 1st – 12th Science)
               </h3>
               <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>
                 Seats are allocated on a first-come, first-served basis subject to merit & interaction.
@@ -186,8 +186,8 @@ export default function Admissions() {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
                       <label>Student's Full Name *</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="studentName"
                         className="form-control"
                         placeholder="Enter student's full name"
@@ -199,8 +199,8 @@ export default function Admissions() {
 
                     <div className="form-group">
                       <label>Parent / Guardian Name *</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="parentName"
                         className="form-control"
                         placeholder="Enter parent/guardian name"
@@ -212,8 +212,8 @@ export default function Admissions() {
 
                     <div className="form-group">
                       <label>Contact Phone Number *</label>
-                      <input 
-                        type="tel" 
+                      <input
+                        type="tel"
                         name="phone"
                         className="form-control"
                         placeholder="Enter 10-digit mobile number"
@@ -225,8 +225,8 @@ export default function Admissions() {
 
                     <div className="form-group">
                       <label>Email Address</label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         name="email"
                         className="form-control"
                         placeholder="Enter email address"
@@ -237,7 +237,7 @@ export default function Admissions() {
 
                     <div className="form-group">
                       <label>Class Seeking Admission For *</label>
-                      <select 
+                      <select
                         name="classApplying"
                         className="form-control"
                         value={formData.classApplying}
@@ -261,7 +261,7 @@ export default function Admissions() {
 
                     <div className="form-group">
                       <label>Additional Message / Query</label>
-                      <textarea 
+                      <textarea
                         name="message"
                         rows="4"
                         className="form-control"
@@ -285,7 +285,7 @@ export default function Admissions() {
       {/* Admissions FAQs */}
       <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
         <div className="container">
-          <SectionTitle 
+          <SectionTitle
             badge="Frequently Asked Questions"
             title="Admission FAQs"
             subtitle="Clear answers to common parent inquiries about school admissions."

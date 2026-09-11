@@ -71,11 +71,15 @@ export default function Navbar() {
           {/* Logo & Brand Name */}
           <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
             <div className="brand-logo-icon">
-              <GraduationCap size={26} />
+              {contactSettings.logoUrl ? (
+                <img src={contactSettings.logoUrl} alt="School Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
+              ) : (
+                <GraduationCap size={26} />
+              )}
             </div>
             <div className="brand-text">
-              <span className="brand-full-name">{SCHOOL_CONFIG.fullName}</span>
-              <span className="brand-sub-name">{SCHOOL_CONFIG.shortName}</span>
+              <span className="brand-full-name">{contactSettings.schoolFullName || SCHOOL_CONFIG.fullName}</span>
+              <span className="brand-sub-name">{contactSettings.schoolShortName || SCHOOL_CONFIG.shortName}</span>
             </div>
           </Link>
 
