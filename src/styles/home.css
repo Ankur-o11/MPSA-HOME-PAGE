@@ -1,0 +1,424 @@
+/* HOME PAGE STYLES */
+
+/* HERO SECTION */
+.hero-section {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(rgba(18, 59, 99, 0.85), rgba(10, 34, 59, 0.9)), url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--bg-white);
+  padding: 4rem 0;
+}
+
+.hero-content {
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.25rem;
+  background: rgba(212, 167, 44, 0.2);
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(5px);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--bg-white);
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.hero-title span {
+  color: var(--accent-gold);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #E2E8F0;
+  margin-bottom: 2.25rem;
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+/* QUICK HIGHLIGHTS STRIP */
+.quick-highlights-strip {
+  background-color: var(--bg-white);
+  margin-top: -3.5rem;
+  position: relative;
+  z-index: 10;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(18, 59, 99, 0.12);
+  padding: 2rem 1.5rem;
+  border-bottom: 4px solid var(--accent-gold);
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-right: 1px solid var(--border-color);
+}
+
+.highlight-item:last-child {
+  border-right: none;
+}
+
+.highlight-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--accent-gold-light);
+  color: #926f12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.highlight-text h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin-bottom: 0.2rem;
+}
+
+.highlight-text p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ABOUT SECTION HOME */
+.about-home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.about-home-image-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-home-image-wrapper img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.about-home-image-wrapper:hover img {
+  transform: scale(1.03);
+}
+
+.about-home-experience-badge {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: var(--primary-navy);
+  color: var(--bg-white);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--accent-gold);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.experience-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+.experience-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.about-home-content p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+.about-home-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.feature-check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: var(--primary-navy);
+}
+
+.feature-check-item svg {
+  color: var(--accent-gold);
+}
+
+/* PRINCIPAL & FOUNDER DUAL SECTION */
+.dual-leadership-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.leadership-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.leadership-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.leadership-card-header {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+  color: var(--bg-white);
+  align-items: center;
+}
+
+.leadership-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-gold);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+.leadership-info h3 {
+  color: var(--bg-white);
+  font-size: 1.3rem;
+  margin-bottom: 0.25rem;
+}
+
+.leadership-designation {
+  color: var(--accent-gold);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.leadership-card-body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.leadership-quote {
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--accent-gold);
+}
+
+/* WHY CHOOSE MPSA GRID */
+.why-mpsa-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+}
+
+.why-card {
+  background-color: var(--bg-white);
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+  text-align: center;
+}
+
+.why-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-gold);
+}
+
+.why-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  color: var(--primary-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem auto;
+  transition: all var(--transition-normal);
+}
+
+.why-card:hover .why-icon-box {
+  background: var(--primary-navy);
+  color: var(--accent-gold);
+}
+
+.why-card h4 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.why-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ADMISSIONS CTA BANNER */
+.admissions-cta-banner {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+  color: var(--bg-white);
+  border-radius: var(--radius-xl);
+  padding: 4rem 3rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.cta-content {
+  max-width: 700px;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-title {
+  color: var(--bg-white);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.cta-title span {
+  color: var(--accent-gold);
+}
+
+.cta-desc {
+  font-size: 1.1rem;
+  color: #E2E8F0;
+  margin-bottom: 2rem;
+}
+
+/* GOOGLE MAPS SECTION */
+.maps-container-box {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+}
+
+.map-placeholder-card {
+  padding: 3.5rem 2rem;
+  text-align: center;
+  background-color: var(--bg-soft);
+}
+
+.map-icon-large {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: var(--accent-gold-light);
+  color: #8c6a12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem auto;
+}
+
+/* RESPONSIVE MEDIA QUERIES FOR HOME */
+@media (max-width: 1024px) {
+  .highlights-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .highlight-item {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+  }
+  .why-mpsa-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-title {
+    font-size: 2.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-home-grid,
+  .dual-leadership-grid {
+    grid-template-columns: 1fr;
+  }
+  .highlights-grid {
+    grid-template-columns: 1fr;
+  }
+  .why-mpsa-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  .admissions-cta-banner {
+    padding: 2.5rem 1.5rem;
+  }
+  .cta-title {
+    font-size: 1.8rem;
+  }
+}

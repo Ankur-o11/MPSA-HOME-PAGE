@@ -1,0 +1,237 @@
+/* NAVBAR STYLES */
+
+.header-top-bar {
+  background-color: var(--primary-navy);
+  color: var(--bg-white);
+  font-size: 0.82rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.top-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.9;
+}
+
+.top-bar-item:hover {
+  opacity: 1;
+}
+
+.top-bar-social {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.top-bar-social a {
+  color: var(--bg-white);
+  opacity: 0.85;
+  transition: all var(--transition-fast);
+}
+
+.top-bar-social a:hover {
+  color: var(--accent-gold);
+  opacity: 1;
+}
+
+/* Main Sticky Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--bg-white);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition-normal);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.5rem;
+}
+
+/* Brand Logo Area */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+}
+
+.brand-logo-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+  border: 2px solid var(--accent-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  box-shadow: 0 4px 10px rgba(18, 59, 99, 0.2);
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-full-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--primary-navy);
+  letter-spacing: 0.3px;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.brand-sub-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--secondary-blue);
+  letter-spacing: 0.5px;
+}
+
+/* Desktop Navigation Menu */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  padding: 0.4rem 0.2rem;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--secondary-blue);
+}
+
+.nav-link.active {
+  color: var(--primary-navy);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--accent-gold);
+  border-radius: 2px;
+}
+
+/* Navbar Right Actions */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hamburger-btn {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--primary-navy);
+  background: none;
+  border: none;
+  padding: 0.3rem;
+}
+
+/* Responsive Navbar Styles */
+@media (max-width: 1120px) {
+  .brand-full-name {
+    font-size: 0.92rem;
+  }
+  .navbar-menu {
+    gap: 0.85rem;
+  }
+  .nav-link {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .top-bar-info {
+    gap: 0.8rem;
+  }
+  
+  .hamburger-btn {
+    display: block;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 72px);
+    background-color: var(--bg-white);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transform: translateX(-100%);
+    transition: transform var(--transition-normal);
+    overflow-y: auto;
+  }
+
+  .navbar-menu.mobile-open {
+    transform: translateX(0);
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nav-link.active::after {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-top-bar {
+    display: none;
+  }
+  
+  .brand-full-name {
+    font-size: 0.82rem;
+  }
+  
+  .brand-sub-name {
+    font-size: 0.7rem;
+  }
+
+  .brand-logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+}

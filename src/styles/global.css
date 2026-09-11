@@ -1,0 +1,294 @@
+/* ==========================================================================
+   MAHARANA PRATAP SCIENCE ACADEMY (MPSA SCHOOL) - GLOBAL DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+  /* Brand Palette */
+  --primary-navy: #123B63;
+  --secondary-blue: #1F5F95;
+  --accent-gold: #D4A72C;
+  --accent-gold-hover: #b58b1f;
+  --accent-gold-light: #FFF9E6;
+  
+  /* Neutral Colors */
+  --bg-white: #FFFFFF;
+  --bg-soft: #F5F7FA;
+  --bg-dark: #0A223B;
+  --text-main: #1F2937;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+  --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
+
+  /* Fonts */
+  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(18, 59, 99, 0.08);
+  --shadow-lg: 0 10px 25px rgba(18, 59, 99, 0.12);
+  --shadow-hover: 0 15px 30px rgba(18, 59, 99, 0.16);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+
+  /* Layout */
+  --max-width: 1280px;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  background-color: var(--bg-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--primary-navy);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Utility Containers */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-padding {
+  padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 3.5rem 0;
+  }
+}
+
+/* Section Title Component Styles */
+.section-title-wrapper {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 3rem auto;
+}
+
+.section-title-wrapper.align-left {
+  text-align: left;
+  margin-left: 0;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  background-color: var(--accent-gold-light);
+  color: #926f12;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  border: 1px solid rgba(212, 167, 44, 0.3);
+  margin-bottom: 0.75rem;
+}
+
+.section-title-text {
+  font-size: 2.25rem;
+  color: var(--primary-navy);
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.title-underline {
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent-gold);
+  border-radius: 2px;
+  margin: 0.75rem auto 0 auto;
+}
+
+.align-left .title-underline {
+  margin-left: 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--accent-gold);
+  color: #123B63;
+  box-shadow: 0 4px 14px rgba(212, 167, 44, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 167, 44, 0.4);
+}
+
+.btn-secondary {
+  background-color: var(--primary-navy);
+  color: var(--bg-white);
+  box-shadow: 0 4px 14px rgba(18, 59, 99, 0.2);
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(31, 95, 149, 0.3);
+}
+
+.btn-outline {
+  border: 2px solid var(--primary-navy);
+  color: var(--primary-navy);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-navy);
+  color: var(--bg-white);
+}
+
+.btn-outline-gold {
+  border: 2px solid var(--accent-gold);
+  color: var(--accent-gold);
+  background: transparent;
+}
+
+.btn-outline-gold:hover {
+  background-color: var(--accent-gold);
+  color: var(--primary-navy);
+}
+
+.btn-sm {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.btn-lg {
+  padding: 1rem 2.25rem;
+  font-size: 1.05rem;
+}
+
+/* Badge Tags */
+.degree-tag {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background-color: #EBF3FA;
+  color: var(--secondary-blue);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid #D0E2F2;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--accent-gold-light);
+  color: #8c6a12;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 50px;
+}
+
+/* Placeholders & Alerts */
+.placeholder-notice {
+  background-color: #FFFBEB;
+  border-left: 4px solid var(--accent-gold);
+  padding: 0.85rem 1.25rem;
+  font-size: 0.88rem;
+  color: #78350F;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: 1rem 0;
+}
+
+.placeholder-notice code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #123B63;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1F5F95;
+}

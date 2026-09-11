@@ -1,0 +1,178 @@
+/* FACULTY & TEACHERS STYLES */
+
+.faculty-filter-bar {
+  background-color: var(--bg-white);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  margin-bottom: 3rem;
+}
+
+.filter-controls-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input-wrapper svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.search-input-wrapper input {
+  padding-left: 2.75rem;
+}
+
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.teacher-card {
+  background-color: var(--bg-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-gold);
+}
+
+.teacher-img-wrapper {
+  height: 260px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--bg-soft);
+}
+
+.teacher-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.teacher-card:hover .teacher-img {
+  transform: scale(1.05);
+}
+
+.teacher-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.teacher-name {
+  font-size: 1.25rem;
+  color: var(--primary-navy);
+  margin-bottom: 0.2rem;
+}
+
+.teacher-designation {
+  color: var(--secondary-blue);
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.85rem;
+}
+
+/* Qualification Text Tags - VERY IMPORTANT REQUIREMENT #14 */
+.qualifications-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.teacher-details-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-row strong {
+  color: var(--primary-navy);
+}
+
+.teacher-card-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* TEACHER PROFILE DETAIL PAGE */
+.teacher-detail-card {
+  background-color: var(--bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.teacher-detail-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+}
+
+.teacher-detail-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 450px;
+  object-fit: cover;
+}
+
+.teacher-detail-content {
+  padding: 3rem;
+}
+
+.no-results-box {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-color);
+}
+
+@media (max-width: 1024px) {
+  .faculty-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .filter-controls-grid {
+    grid-template-columns: 1fr;
+  }
+  .teacher-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .faculty-grid {
+    grid-template-columns: 1fr;
+  }
+}

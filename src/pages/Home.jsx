@@ -1,0 +1,556 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  Award, 
+  Users, 
+  ShieldCheck, 
+  GraduationCap, 
+  CheckCircle2, 
+  ChevronRight, 
+  FlaskConical, 
+  BookOpen, 
+  Trophy, 
+  MapPin, 
+  Phone, 
+  Mail, 
+  Clock,
+  Sparkles
+} from 'lucide-react';
+
+import Hero from '../components/Hero';
+import SectionTitle from '../components/SectionTitle';
+import FounderSection from '../components/FounderSection';
+import TeacherCard from '../components/TeacherCard';
+import FacilityCard from '../components/FacilityCard';
+import NoticeCard from '../components/NoticeCard';
+import EventCard from '../components/EventCard';
+import AchievementCard from '../components/AchievementCard';
+import GalleryCard from '../components/GalleryCard';
+import Lightbox from '../components/Lightbox';
+
+import { SCHOOL_CONFIG } from '../data/config';
+import { teachersData } from '../data/teachers';
+import { facilitiesData } from '../data/facilities';
+import { noticesData } from '../data/notices';
+import { upcomingEvents } from '../data/events';
+import { achievementsData } from '../data/achievements';
+import { galleryData } from '../data/gallery';
+
+export default function Home() {
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
+  const [selectedNotice, setSelectedNotice] = useState(null);
+
+  return (
+    <div className="home-page">
+      {/* 2. Hero Section */}
+      <Hero />
+
+      {/* 3. Quick Highlights Strip */}
+      <section className="container">
+        <div className="quick-highlights-strip">
+          <div className="highlights-grid">
+            <div className="highlight-item">
+              <div className="highlight-icon"><GraduationCap size={28} /></div>
+              <div className="highlight-text">
+                <h4>Quality Education</h4>
+                <p>CBSE pattern science & holistic curriculum</p>
+              </div>
+            </div>
+            <div className="highlight-item">
+              <div className="highlight-icon"><Users size={28} /></div>
+              <div className="highlight-text">
+                <h4>Experienced Faculty</h4>
+                <p>Post-graduate & specialized mentors</p>
+              </div>
+            </div>
+            <div className="highlight-item">
+              <div className="highlight-icon"><ShieldCheck size={28} /></div>
+              <div className="highlight-text">
+                <h4>Safe & Caring</h4>
+                <p>CCTV secured GPS transport campus</p>
+              </div>
+            </div>
+            <div className="highlight-item">
+              <div className="highlight-icon"><Award size={28} /></div>
+              <div className="highlight-text">
+                <h4>Holistic Development</h4>
+                <p>Sports, robotics, arts & leadership</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. About MPSA Home Preview */}
+      <section className="section-padding">
+        <div className="container">
+          <div className="about-home-grid">
+            <div className="about-home-image-wrapper">
+              <img 
+                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=800&auto=format&fit=crop" 
+                alt="Maharana Pratap Science Academy Campus" 
+              />
+              <div className="about-home-experience-badge">
+                <div className="experience-number">15+</div>
+                <div className="experience-text">Years of Educational Excellence</div>
+              </div>
+            </div>
+
+            <div className="about-home-content">
+              <span className="section-badge">Welcome to {SCHOOL_CONFIG.shortName}</span>
+              <h2 className="section-title-text" style={{ fontSize: '2.5rem', textAlign: 'left', marginBottom: '1.25rem' }}>
+                Nurturing Scientific Minds & Character Excellence
+              </h2>
+              <p>
+                <strong>MAHARANA PRATAP SCIENCE ACADEMY (MPSA School)</strong> is a premier educational institution committed to nurturing academic rigor, scientific curiosity, and moral integrity in every student.
+              </p>
+              <p>
+                Our modern campus offers state-of-the-art physics, chemistry, biology, and computer laboratories alongside interactive smart classrooms and extensive athletic grounds.
+              </p>
+
+              <div className="about-home-features">
+                <div className="feature-check-item">
+                  <CheckCircle2 size={20} />
+                  <span>State-of-the-Art Science Labs</span>
+                </div>
+                <div className="feature-check-item">
+                  <CheckCircle2 size={20} />
+                  <span>Digital Smart Classrooms</span>
+                </div>
+                <div className="feature-check-item">
+                  <CheckCircle2 size={20} />
+                  <span>Interactive Pedagogy</span>
+                </div>
+                <div className="feature-check-item">
+                  <CheckCircle2 size={20} />
+                  <span>Disciplined & Value-Based Environment</span>
+                </div>
+              </div>
+
+              <Link to="/about" className="btn btn-secondary">
+                Read More About MPSA <ChevronRight size={18} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Principal's Message Preview & 6. Founder Section */}
+      <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
+        <div className="container">
+          <SectionTitle 
+            badge="Leadership & Guidance"
+            title="Guiding Minds Towards Excellence"
+            subtitle="The visionary leadership steering Maharana Pratap Science Academy into a bright future."
+          />
+
+          <div className="dual-leadership-grid">
+            {/* Principal Card Preview */}
+            <div className="leadership-card">
+              <div className="leadership-card-header">
+                <img 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" 
+                  alt="Principal Placeholder" 
+                  className="leadership-img"
+                />
+                <div className="leadership-info">
+                  <h3>Dr. [Principal Name Placeholder]</h3>
+                  <p className="leadership-designation">Principal, MPSA School</p>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>Ph.D., M.Sc., B.Ed.</p>
+                </div>
+              </div>
+
+              <div className="leadership-card-body">
+                <div className="placeholder-notice">
+                  <strong>Notice:</strong> Principal details are set to professional placeholders until official records are uploaded.
+                </div>
+                <blockquote className="leadership-quote">
+                  "Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential in a supportive environment."
+                </blockquote>
+                <Link to="/principal-message" className="btn btn-outline btn-sm">
+                  Read Full Principal Message <ChevronRight size={16} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Founder Card Preview */}
+            <div className="leadership-card">
+              <div className="leadership-card-header">
+                <img 
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop" 
+                  alt="Founder Placeholder" 
+                  className="leadership-img"
+                />
+                <div className="leadership-info">
+                  <h3>Shri [Founder Name Placeholder]</h3>
+                  <p className="leadership-designation">Founder & Visionary Chairman</p>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>MPSA Founding Patron</p>
+                </div>
+              </div>
+
+              <div className="leadership-card-body">
+                <div className="placeholder-notice">
+                  <strong>Notice:</strong> Founder biography & quotes are set to placeholders.
+                </div>
+                <blockquote className="leadership-quote">
+                  "A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance."
+                </blockquote>
+                <Link to="/founder" className="btn btn-primary btn-sm">
+                  Explore Founder & Inspiration Story <ChevronRight size={16} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Why Choose MPSA */}
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle 
+            badge="Why Choose Us"
+            title="The MPSA School Advantage"
+            subtitle="Why parents trust Maharana Pratap Science Academy for their children's educational journey."
+          />
+
+          <div className="why-mpsa-grid">
+            <div className="why-card">
+              <div className="why-icon-box"><FlaskConical size={32} /></div>
+              <h4>Science & Innovation Focus</h4>
+              <p>Advanced laboratories and practical-oriented learning enabling early scientific discovery.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon-box"><ShieldCheck size={32} /></div>
+              <h4>Values & Discipline</h4>
+              <p>Emphasis on character building, moral ethics, punctuality, and mutual respect.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon-box"><Trophy size={32} /></div>
+              <h4>Sports & Extra-Curricular</h4>
+              <p>Comprehensive athletic training, inter-house competitions, arts, and robotics clubs.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon-box"><BookOpen size={32} /></div>
+              <h4>Experienced Faculty</h4>
+              <p>Dedicated post-graduate teachers with personalized mentorship and student care.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Facilities Preview */}
+      <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
+        <div className="container">
+          <SectionTitle 
+            badge="Campus Life"
+            title="World-Class Facilities"
+            subtitle="Providing an inspiring infrastructure that supports academic curiosity and physical growth."
+          />
+
+          <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
+            {facilitiesData.slice(0, 3).map((facility) => (
+              <FacilityCard key={facility.id} facility={facility} />
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/facilities" className="btn btn-secondary">
+              Explore All Campus Facilities <ChevronRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Academic Highlights */}
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle 
+            badge="Academic Excellence"
+            title="Curriculum & Programs"
+            subtitle="Structured learning pathways from Pre-Primary through Senior Secondary Science."
+          />
+
+          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+            <div className="why-card" style={{ textAlign: 'left' }}>
+              <span className="category-tag">Classes 1st – 5th</span>
+              <h4 style={{ marginTop: '0.85rem' }}>Primary Education</h4>
+              <p style={{ marginBottom: '1rem' }}>Foundational literacy, numeracy, environmental awareness, and activity-based learning.</p>
+              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                <li>Activity & Play-way methods</li>
+                <li>Phonics & English fluency</li>
+                <li>Basic Math & Nature study</li>
+              </ul>
+            </div>
+
+            <div className="why-card" style={{ textAlign: 'left' }}>
+              <span className="category-tag">Classes 6th – 8th</span>
+              <h4 style={{ marginTop: '0.85rem' }}>Middle School</h4>
+              <p style={{ marginBottom: '1rem' }}>Fostering analytical thinking, science lab practicals, computer coding, and social sciences.</p>
+              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                <li>Physics, Chemistry, Biology introduced</li>
+                <li>Computer Science & Robotics</li>
+                <li>Inter-house debates & quiz contests</li>
+              </ul>
+            </div>
+
+            <div className="why-card" style={{ textAlign: 'left' }}>
+              <span className="category-tag">Classes 9th – 12th</span>
+              <h4 style={{ marginTop: '0.85rem' }}>Secondary & Sr. Secondary Science</h4>
+              <p style={{ marginBottom: '1rem' }}>Rigorous academic preparation for Board examinations and scientific entrance competitive exams.</p>
+              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                <li>Physics, Chemistry, Math, Biology streams</li>
+                <li>Board exam coaching & mock tests</li>
+                <li>Science Olympiad & Expo participation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+            <Link to="/academics" className="btn btn-primary">
+              View Detailed Academics Syllabus <ChevronRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. Latest Notices Preview */}
+      <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
+        <div className="container">
+          <SectionTitle 
+            badge="Official Announcements"
+            title="Latest Notices & Circulars"
+            subtitle="Stay informed with important announcements regarding admissions, exams, and events."
+          />
+
+          <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
+            {noticesData.slice(0, 3).map((notice) => (
+              <NoticeCard 
+                key={notice.id} 
+                notice={notice} 
+                onSelectNotice={(n) => setSelectedNotice(n)}
+              />
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/notices" className="btn btn-outline">
+              View All Official Notices <ChevronRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 11. Achievements Preview */}
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle 
+            badge="Our Pride"
+            title="Recent Achievements & Awards"
+            subtitle="Celebrating our students' success in board exams, sports championships, and national contests."
+          />
+
+          <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
+            {achievementsData.slice(0, 3).map((achievement) => (
+              <AchievementCard key={achievement.id} achievement={achievement} />
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/achievements" className="btn btn-secondary">
+              View All Achievements <ChevronRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 12. Upcoming Events Preview */}
+      <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
+        <div className="container">
+          <SectionTitle 
+            badge="Calendar of Events"
+            title="Upcoming School Events"
+            subtitle="Join us for our upcoming academic expos, sports tournaments, and cultural fests."
+          />
+
+          <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
+            {upcomingEvents.slice(0, 3).map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/events" className="btn btn-primary">
+              Explore All Events & Activities <ChevronRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 13. Gallery Preview */}
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle 
+            badge="Campus Moments"
+            title="Photo Gallery Highlights"
+            subtitle="A glimpse into campus life, science expos, sports meets, and cultural celebrations."
+          />
+
+          <div className="gallery-grid" style={{ marginBottom: '2.5rem' }}>
+            {galleryData.slice(0, 6).map((item) => (
+              <GalleryCard 
+                key={item.id} 
+                item={item} 
+                onClick={(g) => setSelectedGalleryItem(g)}
+              />
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/gallery" className="btn btn-outline">
+              View Full Campus Photo Gallery <ChevronRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 14. Admissions CTA Banner */}
+      <section className="container" style={{ margin: '2rem auto 5rem auto' }}>
+        <div className="admissions-cta-banner">
+          <div className="cta-content">
+            <span className="section-badge" style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: 'var(--accent-gold)' }}>
+              Session {SCHOOL_CONFIG.admissionSession}
+            </span>
+            <h2 className="cta-title">
+              Admissions Open for <span>Academic Session {SCHOOL_CONFIG.admissionSession}</span>
+            </h2>
+            <p className="cta-desc">
+              Give your child the advantage of quality education, modern science facilities, and strong moral values at Maharana Pratap Science Academy.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link to="/admissions" className="btn btn-primary btn-lg">
+                Apply Online Now <ChevronRight size={18} />
+              </Link>
+              <a href={`tel:${SCHOOL_CONFIG.phonePrimary}`} className="btn btn-outline-gold btn-lg">
+                <Phone size={18} /> Call Admission Desk: {SCHOOL_CONFIG.phonePrimary}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 15. Google Maps / Visit Our School Section (RULE #22 MANDATORY) */}
+      <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
+        <div className="container">
+          <SectionTitle 
+            badge="Visit Our Campus"
+            title="Visit Maharana Pratap Science Academy"
+            subtitle="We invite parents and prospective students to tour our modern campus."
+          />
+
+          <div className="maps-container-box">
+            {SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL ? (
+              <div style={{ width: '100%', height: '400px' }}>
+                <iframe 
+                  src={SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL}
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  title="School Google Map"
+                />
+              </div>
+            ) : (
+              <div className="map-placeholder-card">
+                <div className="map-icon-large">
+                  <MapPin size={36} />
+                </div>
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-navy)', marginBottom: '0.5rem' }}>
+                  {SCHOOL_CONFIG.fullName} Campus Location
+                </h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 1.5rem auto' }}>
+                  {SCHOOL_CONFIG.address}
+                </p>
+
+                <div className="placeholder-notice" style={{ maxWidth: '650px', margin: '0 auto 1.5rem auto' }}>
+                  <strong>Map Embed Notice:</strong> Google Maps embed iframe URL will be configured via <code>SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL</code> once exact campus GPS pin is confirmed.
+                </div>
+
+                <a 
+                  href={SCHOOL_CONFIG.GOOGLE_MAPS_DIRECTION_URL} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="btn btn-secondary"
+                >
+                  Get Directions on Google Maps <ChevronRight size={16} />
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 16. Contact Preview */}
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle 
+            badge="Get in Touch"
+            title="School Contact Information"
+            subtitle="Reach out to our administrative team for admissions, inquiries, and campus tours."
+          />
+
+          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+            <div className="why-card">
+              <div className="why-icon-box"><MapPin size={28} /></div>
+              <h4>Campus Address</h4>
+              <p>{SCHOOL_CONFIG.address}</p>
+            </div>
+
+            <div className="why-card">
+              <div className="why-icon-box"><Phone size={28} /></div>
+              <h4>Phone Numbers</h4>
+              <p>{SCHOOL_CONFIG.phonePrimary}<br />{SCHOOL_CONFIG.phoneSecondary}</p>
+            </div>
+
+            <div className="why-card">
+              <div className="why-icon-box"><Clock size={28} /></div>
+              <h4>School Timings</h4>
+              <p>{SCHOOL_CONFIG.timingOffice}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      {selectedGalleryItem && (
+        <Lightbox 
+          item={selectedGalleryItem} 
+          onClose={() => setSelectedGalleryItem(null)} 
+        />
+      )}
+
+      {/* Notice Detail Modal */}
+      {selectedNotice && (
+        <div className="lightbox-backdrop" onClick={() => setSelectedNotice(null)}>
+          <div className="lightbox-content-box" style={{ padding: '2.5rem', maxWidth: '650px' }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <span className="category-tag">{selectedNotice.category}</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{selectedNotice.date}</span>
+            </div>
+            <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-navy)', marginBottom: '1rem' }}>
+              {selectedNotice.title}
+            </h3>
+            <p style={{ fontSize: '1rem', color: 'var(--text-main)', lineHeight: '1.7', marginBottom: '2rem' }}>
+              {selectedNotice.description}
+            </p>
+            <div style={{ textAlign: 'right' }}>
+              <button className="btn btn-secondary" onClick={() => setSelectedNotice(null)}>
+                Close Notice
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
