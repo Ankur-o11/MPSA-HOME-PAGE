@@ -28,7 +28,7 @@ import AchievementCard from '../components/AchievementCard';
 import GalleryCard from '../components/GalleryCard';
 import Lightbox from '../components/Lightbox';
 
-import { SCHOOL_CONFIG as defaultConfig } from '../data/config';
+import { SCHOOL_CONFIG } from '../data/config';
 import { teachersData as defaultTeachers } from '../data/teachers';
 import { facilitiesData as defaultFacilities } from '../data/facilities';
 import { noticesData as defaultNotices } from '../data/notices';
@@ -48,16 +48,18 @@ export default function Home() {
   const [events, setEvents] = useState(defaultEvents);
   const [achievements, setAchievements] = useState(defaultAchievements);
   const [gallery, setGallery] = useState(defaultGallery);
+  const [siteSettings, setSiteSettings] = useState(SCHOOL_CONFIG);
 
   useEffect(() => {
     async function loadHomeData() {
-      const [tData, fData, nData, eData, aData, gData] = await Promise.all([
+      const [tData, fData, nData, eData, aData, gData, sData] = await Promise.all([
         apiService.getTeachers(),
         apiService.getFacilities(),
         apiService.getNotices(),
         apiService.getEvents(),
         apiService.getAchievements(),
-        apiService.getGallery()
+        apiService.getGallery(),
+        apiService.getContactSettings()
       ]);
 
       if (tData && tData.length > 0) setTeachers(tData);
@@ -66,9 +68,12 @@ export default function Home() {
       if (eData && eData.length > 0) setEvents(eData);
       if (aData && aData.length > 0) setAchievements(aData);
       if (gData && gData.length > 0) setGallery(gData);
+      if (sData) setSiteSettings(sData);
     }
     loadHomeData();
   }, []);
+
+  const schoolConfig = siteSettings || SCHOOL_CONFIG;
 
   return (
     <div className="home-page">
