@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -7,18 +7,30 @@ import {
   Briefcase, 
   Mail, 
   Clock, 
-  GraduationCap,
-  Award
+  GraduationCap
 } from 'lucide-react';
-import { teachersData } from '../data/teachers';
+import { teachersData as defaultTeachers } from '../data/teachers';
+import { apiService } from '../services/api';
 
 export default function TeacherProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const teacher = teachersData.find(t => t.id === id);
+  const [teacher, setTeacher] = useState(() => {
+    return defaultTeachers.find(t => t.id === id || t._id === id);
+  });
+  const [loading, setLoading] = useState(true);
 
-  if (!teacher) {
+  useEffect(() => {
+    async function loadTeacher() {
+      const data = await apiService.getTeacherById(id);
+      if (data) setTeacher(data);
+      setLoading(false);
+    }
+    loadTeacher();
+  }, [id]);
+
+  if (!teacher && !loading) {
     return (
       <div className="container section-padding" style={{ textAlign: 'center' }}>
         <h2>Teacher Profile Not Found</h2>
@@ -31,6 +43,8 @@ export default function TeacherProfile() {
       </div>
     );
   }
+
+  if (!teacher) return null;
 
   return (
     <div className="teacher-profile-page">
@@ -117,14 +131,18 @@ export default function TeacherProfile() {
                     <Briefcase size={18} color="#1F5F95" />
                     <span><strong>Teaching Experience:</strong> {teacher.experience}</span>
                   </div>
-                  <div className="meta-row">
-                    <Mail size={18} color="#1F5F95" />
-                    <span><strong>Official Email:</strong> {teacher.email}</span>
-                  </div>
-                  <div className="meta-row">
-                    <Clock size={18} color="#1F5F95" />
-                    <span><strong>Office / Parent Interaction Hours:</strong> {teacher.officeHours}</span>
-                  </div>
+                  {teacher.email && (
+                    <div className="meta-row">
+                      <Mail size={18} color="#1F5F95" />
+                      <span><strong>Official Email:</strong> {teacher.email}</span>
+                    </div>
+                  )}
+                  {teacher.officeHours && (
+                    <div className="meta-row">
+                      <Clock size={18} color="#1F5F95" />
+                      <span><strong>Office / Parent Interaction Hours:</strong> {teacher.officeHours}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Biography */}
@@ -132,7 +150,7 @@ export default function TeacherProfile() {
                   About & Educational Philosophy
                 </h4>
                 <p style={{ color: 'var(--text-main)', lineHeight: '1.8', fontSize: '1.02rem' }}>
-                  {teacher.bioFull}
+                  {teacher.bioFull || teacher.bioShort}
                 </p>
               </div>
             </div>

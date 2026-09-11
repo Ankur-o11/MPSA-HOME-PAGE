@@ -1,41 +1,52 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, RefreshCw, UserCheck } from 'lucide-react';
+import { Search, RefreshCw, UserCheck } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import TeacherCard from '../components/TeacherCard';
-import { teachersData } from '../data/teachers';
+import { teachersData as defaultTeachers } from '../data/teachers';
+import { apiService } from '../services/api';
 
 export default function Faculty() {
+  const [teachers, setTeachers] = useState(defaultTeachers);
   const [searchTerm, setSearchTerm] = useState('');
   const [subjectFilter, setSubjectFilter] = useState('All');
   const [classFilter, setClassFilter] = useState('All');
 
+  useEffect(() => {
+    async function loadData() {
+      const data = await apiService.getTeachers();
+      if (data && data.length > 0) setTeachers(data);
+    }
+    loadData();
+  }, []);
+
   // Extract unique subjects
   const subjects = useMemo(() => {
-    const set = new Set(teachersData.map(t => t.subject));
+    const set = new Set(teachers.map(t => t.subject));
     return ['All', ...Array.from(set)];
-  }, []);
+  }, [teachers]);
 
   // Filtered teachers list
   const filteredTeachers = useMemo(() => {
-    return teachersData.filter(teacher => {
+    return teachers.filter(teacher => {
       const matchesSearch = 
         teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         teacher.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.classes.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.designation.toLowerCase().includes(searchTerm.toLowerCase());
+        (teacher.classes && teacher.classes.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (teacher.designation && teacher.designation.toLowerCase().includes(searchTerm.toLowerCase()));
 
       const matchesSubject = subjectFilter === 'All' || teacher.subject === subjectFilter;
       
+      const classGroupStr = teacher.classGroup || '';
       const matchesClass = classFilter === 'All' || 
-        (classFilter === 'Primary' && teacher.classGroup.includes('Primary')) ||
-        (classFilter === 'Middle' && teacher.classGroup.includes('Middle')) ||
-        (classFilter === 'Secondary' && teacher.classGroup.includes('Secondary')) ||
-        (classFilter === 'Sr. Secondary' && teacher.classGroup.includes('Sr. Secondary'));
+        (classFilter === 'Primary' && classGroupStr.includes('Primary')) ||
+        (classFilter === 'Middle' && classGroupStr.includes('Middle')) ||
+        (classFilter === 'Secondary' && classGroupStr.includes('Secondary')) ||
+        (classFilter === 'Sr. Secondary' && classGroupStr.includes('Sr. Secondary'));
 
       return matchesSearch && matchesSubject && matchesClass;
     });
-  }, [searchTerm, subjectFilter, classFilter]);
+  }, [teachers, searchTerm, subjectFilter, classFilter]);
 
   const handleResetFilters = () => {
     setSearchTerm('');
@@ -110,7 +121,7 @@ export default function Faculty() {
             {(searchTerm || subjectFilter !== 'All' || classFilter !== 'All') && (
               <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                  Showing <strong>{filteredTeachers.length}</strong> of {teachersData.length} faculty members
+                  Showing <strong>{filteredTeachers.length}</strong> of {teachers.length} faculty members
                 </span>
                 <button className="btn btn-outline-gold btn-sm" onClick={handleResetFilters}>
                   <RefreshCw size={14} /> Reset Search & Filters
@@ -123,7 +134,7 @@ export default function Faculty() {
           {filteredTeachers.length > 0 ? (
             <div className="faculty-grid">
               {filteredTeachers.map(teacher => (
-                <TeacherCard key={teacher.id} teacher={teacher} />
+                <TeacherCard key={teacher._id || teacher.id} teacher={teacher} />
               ))}
             </div>
           ) : (

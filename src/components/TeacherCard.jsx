@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { BookOpen, UserCheck, Briefcase, ChevronRight } from 'lucide-react';
 
 export default function TeacherCard({ teacher }) {
+  const teacherId = teacher._id || teacher.id;
+
   return (
     <div className="teacher-card">
       <div className="teacher-img-wrapper">
@@ -51,7 +53,7 @@ export default function TeacherCard({ teacher }) {
         </p>
 
         <div className="teacher-card-footer">
-          <Link to={`/faculty/${teacher.id}`} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
+          <Link to={`/faculty/${teacherId}`} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
             View Profile <ChevronRight size={14} />
           </Link>
         </div>
