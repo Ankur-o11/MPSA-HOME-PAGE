@@ -357,6 +357,17 @@
 }
 
 /* RESPONSIVE MEDIA QUERIES FOR PAGES */
+/* RESPONSIVE MEDIA QUERIES FOR PAGES */
+@media (max-width: 1024px) {
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .academics-exam-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 992px) {
   .founder-hero-inner {
     grid-template-columns: 1fr;
@@ -370,8 +381,10 @@
   .vision-mission-grid,
   .admissions-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  .values-grid {
+  .about-infra-grid,
+  .academics-levels-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .timeline-wrapper::before {
@@ -393,14 +406,64 @@
   }
 }
 
+@media (max-width: 768px) {
+  .page-banner {
+    padding: 3.5rem 0 2.25rem 0;
+  }
+  .page-banner-title {
+    font-size: 2.25rem;
+  }
+  .page-banner-subtitle {
+    font-size: 1rem;
+  }
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .vm-card {
+    padding: 2rem 1.5rem;
+  }
+  .founder-details,
+  .message-content-box {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-infra-grid,
+  .academics-levels-grid,
+  .academics-exam-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 576px) {
   .page-banner-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
+  }
+  .page-banner-subtitle {
+    font-size: 0.92rem;
   }
   .values-grid {
     grid-template-columns: 1fr;
   }
+  .value-card {
+    padding: 1.25rem 1rem;
+  }
+  .vm-card {
+    padding: 1.5rem 1.25rem;
+  }
   .form-box {
     padding: 1.5rem;
+  }
+  .founder-details,
+  .message-content-box {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .page-banner-title {
+    font-size: 1.65rem;
   }
 }

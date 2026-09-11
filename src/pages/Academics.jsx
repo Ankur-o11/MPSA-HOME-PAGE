@@ -30,7 +30,7 @@ export default function Academics() {
             subtitle="Providing a seamless educational continuum from primary foundations to senior secondary science streams."
           />
 
-          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="why-mpsa-grid academics-levels-grid">
             <div className="why-card" style={{ textAlign: 'left' }}>
               <span className="category-tag">Foundational</span>
               <h4 style={{ fontSize: '1.25rem', marginTop: '0.75rem', marginBottom: '0.5rem' }}>
@@ -118,7 +118,7 @@ export default function Academics() {
             subtitle="Continuous assessment designed to build confidence, knowledge retention, and exam readiness."
           />
 
-          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          <div className="why-mpsa-grid academics-exam-grid">
             <div className="why-card">
               <FileText size={28} color="#123B63" style={{ marginBottom: '0.75rem' }} />
               <h4>Weekly Periodic Tests</h4>

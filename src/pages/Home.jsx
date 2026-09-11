@@ -325,7 +325,7 @@ export default function Home() {
             subtitle="Structured learning pathways from Pre-Primary through Senior Secondary Science."
           />
 
-          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="why-mpsa-grid home-curriculum-grid">
             <div className="why-card" style={{ textAlign: 'left' }}>
               <span className="category-tag">Classes 1st – 5th</span>
               <h4 style={{ marginTop: '0.85rem' }}>Primary Education</h4>
@@ -481,7 +481,7 @@ export default function Home() {
             <p className="cta-desc">
               Give your child the advantage of quality education, modern science facilities, and strong moral values at Maharana Pratap Science Academy.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div className="cta-buttons-wrapper">
               <Link to="/admissions" className="btn btn-primary btn-lg">
                 Apply Online Now <ChevronRight size={18} />
               </Link>
@@ -554,7 +554,7 @@ export default function Home() {
             subtitle="Reach out to our administrative team for admissions, inquiries, and campus tours."
           />
 
-          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="why-mpsa-grid home-contact-grid">
             <div className="why-card">
               <div className="why-icon-box"><MapPin size={28} /></div>
               <h4>Campus Address</h4>

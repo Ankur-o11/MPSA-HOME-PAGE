@@ -390,35 +390,134 @@
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 1rem;
   }
-  .why-mpsa-grid {
+  .why-mpsa-grid,
+  .home-curriculum-grid,
+  .home-contact-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .hero-title {
     font-size: 2.75rem;
   }
+  .about-home-image-wrapper img {
+    height: 360px;
+  }
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    background-attachment: scroll;
+    padding: 3rem 0;
+    min-height: auto;
+  }
   .about-home-grid,
   .dual-leadership-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .quick-highlights-strip {
+    margin-top: 1.5rem;
+    padding: 1.25rem 1rem;
   }
   .highlights-grid {
     grid-template-columns: 1fr;
-  }
-  .why-mpsa-grid {
-    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .hero-title {
     font-size: 2.2rem;
   }
   .hero-subtitle {
     font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .about-home-image-wrapper img {
+    height: 300px;
   }
   .admissions-cta-banner {
     padding: 2.5rem 1.5rem;
   }
   .cta-title {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
+  }
+  .cta-desc {
+    font-size: 0.98rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .why-mpsa-grid,
+  .home-curriculum-grid,
+  .home-contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-home-features {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-buttons,
+  .cta-buttons-wrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-buttons .btn,
+  .cta-buttons-wrapper .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-welcome-badge {
+    font-size: 0.82rem;
+    padding: 0.35rem 0.85rem;
+  }
+  .hero-title {
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+  .about-home-image-wrapper img {
+    height: 230px;
+  }
+  .about-home-experience-badge {
+    padding: 0.85rem 1rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .experience-number {
+    font-size: 1.75rem;
+  }
+  .leadership-card-header {
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+  }
+  .leadership-img {
+    width: 70px;
+    height: 70px;
+  }
+  .leadership-info h3 {
+    font-size: 1.15rem;
+  }
+  .leadership-card-body {
+    padding: 1.25rem 1rem;
+  }
+  .why-card {
+    padding: 1.5rem 1.25rem;
+  }
+  .admissions-cta-banner {
+    padding: 2rem 1.25rem;
+    border-radius: var(--radius-lg);
+  }
+  .cta-title {
+    font-size: 1.55rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .hero-title {
+    font-size: 1.55rem;
   }
 }

@@ -162,7 +162,7 @@ export default function About() {
             subtitle="Designed to provide a safe, vibrant, and resource-rich learning ecosystem."
           />
 
-          <div className="why-mpsa-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="why-mpsa-grid about-infra-grid">
             <div className="why-card" style={{ textAlign: 'left' }}>
               <Building size={32} color="#123B63" style={{ marginBottom: '1rem' }} />
               <h4>Modern Classrooms & Labs</h4>
