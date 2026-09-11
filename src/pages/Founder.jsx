@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Quote, Award, Calendar, ChevronRight, Heart, Sparkles, AlertCircle } from 'lucide-react';
+import { Quote, Award, Calendar, ChevronRight, Heart, Sparkles, AlertCircle, ImageOff } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import Lightbox from '../components/Lightbox';
 import { apiService } from '../services/api';
@@ -30,10 +30,7 @@ export default function Founder() {
     { stage: 'Milestone 4', title: 'Growth & Development', description: 'Expansion into Senior Secondary Science streams, computer labs, and sports arenas.', year: '[Year Placeholder]' }
   ];
 
-  const galleryDataList = (founder?.gallery && founder.gallery.length > 0) ? founder.gallery : [
-    { id: 'fg1', title: 'Founder Portrait', image: fPhoto, caption: `${fName} - Founder of MPSA School.`, date: 'Founder Archive' },
-    { id: 'fg2', title: 'Foundation Ceremony', image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop', caption: 'Foundation Ceremony of MPSA Campus.', date: 'Milestone Year' }
-  ];
+  const galleryDataList = founder?.gallery || [];
 
   return (
     <div className="founder-page">
@@ -104,29 +101,35 @@ export default function Founder() {
       </section>
 
       {/* 3. Founder Photo Gallery */}
-      {galleryDataList.length > 0 && (
-        <section className="section-padding">
-          <div className="container">
-            <SectionTitle 
-              badge="Historical Moments"
-              title="Founder Photo Gallery"
-              subtitle="Capturing memorable moments from the school's journey and founder's interactions."
-            />
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle 
+            badge="Historical Moments"
+            title="Founder Photo Gallery"
+            subtitle="Capturing memorable moments from the school's journey and founder's interactions."
+          />
 
+          {galleryDataList.length > 0 ? (
             <div className="gallery-grid">
               {galleryDataList.map((item, idx) => (
                 <div key={item.id || item._id || idx} className="gallery-card" onClick={() => setSelectedGalleryItem(item)}>
-                  <img src={item.image} alt={item.title} className="gallery-card-img" />
+                  <img src={item.image} alt={item.title || 'Founder Photo'} className="gallery-card-img" />
                   <div className="gallery-card-overlay">
                     <h4 className="gallery-card-title">{item.title}</h4>
-                    <p className="gallery-card-date">{item.date || item.caption}</p>
+                    <p className="gallery-card-date">{item.caption || item.date}</p>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          ) : (
+            <div className="no-results-box" style={{ padding: '2.5rem', textAlign: 'center', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-lg)' }}>
+              <ImageOff size={44} color="#64748B" style={{ margin: '0 auto 1rem auto' }} />
+              <h4 style={{ color: 'var(--primary-navy)', fontSize: '1.15rem', marginBottom: '0.5rem' }}>No Founder Gallery Photos Uploaded Yet</h4>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>School management can add historical photos in the Founder Photo Gallery section of the Admin Panel.</p>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* 4. SCHOOL JOURNEY TIMELINE */}
       <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
