@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 
 export default function ManageAcademics() {
   const { authFetch } = useAuth();
@@ -18,7 +20,7 @@ export default function ManageAcademics() {
   useEffect(() => {
     async function loadAcademics() {
       try {
-        const res = await authFetch('http://localhost:5000/api/public/academics');
+        const res = await authFetch(`${API_BASE_URL}/public/academics`);
         if (res.ok) {
           const data = await res.json();
           if (data) setFormData(prev => ({ ...prev, ...data }));
@@ -33,7 +35,7 @@ export default function ManageAcademics() {
     setSaving(true);
 
     try {
-      await authFetch('http://localhost:5000/api/admin/academics', {
+      await authFetch(`${API_BASE_URL}/admin/academics`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, CheckCircle2, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { facilitiesData as defaultFacilities } from '../../data/facilities';
 
 export default function ManageFacilities() {
@@ -22,7 +24,7 @@ export default function ManageFacilities() {
 
   const fetchFacilities = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/facilities');
+      const res = await authFetch(`${API_BASE_URL}/admin/facilities`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) setFacilities(data);
@@ -58,13 +60,13 @@ export default function ManageFacilities() {
 
     try {
       if (editingFacility && editingFacility._id) {
-        await authFetch(`http://localhost:5000/api/admin/facilities/${editingFacility._id}`, {
+        await authFetch(`${API_BASE_URL}/admin/facilities/${editingFacility._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
       } else {
-        await authFetch('http://localhost:5000/api/admin/facilities', {
+        await authFetch(`${API_BASE_URL}/admin/facilities`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -86,7 +88,7 @@ export default function ManageFacilities() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this facility card?')) return;
     try {
-      await authFetch(`http://localhost:5000/api/admin/facilities/${id}`, { method: 'DELETE' });
+      await authFetch(`${API_BASE_URL}/admin/facilities/${id}`, { method: 'DELETE' });
     } catch (err) {}
     setFacilities(prev => prev.filter(f => f.id !== id && f._id !== id));
     setMessage('Facility deleted!');

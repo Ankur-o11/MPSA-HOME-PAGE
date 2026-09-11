@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, CheckCircle2, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { achievementsData as defaultAchievements } from '../../data/achievements';
 
 export default function ManageAchievements() {
@@ -22,7 +24,7 @@ export default function ManageAchievements() {
 
   const fetchAchievements = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/achievements');
+      const res = await authFetch(`${API_BASE_URL}/admin/achievements`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) setAchievements(data);
@@ -58,13 +60,13 @@ export default function ManageAchievements() {
 
     try {
       if (editingItem && editingItem._id) {
-        await authFetch(`http://localhost:5000/api/admin/achievements/${editingItem._id}`, {
+        await authFetch(`${API_BASE_URL}/admin/achievements/${editingItem._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
       } else {
-        await authFetch('http://localhost:5000/api/admin/achievements', {
+        await authFetch(`${API_BASE_URL}/admin/achievements`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -86,7 +88,7 @@ export default function ManageAchievements() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this achievement?')) return;
     try {
-      await authFetch(`http://localhost:5000/api/admin/achievements/${id}`, { method: 'DELETE' });
+      await authFetch(`${API_BASE_URL}/admin/achievements/${id}`, { method: 'DELETE' });
     } catch (err) {}
     setAchievements(prev => prev.filter(a => a.id !== id && a._id !== id));
     setMessage('Achievement deleted!');

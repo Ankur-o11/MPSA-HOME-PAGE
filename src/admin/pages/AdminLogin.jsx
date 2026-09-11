@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { GraduationCap, Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -19,7 +21,7 @@ export default function AdminLogin() {
   useEffect(() => {
     async function fetchLogo() {
       try {
-        const res = await fetch('http://localhost:5000/api/public/contact-settings');
+        const res = await fetch(`${API_BASE_URL}/public/contact-settings`);
         if (res.ok) {
           const data = await res.json();
           if (data?.logoUrl) setLogoUrl(data.logoUrl);

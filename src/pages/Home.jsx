@@ -37,6 +37,7 @@ import { achievementsData as defaultAchievements } from '../data/achievements';
 import { galleryData as defaultGallery } from '../data/gallery';
 
 import { apiService } from '../services/api';
+import { getUploadUrl } from '../config/api';
 
 export default function Home() {
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
@@ -84,12 +85,12 @@ export default function Home() {
   const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
   const pDesignation = principal?.designation || 'Principal, MPSA School';
   const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
-  const pPhoto = principal?.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop';
+  const pPhoto = getUploadUrl(principal?.photo) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop';
   const pQuote = principal?.messageQuote || 'Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential in a supportive environment.';
 
   const fName = founder?.name || 'Shri [Founder Name Placeholder]';
   const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
-  const fPhoto = founder?.photo || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop';
+  const fPhoto = getUploadUrl(founder?.photo) || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop';
   const fQuote = founder?.visionQuote || founder?.intro || 'A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance.';
 
   return (

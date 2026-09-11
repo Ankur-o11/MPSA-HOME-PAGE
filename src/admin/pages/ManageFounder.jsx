@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, Upload, Plus, Trash2, Image, Edit } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 
 export default function ManageFounder() {
   const { authFetch } = useAuth();
@@ -25,7 +27,7 @@ export default function ManageFounder() {
   useEffect(() => {
     async function loadFounder() {
       try {
-        const res = await authFetch('http://localhost:5000/api/public/founder');
+        const res = await authFetch(`${API_BASE_URL}/public/founder`);
         if (res.ok) {
           const data = await res.json();
           if (data) {
@@ -48,13 +50,13 @@ export default function ManageFounder() {
     const data = new FormData();
     data.append('image', file);
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/upload', {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
         method: 'POST',
         body: data
       });
       const result = await res.json();
       if (result.success) {
-        setFormData(prev => ({ ...prev, photo: `http://localhost:5000${result.url}` }));
+        setFormData(prev => ({ ...prev, photo: getUploadUrl(result.url) }));
       }
     } catch (err) {
       alert('Photo upload failed');
@@ -120,13 +122,13 @@ export default function ManageFounder() {
     const data = new FormData();
     data.append('image', file);
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/upload', {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
         method: 'POST',
         body: data
       });
       const result = await res.json();
       if (result.success) {
-        const imageUrl = `http://localhost:5000${result.url}`;
+        const imageUrl = getUploadUrl(result.url);
         handleGalleryChange(idx, 'image', imageUrl);
       }
     } catch (err) {
@@ -141,7 +143,7 @@ export default function ManageFounder() {
     setSaving(true);
 
     try {
-      await authFetch('http://localhost:5000/api/admin/founder', {
+      await authFetch(`${API_BASE_URL}/admin/founder`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

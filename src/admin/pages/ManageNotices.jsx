@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, CheckCircle2, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { noticesData as defaultNotices } from '../../data/notices';
 
 export default function ManageNotices() {
@@ -23,7 +25,7 @@ export default function ManageNotices() {
 
   const fetchNotices = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/notices');
+      const res = await authFetch(`${API_BASE_URL}/admin/notices`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) setNotices(data);
@@ -60,13 +62,13 @@ export default function ManageNotices() {
 
     try {
       if (editingNotice && editingNotice._id) {
-        await authFetch(`http://localhost:5000/api/admin/notices/${editingNotice._id}`, {
+        await authFetch(`${API_BASE_URL}/admin/notices/${editingNotice._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
       } else {
-        await authFetch('http://localhost:5000/api/admin/notices', {
+        await authFetch(`${API_BASE_URL}/admin/notices`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -89,7 +91,7 @@ export default function ManageNotices() {
     if (!window.confirm('Delete this notice?')) return;
 
     try {
-      await authFetch(`http://localhost:5000/api/admin/notices/${id}`, { method: 'DELETE' });
+      await authFetch(`${API_BASE_URL}/admin/notices/${id}`, { method: 'DELETE' });
     } catch (err) {}
 
     setNotices(prev => prev.filter(n => n.id !== id && n._id !== id));

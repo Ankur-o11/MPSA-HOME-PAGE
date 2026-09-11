@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, Upload } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 
 export default function ManagePrincipal() {
   const { authFetch } = useAuth();
@@ -21,7 +23,7 @@ export default function ManagePrincipal() {
   useEffect(() => {
     async function loadPrincipal() {
       try {
-        const res = await authFetch('http://localhost:5000/api/public/principal');
+        const res = await authFetch(`${API_BASE_URL}/public/principal`);
         if (res.ok) {
           const data = await res.json();
           if (data) setFormData(prev => ({ ...prev, ...data }));
@@ -37,13 +39,13 @@ export default function ManagePrincipal() {
     const data = new FormData();
     data.append('image', file);
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/upload', {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
         method: 'POST',
         body: data
       });
       const result = await res.json();
       if (result.success) {
-        setFormData(prev => ({ ...prev, photo: `http://localhost:5000${result.url}` }));
+        setFormData(prev => ({ ...prev, photo: getUploadUrl(result.url) }));
       }
     } catch (err) {
       alert('Photo upload failed');
@@ -55,7 +57,7 @@ export default function ManagePrincipal() {
     setSaving(true);
 
     try {
-      await authFetch('http://localhost:5000/api/admin/principal', {
+      await authFetch(`${API_BASE_URL}/admin/principal`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -30,3 +30,7 @@ uploads/
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+.env*
+scratch/

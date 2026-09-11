@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, Upload, CheckCircle2, X, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { galleryData as defaultGallery, galleryCategories } from '../../data/gallery';
 
 export default function ManageGallery() {
@@ -24,7 +26,7 @@ export default function ManageGallery() {
 
   const fetchGallery = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/gallery');
+      const res = await authFetch(`${API_BASE_URL}/admin/gallery`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) setGallery(data);
@@ -64,13 +66,13 @@ export default function ManageGallery() {
     setUploading(true);
 
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/upload', {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
         method: 'POST',
         body: data
       });
       const result = await res.json();
       if (result.success) {
-        setFormData(prev => ({ ...prev, image: `http://localhost:5000${result.url}` }));
+        setFormData(prev => ({ ...prev, image: getUploadUrl(result.url) }));
       }
     } catch (err) {
       alert('Upload failed');
@@ -84,13 +86,13 @@ export default function ManageGallery() {
 
     try {
       if (editingItem && editingItem._id) {
-        await authFetch(`http://localhost:5000/api/admin/gallery/${editingItem._id}`, {
+        await authFetch(`${API_BASE_URL}/admin/gallery/${editingItem._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
       } else {
-        await authFetch('http://localhost:5000/api/admin/gallery', {
+        await authFetch(`${API_BASE_URL}/admin/gallery`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -113,7 +115,7 @@ export default function ManageGallery() {
     if (!window.confirm('Delete this gallery photo?')) return;
 
     try {
-      await authFetch(`http://localhost:5000/api/admin/gallery/${id}`, { method: 'DELETE' });
+      await authFetch(`${API_BASE_URL}/admin/gallery/${id}`, { method: 'DELETE' });
     } catch (err) {}
 
     setGallery(prev => prev.filter(item => item.id !== id && item._id !== id));

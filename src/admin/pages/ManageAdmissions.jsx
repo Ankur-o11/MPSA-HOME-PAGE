@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, Plus, Trash2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 
 export default function ManageAdmissions() {
   const { authFetch } = useAuth();
@@ -20,7 +22,7 @@ export default function ManageAdmissions() {
   useEffect(() => {
     async function loadAdmissions() {
       try {
-        const res = await authFetch('http://localhost:5000/api/public/admissions');
+        const res = await authFetch(`${API_BASE_URL}/public/admissions`);
         if (res.ok) {
           const data = await res.json();
           if (data) setFormData(prev => ({ ...prev, ...data }));
@@ -57,7 +59,7 @@ export default function ManageAdmissions() {
     setSaving(true);
 
     try {
-      await authFetch('http://localhost:5000/api/admin/admissions', {
+      await authFetch(`${API_BASE_URL}/admin/admissions`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, CheckCircle2, Upload, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { upcomingEvents as defaultUpcoming, previousEvents as defaultPrevious } from '../../data/events';
 
 export default function ManageEvents() {
@@ -28,7 +30,7 @@ export default function ManageEvents() {
 
   const fetchEvents = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/events');
+      const res = await authFetch(`${API_BASE_URL}/admin/events`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) setEvents(data);
@@ -66,13 +68,13 @@ export default function ManageEvents() {
 
     try {
       if (editingEvent && editingEvent._id) {
-        await authFetch(`http://localhost:5000/api/admin/events/${editingEvent._id}`, {
+        await authFetch(`${API_BASE_URL}/admin/events/${editingEvent._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
       } else {
-        await authFetch('http://localhost:5000/api/admin/events', {
+        await authFetch(`${API_BASE_URL}/admin/events`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -95,7 +97,7 @@ export default function ManageEvents() {
     if (!window.confirm('Delete this event?')) return;
 
     try {
-      await authFetch(`http://localhost:5000/api/admin/events/${id}`, { method: 'DELETE' });
+      await authFetch(`${API_BASE_URL}/admin/events/${id}`, { method: 'DELETE' });
     } catch (err) {}
 
     setEvents(prev => prev.filter(e => e.id !== id && e._id !== id));

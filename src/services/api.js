@@ -5,16 +5,21 @@ import { achievementsData } from '../data/achievements';
 import { facilitiesData } from '../data/facilities';
 import { galleryData } from '../data/gallery';
 import { SCHOOL_CONFIG } from '../data/config';
-
-const API_BASE_URL = 'http://localhost:5000/api';
+import { API_BASE_URL } from '../config/api';
 
 // Safe Fetch Helper with Fallback
 async function fetchWithFallback(url, fallbackData) {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s timeout fallback
+    const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout fallback
 
-    const res = await fetch(url, { signal: controller.signal });
+    const res = await fetch(url, { 
+      signal: controller.signal,
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
     clearTimeout(timeoutId);
 
     if (res.ok) {

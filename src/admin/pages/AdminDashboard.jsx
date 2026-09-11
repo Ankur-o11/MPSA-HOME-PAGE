@@ -16,6 +16,8 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 
 export default function AdminDashboard() {
   const { authFetch, adminUser } = useAuth();
@@ -30,7 +32,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadStats() {
       try {
-        const res = await authFetch('http://localhost:5000/api/admin/stats');
+        const res = await authFetch(`${API_BASE_URL}/admin/stats`);
         if (res.ok) {
           const data = await res.json();
           if (data.stats) setStats(data.stats);

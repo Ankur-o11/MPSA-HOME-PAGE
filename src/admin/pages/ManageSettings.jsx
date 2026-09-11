@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, ShieldCheck, Upload, Trash2, Image as ImageIcon, GraduationCap } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { SCHOOL_CONFIG } from '../../data/config';
 
 export default function ManageSettings() {
@@ -21,7 +23,7 @@ export default function ManageSettings() {
   useEffect(() => {
     async function loadSettings() {
       try {
-        const res = await authFetch('http://localhost:5000/api/public/contact-settings');
+        const res = await authFetch(`${API_BASE_URL}/public/contact-settings`);
         if (res.ok) {
           const data = await res.json();
           if (data) {
@@ -51,13 +53,13 @@ export default function ManageSettings() {
     uploadData.append('image', file);
 
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/upload', {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
         method: 'POST',
         body: uploadData
       });
       const result = await res.json();
       if (result.success) {
-        const logoFullUrl = `http://localhost:5000${result.url}`;
+        const logoFullUrl = getUploadUrl(result.url);
         setFormData(prev => ({ ...prev, logoUrl: logoFullUrl }));
         setMessage('Logo uploaded successfully! Click "Save Settings" to persist changes.');
       } else {
@@ -75,7 +77,7 @@ export default function ManageSettings() {
     setSaving(true);
 
     try {
-      await authFetch('http://localhost:5000/api/admin/contact-settings', {
+      await authFetch(`${API_BASE_URL}/admin/contact-settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

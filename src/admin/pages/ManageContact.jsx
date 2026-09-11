@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, MapPin } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { SCHOOL_CONFIG } from '../../data/config';
 
 export default function ManageContact() {
@@ -26,7 +28,7 @@ export default function ManageContact() {
   useEffect(() => {
     async function loadContact() {
       try {
-        const res = await authFetch('http://localhost:5000/api/public/contact-settings');
+        const res = await authFetch(`${API_BASE_URL}/public/contact-settings`);
         if (res.ok) {
           const data = await res.json();
           if (data) setFormData(prev => ({ ...prev, ...data }));
@@ -41,7 +43,7 @@ export default function ManageContact() {
     setSaving(true);
 
     try {
-      await authFetch('http://localhost:5000/api/admin/contact-settings', {
+      await authFetch(`${API_BASE_URL}/admin/contact-settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

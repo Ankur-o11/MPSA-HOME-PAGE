@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Search, Upload, CheckCircle2, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, getUploadUrl } from '../../config/api';
+
 import { teachersData as defaultTeachers } from '../../data/teachers';
 
 export default function ManageTeachers() {
@@ -33,7 +35,7 @@ export default function ManageTeachers() {
   // Fetch teachers from backend
   const fetchTeachers = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/teachers');
+      const res = await authFetch(`${API_BASE_URL}/admin/teachers`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) setTeachers(data);
@@ -86,13 +88,13 @@ export default function ManageTeachers() {
     setUploading(true);
 
     try {
-      const res = await authFetch('http://localhost:5000/api/admin/upload', {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
         method: 'POST',
         body: data
       });
       const result = await res.json();
       if (result.success) {
-        setFormData(prev => ({ ...prev, photo: `http://localhost:5000${result.url}` }));
+        setFormData(prev => ({ ...prev, photo: getUploadUrl(result.url) }));
         setMessage('Photo uploaded successfully!');
       }
     } catch (err) {
@@ -113,13 +115,13 @@ export default function ManageTeachers() {
 
     try {
       if (editingTeacher && editingTeacher._id) {
-        await authFetch(`http://localhost:5000/api/admin/teachers/${editingTeacher._id}`, {
+        await authFetch(`${API_BASE_URL}/admin/teachers/${editingTeacher._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       } else {
-        await authFetch('http://localhost:5000/api/admin/teachers', {
+        await authFetch(`${API_BASE_URL}/admin/teachers`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -144,7 +146,7 @@ export default function ManageTeachers() {
     if (!window.confirm(`Are you sure you want to delete teacher ${name}?`)) return;
 
     try {
-      await authFetch(`http://localhost:5000/api/admin/teachers/${id}`, { method: 'DELETE' });
+      await authFetch(`${API_BASE_URL}/admin/teachers/${id}`, { method: 'DELETE' });
     } catch (err) {
       // Local fallback
     }
