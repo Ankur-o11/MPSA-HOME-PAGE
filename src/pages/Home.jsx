@@ -501,10 +501,10 @@ export default function Home() {
                   <MapPin size={36} />
                 </div>
                 <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-navy)', marginBottom: '0.5rem' }}>
-                  {SCHOOL_CONFIG.fullName} Campus Location
+                  {schoolConfig.schoolFullName || schoolConfig.fullName || SCHOOL_CONFIG.fullName} Campus Location
                 </h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 1.5rem auto' }}>
-                  {SCHOOL_CONFIG.address}
+                  {schoolConfig.address || SCHOOL_CONFIG.address}
                 </p>
 
                 <div className="placeholder-notice" style={{ maxWidth: '650px', margin: '0 auto 1.5rem auto' }}>
@@ -512,7 +512,7 @@ export default function Home() {
                 </div>
 
                 <a 
-                  href={SCHOOL_CONFIG.GOOGLE_MAPS_DIRECTION_URL} 
+                  href={schoolConfig.googleMapsDirectionUrl || SCHOOL_CONFIG.GOOGLE_MAPS_DIRECTION_URL} 
                   target="_blank" 
                   rel="noreferrer"
                   className="btn btn-secondary"
@@ -538,19 +538,24 @@ export default function Home() {
             <div className="why-card">
               <div className="why-icon-box"><MapPin size={28} /></div>
               <h4>Campus Address</h4>
-              <p>{SCHOOL_CONFIG.address}</p>
+              <p>{schoolConfig.address || SCHOOL_CONFIG.address}</p>
             </div>
 
             <div className="why-card">
               <div className="why-icon-box"><Phone size={28} /></div>
               <h4>Phone Numbers</h4>
-              <p>{SCHOOL_CONFIG.phonePrimary}<br />{SCHOOL_CONFIG.phoneSecondary}</p>
+              <p>
+                {schoolConfig.phonePrimary || SCHOOL_CONFIG.phonePrimary}
+                {(schoolConfig.phoneSecondary || SCHOOL_CONFIG.phoneSecondary) && (
+                  <><br />{schoolConfig.phoneSecondary || SCHOOL_CONFIG.phoneSecondary}</>
+                )}
+              </p>
             </div>
 
             <div className="why-card">
               <div className="why-icon-box"><Clock size={28} /></div>
               <h4>School Timings</h4>
-              <p>{SCHOOL_CONFIG.timingOffice}</p>
+              <p>{schoolConfig.timingOffice || SCHOOL_CONFIG.timingOffice}</p>
             </div>
           </div>
         </div>
