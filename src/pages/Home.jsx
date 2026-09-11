@@ -80,6 +80,7 @@ export default function Home() {
   }, []);
 
   const schoolConfig = siteSettings || SCHOOL_CONFIG;
+  const activePhonePrimary = schoolConfig?.phonePrimary || SCHOOL_CONFIG.phonePrimary;
   const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
   const pDesignation = principal?.designation || 'Principal, MPSA School';
   const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
@@ -484,8 +485,8 @@ export default function Home() {
               <Link to="/admissions" className="btn btn-primary btn-lg">
                 Apply Online Now <ChevronRight size={18} />
               </Link>
-              <a href={`tel:${SCHOOL_CONFIG.phonePrimary}`} className="btn btn-outline-gold btn-lg">
-                <Phone size={18} /> Call Admission Desk: {SCHOOL_CONFIG.phonePrimary}
+              <a href={`tel:${activePhonePrimary}`} className="btn btn-outline-gold btn-lg">
+                <Phone size={18} /> Call Admission Desk: {activePhonePrimary}
               </a>
             </div>
           </div>
