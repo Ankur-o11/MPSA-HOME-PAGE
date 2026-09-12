@@ -28,8 +28,12 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static directory for uploads
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+// Static directory for uploads with fallback 404 for missing image files
+app.use('/uploads', (req, res, next) => {
+  express.static(path.join(process.cwd(), 'uploads'))(req, res, () => {
+    res.status(404).send('Upload image not found');
+  });
+});
 
 // Cache Control middleware for public endpoints to prevent browser/CDN stale data
 app.use('/api/public', (req, res, next) => {
