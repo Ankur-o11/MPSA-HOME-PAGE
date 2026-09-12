@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Save, CheckCircle2, ShieldCheck, Upload, Trash2, Image as ImageIcon, GraduationCap } from 'lucide-react';
+import { Save, CheckCircle2, ShieldCheck, Upload, Trash2, Image as ImageIcon, GraduationCap, Layout } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
-
 import { SCHOOL_CONFIG } from '../../data/config';
 
 export default function ManageSettings() {
@@ -12,12 +11,14 @@ export default function ManageSettings() {
     schoolShortName: SCHOOL_CONFIG.shortName,
     tagline: SCHOOL_CONFIG.tagline,
     logoUrl: '',
+    heroBannerImage: '',
     seoTitle: 'Maharana Pratap Science Academy | MPSA School',
     seoDescription: 'Official public website of Maharana Pratap Science Academy (MPSA School).'
   });
 
   const [saving, setSaving] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingHero, setUploadingHero] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function ManageSettings() {
               schoolShortName: data.schoolShortName || SCHOOL_CONFIG.shortName,
               tagline: data.tagline || SCHOOL_CONFIG.tagline,
               logoUrl: data.logoUrl || '',
+              heroBannerImage: data.heroBannerImage || '',
               seoTitle: data.seoTitle || 'Maharana Pratap Science Academy | MPSA School',
               seoDescription: data.seoDescription || 'Official public website of Maharana Pratap Science Academy (MPSA School).'
             }));
@@ -72,6 +74,33 @@ export default function ManageSettings() {
     }
   };
 
+  const handleHeroBannerUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingHero(true);
+    const uploadData = new FormData();
+    uploadData.append('image', file);
+
+    try {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
+        method: 'POST',
+        body: uploadData
+      });
+      const result = await res.json();
+      if (result.success) {
+        const heroFullUrl = getUploadUrl(result.url);
+        setFormData(prev => ({ ...prev, heroBannerImage: heroFullUrl }));
+        setMessage('Hero Banner image uploaded successfully! Click "Save Settings" to persist changes.');
+      } else {
+        alert(result.message || 'Hero Banner image upload failed');
+      }
+    } catch (err) {
+      alert('Hero Banner image upload failed. Please check network connection.');
+    } finally {
+      setUploadingHero(false);
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -82,7 +111,7 @@ export default function ManageSettings() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      setMessage('Website settings & logo saved successfully!');
+      setMessage('Website settings, logo & Hero Banner image saved successfully!');
     } catch (err) {
       setMessage('Settings updated locally.');
     } finally {
@@ -95,8 +124,8 @@ export default function ManageSettings() {
     <div>
       <div className="admin-card-header">
         <div>
-          <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)' }}>Website Settings & Logo Management</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Configure official school logo, brand names, tagline, and Search Engine Optimization (SEO) settings.</p>
+          <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)' }}>Website Settings & Brand Management</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Configure official school logo, hero banner image, brand names, tagline, and SEO settings.</p>
         </div>
       </div>
 
@@ -108,21 +137,20 @@ export default function ManageSettings() {
 
       <div className="admin-card-box">
         <form onSubmit={handleSave}>
-          {/* School Logo Section */}
+          {/* 1. School Logo Section */}
           <div style={{ marginBottom: '2rem', padding: '1.5rem', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
             <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <ImageIcon size={20} color="#D4A72C" /> School Logo Management
             </h3>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-              Upload, replace, or remove the official school logo displayed across the public header, navbar, home page, and footer. Supported formats: JPG, JPEG, PNG, WEBP, SVG.
+              Upload, replace, or remove the official school logo displayed across the public header, navbar, home page, and footer.
             </p>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
-              {/* Logo Preview Box */}
               <div style={{ textAlign: 'center' }}>
                 <div style={{
-                  width: '110px',
-                  height: '110px',
+                  width: '100px',
+                  height: '100px',
                   borderRadius: '50%',
                   backgroundColor: '#fff',
                   border: '3px solid var(--accent-gold)',
@@ -136,19 +164,18 @@ export default function ManageSettings() {
                   {formData.logoUrl ? (
                     <img src={formData.logoUrl} alt="School Logo Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   ) : (
-                    <GraduationCap size={52} color="var(--primary-navy)" />
+                    <GraduationCap size={48} color="var(--primary-navy)" />
                   )}
                 </div>
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-                  {formData.logoUrl ? 'Current Active Logo' : 'Default Icon Logo'}
+                  {formData.logoUrl ? 'Active Logo' : 'Default Icon'}
                 </span>
               </div>
 
-              {/* Upload & Action Controls */}
               <div style={{ flex: 1, minWidth: '240px' }}>
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
                   <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Upload size={16} /> {uploadingLogo ? 'Uploading Logo...' : formData.logoUrl ? 'Change / Upload Logo' : 'Upload School Logo'}
+                    <Upload size={16} /> {uploadingLogo ? 'Uploading Logo...' : formData.logoUrl ? 'Replace / Change Logo' : 'Upload School Logo'}
                     <input 
                       type="file" 
                       accept="image/jpeg,image/png,image/webp,image/svg+xml,image/jpg" 
@@ -165,7 +192,7 @@ export default function ManageSettings() {
                       style={{ color: '#DC2626', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
                       onClick={() => setFormData(prev => ({ ...prev, logoUrl: '' }))}
                     >
-                      <Trash2 size={16} /> Remove Logo
+                      <Trash2 size={16} /> Delete / Remove Logo
                     </button>
                   )}
                 </div>
@@ -178,6 +205,88 @@ export default function ManageSettings() {
                     placeholder="http://localhost:5000/uploads/logo.png" 
                     value={formData.logoUrl || ''} 
                     onChange={e => setFormData({ ...formData, logoUrl: e.target.value })} 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Hero Banner Image Section */}
+          <div style={{ marginBottom: '2rem', padding: '1.5rem', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Layout size={20} color="#D4A72C" /> Home Page Hero Banner Image Management
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
+              Upload, replace, or delete the dynamic Hero Banner image displayed at the top of the Home Page under the header. Optimized with Sharp and stored securely in MongoDB.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
+              {/* Hero Banner Preview Box */}
+              <div style={{ textAlign: 'center', width: '220px' }}>
+                <div style={{
+                  width: '100%',
+                  height: '120px',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: '#123B63',
+                  backgroundImage: formData.heroBannerImage ? `linear-gradient(135deg, rgba(18, 59, 99, 0.4), rgba(10, 34, 59, 0.6)), url(${formData.heroBannerImage})` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  border: '2px solid var(--accent-gold)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  margin: '0 auto 0.5rem auto',
+                  color: '#fff'
+                }}>
+                  {!formData.heroBannerImage && (
+                    <>
+                      <Layout size={32} color="#D4A72C" />
+                      <span style={{ fontSize: '0.75rem', marginTop: '0.4rem', opacity: 0.8 }}>Default Neutral Gradient</span>
+                    </>
+                  )}
+                </div>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+                  {formData.heroBannerImage ? 'Active Hero Banner' : 'Neutral Gradient Active'}
+                </span>
+              </div>
+
+              {/* Hero Upload & Action Controls */}
+              <div style={{ flex: 1, minWidth: '240px' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                  <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Upload size={16} /> {uploadingHero ? 'Uploading Banner...' : formData.heroBannerImage ? 'Replace Hero Banner Image' : 'Upload Hero Banner Image'}
+                    <input 
+                      type="file" 
+                      accept="image/jpeg,image/png,image/webp,image/jpg" 
+                      style={{ display: 'none' }} 
+                      onChange={handleHeroBannerUpload}
+                      disabled={uploadingHero}
+                    />
+                  </label>
+
+                  {formData.heroBannerImage && (
+                    <button 
+                      type="button" 
+                      className="btn" 
+                      style={{ color: '#DC2626', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+                      onClick={() => setFormData(prev => ({ ...prev, heroBannerImage: '' }))}
+                    >
+                      <Trash2 size={16} /> Delete / Remove Hero Banner
+                    </button>
+                  )}
+                </div>
+
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.82rem' }}>Hero Banner Image URL (Auto-filled on upload)</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="http://localhost:5000/uploads/hero-banner.jpg" 
+                    value={formData.heroBannerImage || ''} 
+                    onChange={e => setFormData({ ...formData, heroBannerImage: e.target.value })} 
                   />
                 </div>
               </div>
@@ -223,8 +332,8 @@ export default function ManageSettings() {
           </div>
 
           <div style={{ marginTop: '2rem' }}>
-            <button type="submit" className="btn btn-primary btn-lg" disabled={saving || uploadingLogo}>
-              <Save size={18} /> {saving ? 'Saving...' : 'Save Settings'}
+            <button type="submit" className="btn btn-primary btn-lg" disabled={saving || uploadingLogo || uploadingHero}>
+              <Save size={18} /> {saving ? 'Saving Settings...' : 'Save Settings'}
             </button>
           </div>
         </form>

@@ -19,6 +19,7 @@ const contactSettingsSchema = new mongoose.Schema(
     instagramUrl: { type: String, default: 'https://instagram.com/mpsaschool' },
     youtubeUrl: { type: String, default: 'https://youtube.com/mpsaschool' },
     logoUrl: { type: String, default: '' },
+    heroBannerImage: { type: String, default: '' },
     seoTitle: { type: String, default: 'Maharana Pratap Science Academy | MPSA School' },
     seoDescription: { type: String, default: 'Official public website of Maharana Pratap Science Academy (MPSA School).' }
   },

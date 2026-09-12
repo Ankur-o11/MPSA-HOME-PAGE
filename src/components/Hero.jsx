@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Compass, GraduationCap } from 'lucide-react';
 import { SCHOOL_CONFIG } from '../data/config';
 import { apiService } from '../services/api';
+import { getUploadUrl } from '../config/api';
 
 export default function Hero() {
   const [contactSettings, setContactSettings] = useState(SCHOOL_CONFIG);
@@ -16,9 +17,17 @@ export default function Hero() {
   }, []);
 
   const schoolFullName = contactSettings.schoolFullName || SCHOOL_CONFIG.fullName;
+  const heroBannerUrl = contactSettings?.heroBannerImage ? getUploadUrl(contactSettings.heroBannerImage) : '';
+
+  const heroStyle = heroBannerUrl ? {
+    backgroundImage: `linear-gradient(135deg, rgba(18, 59, 99, 0.85), rgba(10, 34, 59, 0.90)), url(${heroBannerUrl})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  } : undefined;
 
   return (
-    <section className="hero-section">
+    <section className="hero-section" style={heroStyle}>
       <div className="container">
         <div className="hero-content">
           <div className="hero-welcome-badge">
