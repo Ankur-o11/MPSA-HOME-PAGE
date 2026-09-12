@@ -53,6 +53,7 @@ export default function PrincipalMessage() {
                 src={pPhoto} 
                 alt={pName} 
                 className="principal-avatar-lg"
+                onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop'; }}
               />
               <h3 style={{ fontSize: '1.35rem', color: 'var(--primary-navy)', marginBottom: '0.25rem' }}>
                 {pName}

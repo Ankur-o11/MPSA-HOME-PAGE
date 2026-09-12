@@ -205,6 +205,7 @@ export default function Home() {
                   src={pPhoto} 
                   alt={pName} 
                   className="leadership-img"
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop'; }}
                 />
                 <div className="leadership-info">
                   <h3>{pName}</h3>
@@ -235,6 +236,7 @@ export default function Home() {
                   src={fPhoto} 
                   alt={fName} 
                   className="leadership-img"
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop'; }}
                 />
                 <div className="leadership-info">
                   <h3>{fName}</h3>

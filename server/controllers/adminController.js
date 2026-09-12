@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import Teacher from '../models/Teacher.js';
 import Principal from '../models/Principal.js';
 import Founder from '../models/Founder.js';
@@ -350,7 +352,19 @@ export const handleImageUpload = (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded or file format invalid' });
   }
-  const fileUrl = `/uploads/${req.file.filename}`;
+
+  let fileUrl = `/uploads/${req.file.filename}`;
+  try {
+    const filePath = path.join(process.cwd(), 'uploads', req.file.filename);
+    if (fs.existsSync(filePath)) {
+      const fileBuffer = fs.readFileSync(filePath);
+      const mime = req.file.mimetype || 'image/jpeg';
+      fileUrl = `data:${mime};base64,${fileBuffer.toString('base64')}`;
+    }
+  } catch (e) {
+    console.error('Base64 image conversion error:', e);
+  }
+
   res.json({
     success: true,
     message: 'Image uploaded successfully',

@@ -60,6 +60,7 @@ export default function Founder() {
                   src={fPhoto} 
                   alt={fName} 
                   className="founder-photo"
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop'; }}
                 />
               </div>
               <div className="founder-details">
