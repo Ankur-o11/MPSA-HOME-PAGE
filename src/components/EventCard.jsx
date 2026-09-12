@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 
-export default function EventCard({ event, isPrevious = false }) {
+function EventCard({ event, isPrevious = false }) {
   return (
     <div 
       className="event-card"
@@ -21,6 +21,7 @@ export default function EventCard({ event, isPrevious = false }) {
           alt={event.title} 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           loading="lazy"
+          decoding="async"
         />
         <div 
           style={{ 
@@ -72,3 +73,5 @@ export default function EventCard({ event, isPrevious = false }) {
     </div>
   );
 }
+
+export default memo(EventCard);

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import path from 'path';
 import dotenv from 'dotenv';
 
@@ -15,6 +16,9 @@ const app = express();
 
 // Connect to MongoDB Atlas (mpsa_home_page)
 connectDB();
+
+// HTTP Response Compression (reduces Base64 payload transfer size by up to 80%)
+app.use(compression());
 
 // Security & Body Parser Middlewares
 app.use(helmet({
@@ -35,11 +39,13 @@ app.use('/uploads', (req, res, next) => {
   });
 });
 
-// Cache Control middleware for public endpoints to prevent browser/CDN stale data
+// Optimized Cache Control middleware for public endpoints with stale-while-revalidate
 app.use('/api/public', (req, res, next) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
+  if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
+  } else {
+    res.setHeader('Cache-Control', 'no-store');
+  }
   next();
 });
 

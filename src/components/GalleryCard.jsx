@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ZoomIn } from 'lucide-react';
 
-export default function GalleryCard({ item, onClick }) {
+function GalleryCard({ item, onClick }) {
   return (
     <div className="gallery-card" onClick={() => onClick && onClick(item)}>
       <img 
@@ -9,6 +9,7 @@ export default function GalleryCard({ item, onClick }) {
         alt={item.title} 
         className="gallery-card-img"
         loading="lazy"
+        decoding="async"
       />
       <div className="gallery-zoom-icon">
         <ZoomIn size={18} />
@@ -20,3 +21,5 @@ export default function GalleryCard({ item, onClick }) {
     </div>
   );
 }
+
+export default memo(GalleryCard);

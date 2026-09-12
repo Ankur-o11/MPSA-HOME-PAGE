@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import path from 'path';
 import dotenv from 'dotenv';
 
@@ -17,6 +18,9 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 connectDB();
 
+// HTTP Response Compression
+app.use(compression());
+
 // Security & Body Parser Middlewares
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
@@ -31,6 +35,14 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Static directory for image uploads
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+// Public API Cache Control Headers
+app.use('/api/public', (req, res, next) => {
+  if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
+  }
+  next();
+});
 
 // Health Check Endpoint
 app.get('/api/health', (req, res) => {

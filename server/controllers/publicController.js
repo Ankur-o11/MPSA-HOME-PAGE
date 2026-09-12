@@ -12,7 +12,7 @@ import ContactSettings from '../models/ContactSettings.js';
 
 export const getPublicTeachers = async (req, res) => {
   try {
-    const teachers = await Teacher.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 });
+    const teachers = await Teacher.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 }).lean();
     res.json(teachers);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching teachers data' });
@@ -23,7 +23,7 @@ export const getPublicTeacherById = async (req, res) => {
   try {
     const teacher = await Teacher.findOne({ 
       $or: [{ _id: req.params.id }, { customId: req.params.id }] 
-    });
+    }).lean();
     if (!teacher) return res.status(404).json({ message: 'Teacher not found' });
     res.json(teacher);
   } catch (err) {
@@ -33,7 +33,7 @@ export const getPublicTeacherById = async (req, res) => {
 
 export const getPublicPrincipal = async (req, res) => {
   try {
-    let principal = await Principal.findOne();
+    let principal = await Principal.findOne().lean();
     if (!principal) principal = new Principal();
     res.json(principal);
   } catch (err) {
@@ -43,7 +43,7 @@ export const getPublicPrincipal = async (req, res) => {
 
 export const getPublicFounder = async (req, res) => {
   try {
-    let founder = await Founder.findOne();
+    let founder = await Founder.findOne().lean();
     if (!founder) founder = new Founder();
     res.json(founder);
   } catch (err) {
@@ -53,7 +53,7 @@ export const getPublicFounder = async (req, res) => {
 
 export const getPublicGallery = async (req, res) => {
   try {
-    const gallery = await Gallery.find({ isPublished: true }).sort({ displayOrder: 1, createdAt: -1 });
+    const gallery = await Gallery.find({ isPublished: true }).sort({ displayOrder: 1, createdAt: -1 }).lean();
     res.json(gallery);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching gallery images' });
@@ -62,7 +62,7 @@ export const getPublicGallery = async (req, res) => {
 
 export const getPublicNotices = async (req, res) => {
   try {
-    const notices = await Notice.find({ isPublished: true }).sort({ createdAt: -1 });
+    const notices = await Notice.find({ isPublished: true }).sort({ createdAt: -1 }).lean();
     res.json(notices);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching notices' });
@@ -71,7 +71,7 @@ export const getPublicNotices = async (req, res) => {
 
 export const getPublicEvents = async (req, res) => {
   try {
-    const events = await Event.find({ isPublished: true }).sort({ createdAt: -1 });
+    const events = await Event.find({ isPublished: true }).sort({ createdAt: -1 }).lean();
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching events' });
@@ -80,7 +80,7 @@ export const getPublicEvents = async (req, res) => {
 
 export const getPublicAchievements = async (req, res) => {
   try {
-    const achievements = await Achievement.find({ isPublished: true }).sort({ createdAt: -1 });
+    const achievements = await Achievement.find({ isPublished: true }).sort({ createdAt: -1 }).lean();
     res.json(achievements);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching achievements' });
@@ -89,7 +89,7 @@ export const getPublicAchievements = async (req, res) => {
 
 export const getPublicFacilities = async (req, res) => {
   try {
-    const facilities = await Facility.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 });
+    const facilities = await Facility.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 }).lean();
     res.json(facilities);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching facilities' });
@@ -98,7 +98,7 @@ export const getPublicFacilities = async (req, res) => {
 
 export const getPublicAcademics = async (req, res) => {
   try {
-    let academics = await Academics.findOne();
+    let academics = await Academics.findOne().lean();
     if (!academics) academics = new Academics();
     res.json(academics);
   } catch (err) {
@@ -108,7 +108,7 @@ export const getPublicAcademics = async (req, res) => {
 
 export const getPublicAdmissions = async (req, res) => {
   try {
-    let admissions = await Admissions.findOne();
+    let admissions = await Admissions.findOne().lean();
     if (!admissions) admissions = new Admissions();
     res.json(admissions);
   } catch (err) {
@@ -118,7 +118,7 @@ export const getPublicAdmissions = async (req, res) => {
 
 export const getPublicContactSettings = async (req, res) => {
   try {
-    let settings = await ContactSettings.findOne();
+    let settings = await ContactSettings.findOne().lean();
     if (!settings) settings = new ContactSettings();
     res.json(settings);
   } catch (err) {

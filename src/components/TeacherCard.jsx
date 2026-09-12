@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, UserCheck, Briefcase, ChevronRight } from 'lucide-react';
 
-export default function TeacherCard({ teacher }) {
+function TeacherCard({ teacher }) {
   const teacherId = teacher._id || teacher.id;
 
   return (
@@ -13,6 +13,7 @@ export default function TeacherCard({ teacher }) {
           alt={teacher.name} 
           className="teacher-img"
           loading="lazy"
+          decoding="async"
         />
       </div>
 
@@ -61,3 +62,5 @@ export default function TeacherCard({ teacher }) {
     </div>
   );
 }
+
+export default memo(TeacherCard);

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function FacilityCard({ facility }) {
+function FacilityCard({ facility }) {
   return (
     <div className="why-card" style={{ padding: '0', overflow: 'hidden', textAlign: 'left' }}>
       <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
@@ -9,6 +9,7 @@ export default function FacilityCard({ facility }) {
           alt={facility.title}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           loading="lazy"
+          decoding="async"
         />
         {facility.category && (
           <span 
@@ -30,3 +31,5 @@ export default function FacilityCard({ facility }) {
     </div>
   );
 }
+
+export default memo(FacilityCard);

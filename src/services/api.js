@@ -7,31 +7,64 @@ import { galleryData } from '../data/gallery';
 import { SCHOOL_CONFIG } from '../data/config';
 import { API_BASE_URL } from '../config/api';
 
-// Safe Fetch Helper with Fallback
+// In-Memory Promise Cache & Response Cache (Deduplicates simultaneous requests & caches responses for 15s)
+const apiCache = new Map();
+const pendingRequests = new Map();
+const CACHE_TTL_MS = 15000;
+
+export const clearApiCache = () => {
+  apiCache.clear();
+  pendingRequests.clear();
+};
+
+// Safe Fetch Helper with Deduplication & Short-TTL Caching
 async function fetchWithFallback(url, fallbackData) {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout fallback
+  const now = Date.now();
 
-    const res = await fetch(url, { 
-      signal: controller.signal,
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      }
-    });
-    clearTimeout(timeoutId);
-
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) ? data.length > 0 : Boolean(data)) {
-        return data;
-      }
+  // 1. Return valid cached response if available
+  if (apiCache.has(url)) {
+    const cached = apiCache.get(url);
+    if (now - cached.timestamp < CACHE_TTL_MS) {
+      return cached.data;
     }
-  } catch (err) {
-    // Graceful fallback to static data if backend is offline or loading
+    apiCache.delete(url);
   }
-  return fallbackData;
+
+  // 2. Deduplicate concurrent requests to the exact same URL
+  if (pendingRequests.has(url)) {
+    return pendingRequests.get(url);
+  }
+
+  const fetchPromise = (async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout fallback
+
+      const res = await fetch(url, { 
+        signal: controller.signal,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) ? data.length > 0 : Boolean(data)) {
+          apiCache.set(url, { timestamp: Date.now(), data });
+          return data;
+        }
+      }
+    } catch (err) {
+      // Graceful fallback to static data if backend is offline or loading
+    } finally {
+      pendingRequests.delete(url);
+    }
+    return fallbackData;
+  })();
+
+  pendingRequests.set(url, fetchPromise);
+  return fetchPromise;
 }
 
 export const apiService = {

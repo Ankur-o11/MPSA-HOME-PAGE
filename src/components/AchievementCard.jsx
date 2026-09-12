@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Trophy, Calendar } from 'lucide-react';
 
-export default function AchievementCard({ achievement }) {
+function AchievementCard({ achievement }) {
   return (
     <div 
       className="achievement-card"
@@ -21,6 +21,7 @@ export default function AchievementCard({ achievement }) {
           alt={achievement.title} 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           loading="lazy"
+          decoding="async"
         />
         <div 
           style={{
@@ -68,3 +69,5 @@ export default function AchievementCard({ achievement }) {
     </div>
   );
 }
+
+export default memo(AchievementCard);
