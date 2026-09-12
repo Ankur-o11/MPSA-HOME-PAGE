@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const teacherSchema = new mongoose.Schema(
   {
-    customId: { type: String, unique: true },
+    customId: { type: String, unique: true, sparse: true },
     name: { type: String, required: true, trim: true },
     designation: { type: String, required: true, trim: true },
     photo: { type: String, required: true },

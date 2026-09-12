@@ -114,32 +114,34 @@ export default function ManageTeachers() {
     };
 
     try {
+      let res;
       if (editingTeacher && editingTeacher._id) {
-        await authFetch(`${API_BASE_URL}/admin/teachers/${editingTeacher._id}`, {
+        res = await authFetch(`${API_BASE_URL}/admin/teachers/${editingTeacher._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       } else {
-        await authFetch(`${API_BASE_URL}/admin/teachers`, {
+        res = await authFetch(`${API_BASE_URL}/admin/teachers`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       }
+
+      const result = await res.json();
+      if (!res.ok || (result && result.success === false)) {
+        alert('Failed to save teacher: ' + (result.message || result.error || 'Server error'));
+        return;
+      }
+
+      await fetchTeachers();
+      setShowModal(false);
+      setMessage(editingTeacher ? 'Teacher updated successfully!' : 'Teacher saved successfully!');
+      setTimeout(() => setMessage(''), 3000);
     } catch (err) {
-      // Local state fallback update if offline
+      alert('Error saving teacher: ' + err.message);
     }
-
-    if (editingTeacher) {
-      setTeachers(prev => prev.map(t => (t.id === editingTeacher.id || t._id === editingTeacher._id) ? { ...t, ...payload } : t));
-    } else {
-      setTeachers(prev => [{ ...payload, id: 't_' + Date.now() }, ...prev]);
-    }
-
-    setShowModal(false);
-    setMessage('Teacher saved successfully!');
-    setTimeout(() => setMessage(''), 3000);
   };
 
   const handleDelete = async (id, name) => {

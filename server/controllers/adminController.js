@@ -54,10 +54,14 @@ export const createTeacher = async (req, res) => {
     if (typeof teacherData.qualifications === 'string') {
       teacherData.qualifications = teacherData.qualifications.split(',').map(q => q.trim()).filter(Boolean);
     }
+    if (!teacherData.customId) {
+      teacherData.customId = `t_${Date.now()}`;
+    }
     const teacher = new Teacher(teacherData);
     await teacher.save();
     res.status(201).json({ success: true, teacher });
   } catch (err) {
+    console.error('Error creating teacher:', err);
     res.status(400).json({ message: 'Error creating teacher', error: err.message });
   }
 };
