@@ -156,7 +156,7 @@ export default function Home() {
           <div className="about-home-grid">
             <div className="about-home-image-wrapper">
               <img 
-                src={schoolConfig.campusImage ? getUploadUrl(schoolConfig.campusImage) : NEUTRAL_IMAGE_SVG} 
+                src={schoolConfig?.aboutSectionImage ? getUploadUrl(schoolConfig.aboutSectionImage) : (schoolConfig?.campusImage ? getUploadUrl(schoolConfig.campusImage) : NEUTRAL_IMAGE_SVG)} 
                 alt="Maharana Pratap Science Academy Campus" 
                 onError={handleImageError}
               />

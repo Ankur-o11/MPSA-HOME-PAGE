@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Save, CheckCircle2, ShieldCheck, Upload, Trash2, Image as ImageIcon, GraduationCap, Layout } from 'lucide-react';
+import { Save, CheckCircle2, ShieldCheck, Upload, Trash2, Image as ImageIcon, GraduationCap, Layout, BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
 import { SCHOOL_CONFIG } from '../../data/config';
+import { NEUTRAL_IMAGE_SVG } from '../../utils/imageUtils';
 
 export default function ManageSettings() {
   const { authFetch, adminUser } = useAuth();
@@ -12,6 +13,7 @@ export default function ManageSettings() {
     tagline: SCHOOL_CONFIG.tagline,
     logoUrl: '',
     heroBannerImage: '',
+    aboutSectionImage: '',
     seoTitle: 'Maharana Pratap Science Academy | MPSA School',
     seoDescription: 'Official public website of Maharana Pratap Science Academy (MPSA School).'
   });
@@ -19,6 +21,7 @@ export default function ManageSettings() {
   const [saving, setSaving] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
+  const [uploadingAbout, setUploadingAbout] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -35,6 +38,7 @@ export default function ManageSettings() {
               tagline: data.tagline || SCHOOL_CONFIG.tagline,
               logoUrl: data.logoUrl || '',
               heroBannerImage: data.heroBannerImage || '',
+              aboutSectionImage: data.aboutSectionImage || '',
               seoTitle: data.seoTitle || 'Maharana Pratap Science Academy | MPSA School',
               seoDescription: data.seoDescription || 'Official public website of Maharana Pratap Science Academy (MPSA School).'
             }));
@@ -101,6 +105,33 @@ export default function ManageSettings() {
     }
   };
 
+  const handleAboutImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingAbout(true);
+    const uploadData = new FormData();
+    uploadData.append('image', file);
+
+    try {
+      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
+        method: 'POST',
+        body: uploadData
+      });
+      const result = await res.json();
+      if (result.success) {
+        const aboutFullUrl = getUploadUrl(result.url);
+        setFormData(prev => ({ ...prev, aboutSectionImage: aboutFullUrl }));
+        setMessage('About Section image uploaded successfully! Click "Save Settings" to persist changes.');
+      } else {
+        alert(result.message || 'About Section image upload failed');
+      }
+    } catch (err) {
+      alert('About Section image upload failed. Please check network connection.');
+    } finally {
+      setUploadingAbout(false);
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -111,7 +142,7 @@ export default function ManageSettings() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      setMessage('Website settings, logo & Hero Banner image saved successfully!');
+      setMessage('Website settings, logo, hero banner & About section image saved successfully!');
     } catch (err) {
       setMessage('Settings updated locally.');
     } finally {
@@ -125,7 +156,7 @@ export default function ManageSettings() {
       <div className="admin-card-header">
         <div>
           <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)' }}>Website Settings & Brand Management</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Configure official school logo, hero banner image, brand names, tagline, and SEO settings.</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Configure official school logo, hero banner image, about section campus image, tagline, and SEO settings.</p>
         </div>
       </div>
 
@@ -221,7 +252,6 @@ export default function ManageSettings() {
             </p>
 
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
-              {/* Hero Banner Preview Box */}
               <div style={{ textAlign: 'center', width: '220px' }}>
                 <div style={{
                   width: '100%',
@@ -253,7 +283,6 @@ export default function ManageSettings() {
                 </span>
               </div>
 
-              {/* Hero Upload & Action Controls */}
               <div style={{ flex: 1, minWidth: '240px' }}>
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
                   <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -287,6 +316,80 @@ export default function ManageSettings() {
                     placeholder="http://localhost:5000/uploads/hero-banner.jpg" 
                     value={formData.heroBannerImage || ''} 
                     onChange={e => setFormData({ ...formData, heroBannerImage: e.target.value })} 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. About Section Image Section */}
+          <div style={{ marginBottom: '2rem', padding: '1.5rem', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <BookOpen size={20} color="#D4A72C" /> Home Page About Section Image
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
+              Upload, replace, or delete the right-side campus image in the Home Page About Section ("Nurturing Scientific Minds & Character Excellence"). Processed with Sharp & saved in MongoDB.
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
+              <div style={{ textAlign: 'center', width: '220px' }}>
+                <div style={{
+                  width: '100%',
+                  height: '140px',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: '#fff',
+                  border: '2px solid var(--primary-navy)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  margin: '0 auto 0.5rem auto'
+                }}>
+                  <img 
+                    src={formData.aboutSectionImage || NEUTRAL_IMAGE_SVG} 
+                    alt="About Section Preview" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                </div>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+                  {formData.aboutSectionImage ? 'Active Custom Image' : 'Neutral Placeholder Active'}
+                </span>
+              </div>
+
+              <div style={{ flex: 1, minWidth: '240px' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                  <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Upload size={16} /> {uploadingAbout ? 'Uploading Image...' : formData.aboutSectionImage ? 'Replace About Image' : 'Upload About Image'}
+                    <input 
+                      type="file" 
+                      accept="image/jpeg,image/png,image/webp,image/jpg" 
+                      style={{ display: 'none' }} 
+                      onChange={handleAboutImageUpload}
+                      disabled={uploadingAbout}
+                    />
+                  </label>
+
+                  {formData.aboutSectionImage && (
+                    <button 
+                      type="button" 
+                      className="btn" 
+                      style={{ color: '#DC2626', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+                      onClick={() => setFormData(prev => ({ ...prev, aboutSectionImage: '' }))}
+                    >
+                      <Trash2 size={16} /> Delete / Remove Image
+                    </button>
+                  )}
+                </div>
+
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ fontSize: '0.82rem' }}>About Image URL (Auto-filled on upload)</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="http://localhost:5000/uploads/about-campus.jpg" 
+                    value={formData.aboutSectionImage || ''} 
+                    onChange={e => setFormData({ ...formData, aboutSectionImage: e.target.value })} 
                   />
                 </div>
               </div>
@@ -332,7 +435,7 @@ export default function ManageSettings() {
           </div>
 
           <div style={{ marginTop: '2rem' }}>
-            <button type="submit" className="btn btn-primary btn-lg" disabled={saving || uploadingLogo || uploadingHero}>
+            <button type="submit" className="btn btn-primary btn-lg" disabled={saving || uploadingLogo || uploadingHero || uploadingAbout}>
               <Save size={18} /> {saving ? 'Saving Settings...' : 'Save Settings'}
             </button>
           </div>
