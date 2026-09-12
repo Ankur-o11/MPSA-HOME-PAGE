@@ -17,15 +17,17 @@ import {
 import SectionTitle from '../components/SectionTitle';
 import { SCHOOL_CONFIG } from '../data/config';
 
+import { NEUTRAL_IMAGE_SVG, handleImageError } from '../utils/imageUtils';
+
 export default function About() {
   return (
     <div className="about-page">
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
-          <h1 className="page-banner-title">About Our School</h1>
+          <h1 className="page-banner-title">About Maharana Pratap Science Academy</h1>
           <p className="page-banner-subtitle">
-            Discover the heritage, educational ethos, core values, and infrastructure of Maharana Pratap Science Academy.
+            Established with a commitment to academic excellence, scientific innovation, and moral values.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>
@@ -41,8 +43,9 @@ export default function About() {
           <div className="about-home-grid">
             <div className="about-home-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=800&auto=format&fit=crop" 
+                src={NEUTRAL_IMAGE_SVG} 
                 alt="Maharana Pratap Science Academy Campus" 
+                onError={handleImageError}
               />
             </div>
             <div className="about-home-content">

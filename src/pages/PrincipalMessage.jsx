@@ -4,6 +4,7 @@ import { Quote, Award, BookOpen, GraduationCap, CheckCircle2 } from 'lucide-reac
 import SectionTitle from '../components/SectionTitle';
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
+import { NEUTRAL_AVATAR_SVG, handleAvatarError } from '../utils/imageUtils';
 
 export default function PrincipalMessage() {
   const [principal, setPrincipal] = useState(null);
@@ -20,7 +21,7 @@ export default function PrincipalMessage() {
 
   const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
   const pDesignation = principal?.designation || 'Principal, MPSA School';
-  const pPhoto = getUploadUrl(principal?.photo) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop';
+  const pPhoto = getUploadUrl(principal?.photo) || NEUTRAL_AVATAR_SVG;
   const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
   const pExperience = principal?.experience || '18+ Years in Education';
   const pQuote = principal?.messageQuote || 'At Maharana Pratap Science Academy, we view education as a transformative journey. Our objective is not only to prepare students for examinations, but to equip them with wisdom, resilience, scientific curiosity, and moral courage.';
@@ -53,7 +54,7 @@ export default function PrincipalMessage() {
                 src={pPhoto} 
                 alt={pName} 
                 className="principal-avatar-lg"
-                onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop'; }}
+                onError={handleAvatarError}
               />
               <h3 style={{ fontSize: '1.35rem', color: 'var(--primary-navy)', marginBottom: '0.25rem' }}>
                 {pName}

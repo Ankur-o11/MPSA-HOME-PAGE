@@ -3,13 +3,12 @@ import { Save, CheckCircle2, Upload, Plus, Trash2, Image, Edit } from 'lucide-re
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
 
-
 export default function ManageFounder() {
   const { authFetch } = useAuth();
   const [formData, setFormData] = useState({
     name: 'Shri [Founder Name Placeholder]',
     designation: 'Founder & Visionary Chairman, MPSA School',
-    photo: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop',
+    photo: '',
     intro: 'A visionary educator and philanthropist...',
     visionQuote: 'Education is the greatest light that can ignite a human mind...',
     storyText: 'The journey of Maharana Pratap Science Academy began with a deep conviction...',

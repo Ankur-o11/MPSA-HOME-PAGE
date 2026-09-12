@@ -1,19 +1,23 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, UserCheck, Briefcase, ChevronRight } from 'lucide-react';
+import { getUploadUrl } from '../config/api';
+import { NEUTRAL_AVATAR_SVG, handleAvatarError } from '../utils/imageUtils';
 
 function TeacherCard({ teacher }) {
   const teacherId = teacher._id || teacher.id;
+  const photoUrl = teacher.photo ? getUploadUrl(teacher.photo) : NEUTRAL_AVATAR_SVG;
 
   return (
     <div className="teacher-card">
       <div className="teacher-img-wrapper">
         <img 
-          src={teacher.photo} 
+          src={photoUrl} 
           alt={teacher.name} 
           className="teacher-img"
           loading="lazy"
           decoding="async"
+          onError={handleAvatarError}
         />
       </div>
 

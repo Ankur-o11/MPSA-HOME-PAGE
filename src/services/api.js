@@ -6,6 +6,7 @@ import { facilitiesData } from '../data/facilities';
 import { galleryData } from '../data/gallery';
 import { SCHOOL_CONFIG } from '../data/config';
 import { API_BASE_URL } from '../config/api';
+import { NEUTRAL_AVATAR_SVG } from '../utils/imageUtils';
 
 // In-Memory Promise Cache & Response Cache (Deduplicates simultaneous requests & caches responses for 15s)
 const apiCache = new Map();
@@ -88,7 +89,7 @@ export const apiService = {
     return fetchWithFallback(`${API_BASE_URL}/public/principal`, {
       name: 'Dr. [Principal Name Placeholder]',
       designation: 'Principal, MPSA School',
-      photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop',
+      photo: NEUTRAL_AVATAR_SVG,
       qualifications: 'Ph.D., M.Sc., B.Ed.',
       experience: '18+ Years in Education',
       messageQuote: 'At Maharana Pratap Science Academy, we view education as a transformative journey...',
@@ -101,7 +102,7 @@ export const apiService = {
     return fetchWithFallback(`${API_BASE_URL}/public/founder`, {
       name: 'Shri [Founder Name Placeholder]',
       designation: 'Founder & Visionary Chairman, MPSA School',
-      photo: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop',
+      photo: NEUTRAL_AVATAR_SVG,
       intro: 'A visionary educator and philanthropist...',
       visionQuote: 'Education is the greatest light that can ignite a human mind...',
       storyText: 'The journey of Maharana Pratap Science Academy began with a deep conviction...',

@@ -38,6 +38,7 @@ import { galleryData as defaultGallery } from '../data/gallery';
 
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
+import { NEUTRAL_AVATAR_SVG, NEUTRAL_IMAGE_SVG, handleAvatarError, handleImageError } from '../utils/imageUtils';
 
 export default function Home() {
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
@@ -86,12 +87,12 @@ export default function Home() {
   const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
   const pDesignation = principal?.designation || 'Principal, MPSA School';
   const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
-  const pPhoto = getUploadUrl(principal?.photo) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop';
+  const pPhoto = getUploadUrl(principal?.photo) || NEUTRAL_AVATAR_SVG;
   const pQuote = principal?.messageQuote || 'Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential in a supportive environment.';
 
   const fName = founder?.name || 'Shri [Founder Name Placeholder]';
   const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
-  const fPhoto = getUploadUrl(founder?.photo) || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop';
+  const fPhoto = getUploadUrl(founder?.photo) || NEUTRAL_AVATAR_SVG;
   const fQuote = founder?.visionQuote || founder?.intro || 'A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance.';
 
   return (
@@ -141,8 +142,9 @@ export default function Home() {
           <div className="about-home-grid">
             <div className="about-home-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=800&auto=format&fit=crop" 
+                src={schoolConfig.campusImage ? getUploadUrl(schoolConfig.campusImage) : NEUTRAL_IMAGE_SVG} 
                 alt="Maharana Pratap Science Academy Campus" 
+                onError={handleImageError}
               />
               <div className="about-home-experience-badge">
                 <div className="experience-number">15+</div>
@@ -206,7 +208,7 @@ export default function Home() {
                   src={pPhoto} 
                   alt={pName} 
                   className="leadership-img"
-                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop'; }}
+                  onError={handleAvatarError}
                 />
                 <div className="leadership-info">
                   <h3>{pName}</h3>
@@ -237,7 +239,7 @@ export default function Home() {
                   src={fPhoto} 
                   alt={fName} 
                   className="leadership-img"
-                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop'; }}
+                  onError={handleAvatarError}
                 />
                 <div className="leadership-info">
                   <h3>{fName}</h3>

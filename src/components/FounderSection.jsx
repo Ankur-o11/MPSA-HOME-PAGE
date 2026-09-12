@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Quote, ChevronRight, Award } from 'lucide-react';
 import SectionTitle from './SectionTitle';
+import { NEUTRAL_AVATAR_SVG, handleAvatarError } from '../utils/imageUtils';
 
 export default function FounderSection() {
   return (
@@ -17,9 +18,10 @@ export default function FounderSection() {
           <div className="founder-hero-inner">
             <div className="founder-photo-container">
               <img 
-                src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop" 
+                src={NEUTRAL_AVATAR_SVG} 
                 alt="Founder Placeholder - Maharana Pratap Science Academy" 
                 className="founder-photo"
+                onError={handleAvatarError}
               />
               <div 
                 style={{

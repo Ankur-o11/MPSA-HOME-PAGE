@@ -1,3 +1,5 @@
+import { NEUTRAL_IMAGE_SVG } from '../utils/imageUtils';
+
 /**
  * GALLERY DATA
  * 
@@ -20,7 +22,7 @@ export const galleryData = [
     id: "g1",
     title: "MPSA Academic Building Front View",
     category: "School",
-    image: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1000&auto=format&fit=crop",
+    image: NEUTRAL_IMAGE_SVG,
     caption: "The majestic main building of Maharana Pratap Science Academy with modern architecture and green gardens.",
     date: "Annual Campus Tour 2026"
   },
@@ -28,88 +30,88 @@ export const galleryData = [
     id: "g2",
     title: "Students Performing Physics Experiments",
     category: "Students",
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1000&auto=format&fit=crop",
-    caption: "Senior secondary students conducting practical optics experiments under faculty guidance.",
-    date: "Science Practical Week"
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Senior secondary students conducting optics practicals under faculty mentorship.",
+    date: "Science Lab Exhibition"
   },
   {
     id: "g3",
-    title: "Annual Cultural Dance Performance",
-    category: "Cultural Activities",
-    image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1000&auto=format&fit=crop",
-    caption: "Colorful classical dance presentation by MPSA students during the Annual Cultural Function.",
-    date: "Annual Fest 2026"
+    title: "Annual Sports Day Athletics Final",
+    category: "Sports",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Thrilling track and field competition during the annual sports week.",
+    date: "Sports Meet 2025"
   },
   {
     id: "g4",
-    title: "Inter-House Football Championship Final",
-    category: "Sports",
-    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000&auto=format&fit=crop",
-    caption: "Action moment from the thrilling final match of the Inter-House Football League.",
-    date: "Sports Meet 2026"
+    title: "Independence Day Cultural Performance",
+    category: "Cultural Activities",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Patriotic dance and musical tribute presented by primary and middle school students.",
+    date: "15th August Celebration"
   },
   {
     id: "g5",
-    title: "Visit to State Science Observatory & Planetarium",
-    category: "Educational Trips",
-    image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?q=80&w=1000&auto=format&fit=crop",
-    caption: "Students exploring astronomical models and planetary science displays during the field trip.",
-    date: "Educational Trip"
+    title: "Inter-School Science Model Competition",
+    category: "Competitions",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Student teams presenting renewable energy working models to external judges.",
+    date: "State Science Fair"
   },
   {
     id: "g6",
-    title: "National Science Olympiad Award Ceremony",
-    category: "Competitions",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop",
-    caption: "MPSA rank holders receiving gold medals and certificates of merit.",
-    date: "Olympiad Awards"
+    title: "Educational Field Visit to Planetarium",
+    category: "Educational Trips",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Class 9th & 10th science students exploring astronomy and space science.",
+    date: "Educational Tour 2025"
   },
   {
     id: "g7",
-    title: "Smart Classroom Interactive Session",
+    title: "Composite Chemistry Laboratory Session",
     category: "School",
-    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1000&auto=format&fit=crop",
-    caption: "Teacher demonstrating 3D interactive molecular structures on the digital smartboard.",
-    date: "Daily Academics"
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Well-equipped chemistry lab with modern safety gear and digital balances.",
+    date: "Academic Year 2025-26"
   },
   {
     id: "g8",
-    title: "Annual Sports Meet Track & Field Sprint",
-    category: "Sports",
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=1000&auto=format&fit=crop",
-    caption: "100-meter sprint race during the annual sports meet on campus grounds.",
-    date: "Sports Meet"
+    title: "Annual Day Prize Distribution Ceremony",
+    category: "Events",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Chief Guest honoring academic toppers and sports championship winners.",
+    date: "Annual Function 2025"
   },
   {
     id: "g9",
-    title: "Tree Plantation Drive by Eco-Club",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
-    caption: "Students planting native trees around the school playground to promote environmental conservation.",
-    date: "Green Campus Initiative"
+    title: "Basketball Tournament Championship Match",
+    category: "Sports",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "MPSA school basketball team securing victory in the inter-district finals.",
+    date: "District Sports Meet"
   },
   {
     id: "g10",
-    title: "Robotics & Circuit Design Competition",
-    category: "Competitions",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop",
-    caption: "Young innovators testing obstacle-avoiding robots built in the MPSA Computer Lab.",
-    date: "Tech Expo"
+    title: "Robotics & AI Innovation Workshop",
+    category: "Students",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Students coding microcontrollers and building automated robotic cars.",
+    date: "STEM Workshop Series"
   },
   {
     id: "g11",
-    title: "Library Reading Hour & Knowledge Hub",
-    category: "Students",
-    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1000&auto=format&fit=crop",
-    caption: "Quiet reading and reference research time in the central school library.",
-    date: "Library Hours"
+    title: "Central Library Reading Hall",
+    category: "School",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Quiet and spacious library equipped with over 5,000 reference books and journals.",
+    date: "Campus Facilities"
   },
   {
     id: "g12",
-    title: "Group Music Choir Performance",
-    category: "Cultural Activities",
-    image: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1000&auto=format&fit=crop",
-    caption: "MPSA vocal choir presenting patriotic harmony songs on Independence Day.",
-    date: "Independence Day"
+    title: "Environmental Tree Plantation Drive",
+    category: "Events",
+    image: NEUTRAL_IMAGE_SVG,
+    caption: "Eco-club volunteers planting 200 saplings across the school campus.",
+    date: "World Environment Day"
   }
 ];

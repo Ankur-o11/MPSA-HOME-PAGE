@@ -4,11 +4,12 @@ import { ChevronDown, Loader2, ImageOff, RefreshCw } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import GalleryCard from '../components/GalleryCard';
 import Lightbox from '../components/Lightbox';
-import { galleryCategories, galleryData as defaultGallery } from '../data/gallery';
+import { galleryCategories } from '../data/gallery';
 import { apiService } from '../services/api';
+import { NEUTRAL_IMAGE_SVG } from '../utils/imageUtils';
 
 export default function Gallery() {
-  const [galleryItems, setGalleryItems] = useState(defaultGallery);
+  const [galleryItems, setGalleryItems] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loadingInitial, setLoadingInitial] = useState(true);
@@ -26,15 +27,13 @@ export default function Gallery() {
         const res = await apiService.getGallery({ page: 1, limit: 20 });
         if (res) {
           const items = Array.isArray(res) ? res : (res.data || []);
-          if (items && items.length > 0) {
-            setGalleryItems(items);
-          }
+          setGalleryItems(items || []);
           const moreAvailable = res.pagination ? res.pagination.hasMore : (items.length >= 20);
           setHasMore(moreAvailable);
           setPage(1);
         }
       } catch (err) {
-        setError('Failed to load gallery images. Showing cached default view.');
+        setError('Failed to load gallery images.');
       } finally {
         setLoadingInitial(false);
       }
@@ -139,7 +138,15 @@ export default function Gallery() {
           </div>
 
           {/* Grid */}
-          {filteredItems.length > 0 ? (
+          {loadingInitial ? (
+            <div className="gallery-grid">
+              {[1, 2, 3, 4, 5, 6].map(idx => (
+                <div key={idx} className="gallery-card" style={{ opacity: 0.75 }}>
+                  <img src={NEUTRAL_IMAGE_SVG} alt="Loading..." className="gallery-card-img" />
+                </div>
+              ))}
+            </div>
+          ) : filteredItems.length > 0 ? (
             <div className="gallery-grid">
               {filteredItems.map(item => (
                 <GalleryCard 

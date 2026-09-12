@@ -20,7 +20,7 @@ export default function ManageEvents() {
     date: '',
     time: '09:00 AM - 02:00 PM',
     location: 'MPSA School Campus',
-    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop',
+    image: '',
     description: '',
     isUpcoming: true,
     isPublished: true
@@ -49,7 +49,7 @@ export default function ManageEvents() {
       date: 'October 20, 2026',
       time: '09:00 AM - 02:00 PM',
       location: 'MPSA School Campus',
-      image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop',
+      image: '',
       description: '',
       isUpcoming: true,
       isPublished: true

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, Upload, CheckCircle2, X, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
-
 import { galleryData as defaultGallery, galleryCategories } from '../../data/gallery';
 
 export default function ManageGallery() {
@@ -43,7 +42,7 @@ export default function ManageGallery() {
     setFormData({
       title: '',
       category: 'School',
-      image: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1000&auto=format&fit=crop',
+      image: '',
       caption: '',
       date: 'Annual Campus Tour',
       displayOrder: gallery.length + 1,

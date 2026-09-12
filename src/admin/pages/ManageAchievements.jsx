@@ -15,7 +15,7 @@ export default function ManageAchievements() {
     title: '',
     year: '2026',
     category: 'Academic',
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop',
+    image: '',
     description: '',
     isPublished: true
   });
@@ -42,7 +42,7 @@ export default function ManageAchievements() {
       title: '',
       year: '2026',
       category: 'Academic',
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop',
+      image: '',
       description: '',
       isPublished: true
     });

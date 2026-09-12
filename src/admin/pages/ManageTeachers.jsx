@@ -54,7 +54,7 @@ export default function ManageTeachers() {
     setFormData({
       name: '',
       designation: '',
-      photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop',
+      photo: '',
       qualifications: 'B.A., M.A., B.Ed.',
       subject: 'English',
       classes: '6th – 10th',

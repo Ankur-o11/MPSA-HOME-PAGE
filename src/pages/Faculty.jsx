@@ -1,21 +1,31 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, RefreshCw, UserCheck } from 'lucide-react';
+import { Search, RefreshCw, UserCheck, Loader2 } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import TeacherCard from '../components/TeacherCard';
-import { teachersData as defaultTeachers } from '../data/teachers';
 import { apiService } from '../services/api';
+import { NEUTRAL_AVATAR_SVG } from '../utils/imageUtils';
 
 export default function Faculty() {
-  const [teachers, setTeachers] = useState(defaultTeachers);
+  const [teachers, setTeachers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [subjectFilter, setSubjectFilter] = useState('All');
   const [classFilter, setClassFilter] = useState('All');
 
   useEffect(() => {
     async function loadData() {
-      const data = await apiService.getTeachers();
-      if (data && data.length > 0) setTeachers(data);
+      setLoading(true);
+      try {
+        const data = await apiService.getTeachers();
+        if (data && Array.isArray(data)) {
+          setTeachers(data);
+        }
+      } catch (err) {
+        console.error('Failed to load faculty:', err);
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
@@ -131,7 +141,21 @@ export default function Faculty() {
           </div>
 
           {/* Faculty Cards Grid */}
-          {filteredTeachers.length > 0 ? (
+          {loading ? (
+            <div className="faculty-grid">
+              {[1, 2, 3, 4].map(idx => (
+                <div key={idx} className="teacher-card" style={{ opacity: 0.75 }}>
+                  <div className="teacher-img-wrapper">
+                    <img src={NEUTRAL_AVATAR_SVG} alt="Loading..." className="teacher-img" />
+                  </div>
+                  <div className="teacher-card-body" style={{ textAlign: 'center', padding: '1.5rem 1rem' }}>
+                    <div style={{ height: '18px', backgroundColor: 'var(--bg-soft)', borderRadius: '4px', marginBottom: '0.75rem' }}></div>
+                    <div style={{ height: '14px', width: '60%', margin: '0 auto 1rem auto', backgroundColor: 'var(--bg-soft)', borderRadius: '4px' }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredTeachers.length > 0 ? (
             <div className="faculty-grid">
               {filteredTeachers.map(teacher => (
                 <TeacherCard key={teacher._id || teacher.id} teacher={teacher} />

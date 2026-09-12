@@ -3,13 +3,12 @@ import { Save, CheckCircle2, Upload } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
 
-
 export default function ManagePrincipal() {
   const { authFetch } = useAuth();
   const [formData, setFormData] = useState({
     name: 'Dr. [Principal Name Placeholder]',
     designation: 'Principal, MPSA School',
-    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop',
+    photo: '',
     qualifications: 'Ph.D., M.Sc., B.Ed.',
     experience: '18+ Years in Education',
     messageQuote: 'At Maharana Pratap Science Academy, we view education as a transformative journey...',

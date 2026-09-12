@@ -14,7 +14,7 @@ export default function ManageFacilities() {
   const [formData, setFormData] = useState({
     title: '',
     category: 'Infrastructure',
-    image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto=format&fit=crop',
+    image: '',
     description: '',
     displayOrder: 1,
     isActive: true
@@ -41,7 +41,7 @@ export default function ManageFacilities() {
     setFormData({
       title: '',
       category: 'Infrastructure',
-      image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto=format&fit=crop',
+      image: '',
       description: '',
       displayOrder: facilities.length + 1,
       isActive: true

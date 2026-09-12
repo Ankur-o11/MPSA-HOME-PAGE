@@ -5,6 +5,7 @@ import SectionTitle from '../components/SectionTitle';
 import Lightbox from '../components/Lightbox';
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
+import { NEUTRAL_AVATAR_SVG, handleAvatarError } from '../utils/imageUtils';
 
 export default function Founder() {
   const [founder, setFounder] = useState(null);
@@ -20,7 +21,7 @@ export default function Founder() {
 
   const fName = founder?.name || 'Shri [Founder Name Placeholder]';
   const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
-  const fPhoto = getUploadUrl(founder?.photo) || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop';
+  const fPhoto = getUploadUrl(founder?.photo) || NEUTRAL_AVATAR_SVG;
   const fIntro = founder?.intro || 'A visionary educator and philanthropist who dedicated life to building an institution where children from all walks of life receive quality science education, strong moral discipline, and character building.';
   const fVisionQuote = founder?.visionQuote || 'Education is the greatest light that can ignite a human mind. When we teach a child science with values, we build not just a professional, but a nation builder.';
   const fStoryText = founder?.storyText || 'The journey of Maharana Pratap Science Academy began with a deep conviction — that every child deserves access to high-caliber scientific education combined with character discipline.';
@@ -61,7 +62,7 @@ export default function Founder() {
                   alt={fName} 
                   className="founder-photo"
                   decoding="async"
-                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop'; }}
+                  onError={handleAvatarError}
                 />
               </div>
               <div className="founder-details">
