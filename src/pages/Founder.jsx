@@ -60,6 +60,7 @@ export default function Founder() {
                   src={fPhoto} 
                   alt={fName} 
                   className="founder-photo"
+                  decoding="async"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop'; }}
                 />
               </div>
@@ -115,7 +116,7 @@ export default function Founder() {
             <div className="gallery-grid">
               {galleryDataList.map((item, idx) => (
                 <div key={item.id || item._id || idx} className="gallery-card" onClick={() => setSelectedGalleryItem(item)}>
-                  <img src={getUploadUrl(item.image)} alt={item.title || 'Founder Photo'} className="gallery-card-img" />
+                  <img src={getUploadUrl(item.image)} alt={item.title || 'Founder Photo'} className="gallery-card-img" loading="lazy" decoding="async" />
                   <div className="gallery-card-overlay">
                     <h4 className="gallery-card-title">{item.title}</h4>
                     <p className="gallery-card-date">{item.caption || item.date}</p>

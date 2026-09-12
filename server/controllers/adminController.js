@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import sharp from 'sharp';
 import Teacher from '../models/Teacher.js';
 import Principal from '../models/Principal.js';
 import Founder from '../models/Founder.js';
@@ -352,13 +353,13 @@ export const updateContactSettings = async (req, res) => {
 };
 
 // Image Upload Endpoint (RULE #16)
-export const handleImageUpload = (req, res) => {
+export const handleImageUpload = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded or file format invalid' });
   }
 
   try {
-    const mime = req.file.mimetype || 'image/jpeg';
+    const rawMime = req.file.mimetype || 'image/jpeg';
     const ext = path.extname(req.file.originalname || '.jpg').toLowerCase() || '.jpg';
     const filename = `mpsa-${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
 
@@ -371,13 +372,34 @@ export const handleImageUpload = (req, res) => {
       return res.status(500).json({ message: 'Failed to read uploaded image buffer', success: false });
     }
 
-    const fileUrl = `data:${mime};base64,${fileBuffer.toString('base64')}`;
+    let finalBuffer = fileBuffer;
+    let finalMime = rawMime;
+
+    // Run Sharp optimization if it's a standard bitmap image (skip SVG)
+    if (!rawMime.includes('svg')) {
+      try {
+        finalBuffer = await sharp(fileBuffer)
+          .resize({
+            width: 1000,
+            height: 1000,
+            fit: 'inside',
+            withoutEnlargement: true
+          })
+          .jpeg({ quality: 80, mozjpeg: true })
+          .toBuffer();
+        finalMime = 'image/jpeg';
+      } catch (sharpErr) {
+        console.warn('Sharp optimization warning, falling back to raw buffer:', sharpErr.message);
+      }
+    }
+
+    const fileUrl = `data:${finalMime};base64,${finalBuffer.toString('base64')}`;
 
     // Write to uploads directory if directory is writable (local dev environment backup)
     try {
       const uploadDir = path.join(process.cwd(), 'uploads');
       if (fs.existsSync(uploadDir)) {
-        fs.writeFileSync(path.join(uploadDir, filename), fileBuffer);
+        fs.writeFileSync(path.join(uploadDir, filename), finalBuffer);
       }
     } catch (e) {
       // Ignore write errors in read-only serverless runtimes
@@ -385,7 +407,7 @@ export const handleImageUpload = (req, res) => {
 
     return res.json({
       success: true,
-      message: 'Image uploaded successfully',
+      message: 'Image uploaded and optimized successfully',
       url: fileUrl,
       filename
     });
