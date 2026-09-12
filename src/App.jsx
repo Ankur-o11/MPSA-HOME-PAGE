@@ -21,6 +21,7 @@ import ScrollToTop from './components/ScrollToTop';
 // Public Pages
 import Home from './pages/Home';
 import About from './pages/About';
+import Director from './pages/Director';
 import Founder from './pages/Founder';
 import PrincipalMessage from './pages/PrincipalMessage';
 import Academics from './pages/Academics';
@@ -43,6 +44,7 @@ import AdminDashboard from './admin/pages/AdminDashboard';
 import ManageTeachers from './admin/pages/ManageTeachers';
 import ManagePrincipal from './admin/pages/ManagePrincipal';
 import ManageFounder from './admin/pages/ManageFounder';
+import ManageFounderProfile from './admin/pages/ManageFounderProfile';
 import ManageGallery from './admin/pages/ManageGallery';
 import ManageNotices from './admin/pages/ManageNotices';
 import ManageEvents from './admin/pages/ManageEvents';
@@ -75,6 +77,8 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/director" element={<Director />} />
+          <Route path="/director-manager" element={<Director />} />
           <Route path="/founder" element={<Founder />} />
           <Route path="/principal-message" element={<PrincipalMessage />} />
           <Route path="/academics" element={<Academics />} />
@@ -105,7 +109,9 @@ export default function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="teachers" element={<ManageTeachers />} />
           <Route path="principal" element={<ManagePrincipal />} />
+          <Route path="director" element={<ManageFounder />} />
           <Route path="founder" element={<ManageFounder />} />
+          <Route path="founder-profile" element={<ManageFounderProfile />} />
           <Route path="gallery" element={<ManageGallery />} />
           <Route path="notices" element={<ManageNotices />} />
           <Route path="events" element={<ManageEvents />} />

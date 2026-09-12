@@ -52,11 +52,12 @@ export default function Home() {
   const [gallery, setGallery] = useState(defaultGallery);
   const [siteSettings, setSiteSettings] = useState(SCHOOL_CONFIG);
   const [principal, setPrincipal] = useState(null);
+  const [director, setDirector] = useState(null);
   const [founder, setFounder] = useState(null);
 
   useEffect(() => {
     async function loadHomeData() {
-      const [tData, fData, nData, eData, aData, gData, sData, pData, fndData] = await Promise.all([
+      const [tData, fData, nData, eData, aData, gData, sData, pData, dData, fndData] = await Promise.all([
         apiService.getTeachers(),
         apiService.getFacilities(),
         apiService.getNotices(),
@@ -65,7 +66,8 @@ export default function Home() {
         apiService.getGallery({ limit: 6 }),
         apiService.getContactSettings(),
         apiService.getPrincipal(),
-        apiService.getFounder()
+        apiService.getDirector(),
+        apiService.getFounderProfile()
       ]);
 
       if (tData && tData.length > 0) setTeachers(tData);
@@ -77,6 +79,7 @@ export default function Home() {
       if (gItems && gItems.length > 0) setGallery(gItems);
       if (sData) setSiteSettings(sData);
       if (pData) setPrincipal(pData);
+      if (dData) setDirector(dData);
       if (fndData) setFounder(fndData);
     }
     loadHomeData();
@@ -84,16 +87,27 @@ export default function Home() {
 
   const schoolConfig = siteSettings || SCHOOL_CONFIG;
   const activePhonePrimary = schoolConfig?.phonePrimary || SCHOOL_CONFIG.phonePrimary;
+
+  // Principal Data
   const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
   const pDesignation = principal?.designation || 'Principal, MPSA School';
   const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
   const pPhoto = getUploadUrl(principal?.photo) || NEUTRAL_AVATAR_SVG;
-  const pQuote = principal?.messageQuote || 'Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential in a supportive environment.';
+  const pQuote = principal?.messageQuote || 'Welcome to Maharana Pratap Science Academy. We strive to inspire every child to explore, question, innovate, and achieve their full potential.';
 
+  // Director / Manager Data
+  const dName = director?.name || 'Shri [Director/Manager Name Placeholder]';
+  const dDesignation = director?.designation || 'Director / Manager, MPSA School';
+  const dProfession = director?.profession || 'Educationist & Administrator';
+  const dPhoto = getUploadUrl(director?.photo) || NEUTRAL_AVATAR_SVG;
+  const dQuote = director?.visionQuote || director?.intro || 'Empowering students with quality education, disciplined values, and modern scientific knowledge for a brighter future.';
+
+  // Founder Data
   const fName = founder?.name || 'Shri [Founder Name Placeholder]';
-  const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
+  const fDesignation = 'Founder, MPSA School';
+  const fProfession = founder?.profession || 'Visionary Founder';
   const fPhoto = getUploadUrl(founder?.photo) || NEUTRAL_AVATAR_SVG;
-  const fQuote = founder?.visionQuote || founder?.intro || 'A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance.';
+  const fQuote = founder?.quote || founder?.vision || 'A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance.';
 
   return (
     <div className="home-page">
@@ -191,7 +205,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Principal's Message Preview & 6. Founder Section */}
+      {/* 5. Leadership Section (Principal, Director / Manager, Founder) */}
       <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
         <div className="container">
           <SectionTitle 
@@ -200,8 +214,8 @@ export default function Home() {
             subtitle="The visionary leadership steering Maharana Pratap Science Academy into a bright future."
           />
 
-          <div className="dual-leadership-grid">
-            {/* Principal Card Preview */}
+          <div className="leadership-grid-three">
+            {/* Principal Card */}
             <div className="leadership-card">
               <div className="leadership-card-header">
                 <img 
@@ -220,7 +234,7 @@ export default function Home() {
               <div className="leadership-card-body">
                 {(!principal?.name || principal.name.includes('[Placeholder]')) && (
                   <div className="placeholder-notice">
-                    <strong>Notice:</strong> Principal details are set to professional placeholders until official records are uploaded.
+                    <strong>Notice:</strong> Principal details set to placeholder.
                   </div>
                 )}
                 <blockquote className="leadership-quote">
@@ -232,7 +246,38 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Founder Card Preview */}
+            {/* Director / Manager Card */}
+            <div className="leadership-card">
+              <div className="leadership-card-header">
+                <img 
+                  src={dPhoto} 
+                  alt={dName} 
+                  className="leadership-img"
+                  onError={handleAvatarError}
+                />
+                <div className="leadership-info">
+                  <h3>{dName}</h3>
+                  <p className="leadership-designation">{dDesignation}</p>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>{dProfession}</p>
+                </div>
+              </div>
+
+              <div className="leadership-card-body">
+                {(!director?.name || director.name.includes('[Placeholder]')) && (
+                  <div className="placeholder-notice">
+                    <strong>Notice:</strong> Director / Manager details set to placeholder.
+                  </div>
+                )}
+                <blockquote className="leadership-quote">
+                  "{dQuote}"
+                </blockquote>
+                <Link to="/director" className="btn btn-outline btn-sm">
+                  View Director / Manager Profile <ChevronRight size={16} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Founder Card */}
             <div className="leadership-card">
               <div className="leadership-card-header">
                 <img 
@@ -244,20 +289,21 @@ export default function Home() {
                 <div className="leadership-info">
                   <h3>{fName}</h3>
                   <p className="leadership-designation">{fDesignation}</p>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.85, marginTop: '0.2rem' }}>{fProfession}</p>
                 </div>
               </div>
 
               <div className="leadership-card-body">
                 {(!founder?.name || founder.name.includes('[Placeholder]')) && (
                   <div className="placeholder-notice">
-                    <strong>Notice:</strong> Founder biography & quotes are set to placeholders.
+                    <strong>Notice:</strong> Founder profile set to placeholder.
                   </div>
                 )}
                 <blockquote className="leadership-quote">
                   "{fQuote}"
                 </blockquote>
                 <Link to="/founder" className="btn btn-primary btn-sm">
-                  Explore Founder & Inspiration Story <ChevronRight size={16} />
+                  Explore Founder Profile <ChevronRight size={16} />
                 </Link>
               </div>
             </div>

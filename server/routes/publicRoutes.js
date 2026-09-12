@@ -4,6 +4,8 @@ import {
   getPublicTeacherById,
   getPublicPrincipal,
   getPublicFounder,
+  getPublicDirector,
+  getPublicFounderProfile,
   getPublicGallery,
   getPublicNotices,
   getPublicEvents,
@@ -28,6 +30,8 @@ router.get('/teachers', getPublicTeachers);
 router.get('/teachers/:id', getPublicTeacherById);
 router.get('/principal', getPublicPrincipal);
 router.get('/founder', getPublicFounder);
+router.get('/director', getPublicDirector);
+router.get('/founder-profile', getPublicFounderProfile);
 router.get('/gallery', getPublicGallery);
 router.get('/notices', getPublicNotices);
 router.get('/events', getPublicEvents);

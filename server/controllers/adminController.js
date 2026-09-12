@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import Teacher from '../models/Teacher.js';
 import Principal from '../models/Principal.js';
 import Founder from '../models/Founder.js';
+import FounderProfile from '../models/FounderProfile.js';
 import Gallery from '../models/Gallery.js';
 import Notice from '../models/Notice.js';
 import Event from '../models/Event.js';
@@ -107,7 +108,7 @@ export const updatePrincipal = async (req, res) => {
   }
 };
 
-// Founder Update
+// Director / Manager Update (uses Founder model)
 export const updateFounder = async (req, res) => {
   try {
     let founder = await Founder.findOne();
@@ -119,7 +120,38 @@ export const updateFounder = async (req, res) => {
     await founder.save();
     res.json({ success: true, founder });
   } catch (err) {
-    res.status(400).json({ message: 'Error updating founder section' });
+    res.status(400).json({ message: 'Error updating director section' });
+  }
+};
+
+export const updateDirector = updateFounder;
+
+// Dedicated Founder Profile Admin Controllers
+export const getFounderProfileAdmin = async (req, res) => {
+  try {
+    let profile = await FounderProfile.findOne();
+    if (!profile) {
+      profile = new FounderProfile();
+      await profile.save();
+    }
+    res.json(profile);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching founder profile' });
+  }
+};
+
+export const updateFounderProfile = async (req, res) => {
+  try {
+    let profile = await FounderProfile.findOne();
+    if (!profile) {
+      profile = new FounderProfile(req.body);
+    } else {
+      Object.assign(profile, req.body);
+    }
+    await profile.save();
+    res.json({ success: true, profile });
+  } catch (err) {
+    res.status(400).json({ message: 'Error updating founder profile' });
   }
 };
 

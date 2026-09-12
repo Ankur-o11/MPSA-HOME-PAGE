@@ -67,7 +67,8 @@ export default function Footer() {
             <ul className="footer-links-list">
               <li className="footer-link-item"><Link to="/"><ChevronRight size={14} /> Home</Link></li>
               <li className="footer-link-item"><Link to="/about"><ChevronRight size={14} /> About Us</Link></li>
-              <li className="footer-link-item"><Link to="/founder"><ChevronRight size={14} /> Founder & Inspiration</Link></li>
+              <li className="footer-link-item"><Link to="/director"><ChevronRight size={14} /> Director / Manager</Link></li>
+              <li className="footer-link-item"><Link to="/founder"><ChevronRight size={14} /> Founder</Link></li>
               <li className="footer-link-item"><Link to="/principal-message"><ChevronRight size={14} /> Principal's Message</Link></li>
               <li className="footer-link-item"><Link to="/academics"><ChevronRight size={14} /> Academics</Link></li>
               <li className="footer-link-item"><Link to="/faculty"><ChevronRight size={14} /> Faculty Directory</Link></li>

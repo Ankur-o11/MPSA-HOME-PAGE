@@ -67,8 +67,13 @@ export default function AdminSidebar({ mobileOpen, onCloseMobile }) {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/founder" className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`} onClick={onCloseMobile}>
-            <Award size={18} /> Founder
+          <NavLink to="/admin/director" className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`} onClick={onCloseMobile}>
+            <UserCheck size={18} /> Director / Manager
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/founder-profile" className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`} onClick={onCloseMobile}>
+            <Award size={18} /> Founder Profile
           </NavLink>
         </li>
         <li>

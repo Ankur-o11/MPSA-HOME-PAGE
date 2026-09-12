@@ -1,6 +1,7 @@
 import Teacher from '../models/Teacher.js';
 import Principal from '../models/Principal.js';
 import Founder from '../models/Founder.js';
+import FounderProfile from '../models/FounderProfile.js';
 import Gallery from '../models/Gallery.js';
 import Notice from '../models/Notice.js';
 import Event from '../models/Event.js';
@@ -41,13 +42,31 @@ export const getPublicPrincipal = async (req, res) => {
   }
 };
 
+// Director / Manager (uses Founder model to preserve existing data)
 export const getPublicFounder = async (req, res) => {
   try {
     let founder = await Founder.findOne().lean();
     if (!founder) founder = new Founder();
+    // Guarantee visible identity is Director / Manager (Requirement #1)
+    if (!founder.designation || founder.designation.toLowerCase().includes('founder')) {
+      founder.designation = 'Director / Manager, MPSA School';
+    }
     res.json(founder);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching founder data' });
+    res.status(500).json({ message: 'Error fetching director data' });
+  }
+};
+
+export const getPublicDirector = getPublicFounder;
+
+// Dedicated New Founder Profile
+export const getPublicFounderProfile = async (req, res) => {
+  try {
+    let profile = await FounderProfile.findOne().lean();
+    if (!profile) profile = new FounderProfile();
+    res.json(profile);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching founder profile data' });
   }
 };
 

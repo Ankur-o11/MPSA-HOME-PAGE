@@ -195,11 +195,12 @@
   color: var(--accent-gold);
 }
 
-/* PRINCIPAL & FOUNDER DUAL SECTION */
-.dual-leadership-grid {
+/* PRINCIPAL, DIRECTOR & FOUNDER LEADERSHIP SECTION */
+.dual-leadership-grid,
+.leadership-grid-three {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
 .leadership-card {
@@ -379,8 +380,12 @@
   margin: 0 auto 1.25rem auto;
 }
 
-/* RESPONSIVE MEDIA QUERIES FOR HOME */
 @media (max-width: 1024px) {
+  .dual-leadership-grid,
+  .leadership-grid-three {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
   .highlights-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -409,7 +414,8 @@
     min-height: auto;
   }
   .about-home-grid,
-  .dual-leadership-grid {
+  .dual-leadership-grid,
+  .leadership-grid-three {
     grid-template-columns: 1fr;
     gap: 2rem;
   }

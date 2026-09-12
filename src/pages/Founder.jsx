@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Quote, Award, Calendar, ChevronRight, Heart, Sparkles, AlertCircle, ImageOff } from 'lucide-react';
+import { Quote, Award, GraduationCap, Briefcase, Heart, Sparkles, Trophy, Lightbulb, ImageOff } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import Lightbox from '../components/Lightbox';
 import { apiService } from '../services/api';
@@ -8,50 +8,52 @@ import { getUploadUrl } from '../config/api';
 import { NEUTRAL_AVATAR_SVG, handleAvatarError } from '../utils/imageUtils';
 
 export default function Founder() {
-  const [founder, setFounder] = useState(null);
+  const [founderProfile, setFounderProfile] = useState(null);
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
 
   useEffect(() => {
     async function loadData() {
-      const data = await apiService.getFounder();
-      setFounder(data);
+      const data = await apiService.getFounderProfile();
+      setFounderProfile(data);
     }
     loadData();
   }, []);
 
-  const fName = founder?.name || 'Shri [Founder Name Placeholder]';
-  const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
-  const fPhoto = getUploadUrl(founder?.photo) || NEUTRAL_AVATAR_SVG;
-  const fIntro = founder?.intro || 'A visionary educator and philanthropist who dedicated life to building an institution where children from all walks of life receive quality science education, strong moral discipline, and character building.';
-  const fVisionQuote = founder?.visionQuote || 'Education is the greatest light that can ignite a human mind. When we teach a child science with values, we build not just a professional, but a nation builder.';
-  const fStoryText = founder?.storyText || 'The journey of Maharana Pratap Science Academy began with a deep conviction — that every child deserves access to high-caliber scientific education combined with character discipline.';
-  const timelineData = (founder?.timeline && founder.timeline.length > 0) ? founder.timeline : [
-    { stage: 'Milestone 1', title: 'The School Dream', description: 'Conceptualization of Maharana Pratap Science Academy as a specialized science & value education public school.', year: '[Year Placeholder]' },
-    { stage: 'Milestone 2', title: 'Foundation of the Academy', description: 'Inauguration of the main academic block and first composite science laboratory.', year: '[Year Placeholder]' },
-    { stage: 'Milestone 3', title: 'First Batch of Students', description: 'Welcoming the pioneer batch of students with a dedicated faculty team.', year: '[Year Placeholder]' },
-    { stage: 'Milestone 4', title: 'Growth & Development', description: 'Expansion into Senior Secondary Science streams, computer labs, and sports arenas.', year: '[Year Placeholder]' }
-  ];
+  const fName = founderProfile?.name || 'Shri [Founder Name Placeholder]';
+  const fDesignation = founderProfile?.designation || 'Founder & Visionary Patron, MPSA School';
+  const fPhoto = getUploadUrl(founderProfile?.photo) || NEUTRAL_AVATAR_SVG;
+  const fProfession = founderProfile?.profession || 'Visionary Educator & Philanthropist';
+  const fIntro = founderProfile?.intro || 'A visionary pioneer whose noble dream and dedication laid the groundwork for Maharana Pratap Science Academy.';
+  const fBiography = founderProfile?.biography || founderProfile?.intro || 'Founder biography and inspiring educational journey details will appear here.';
+  const fEducation = founderProfile?.education;
+  const fExperience = founderProfile?.experience;
+  const fContribution = founderProfile?.contribution || 'Established Maharana Pratap Science Academy with a mission to bring high-caliber scientific education and moral discipline to all students.';
+  const fVision = founderProfile?.vision || 'Empowering young minds through scientific inquiry, moral fortitude, and nation-building values.';
+  const fAchievements = founderProfile?.achievements;
+  const fVisionQuote = founderProfile?.visionQuote || 'Education is the greatest light that can ignite a human mind. When we teach a child science with values, we build not just a professional, but a nation builder.';
+  const fStoryText = founderProfile?.storyText || 'The story of Maharana Pratap Science Academy began with a vision to nurture scientific talent rooted in traditional values.';
 
-  const galleryDataList = founder?.gallery || [];
+  const timelineData = founderProfile?.timeline || [];
+  const galleryDataList = founderProfile?.gallery || [];
 
   return (
     <div className="founder-page">
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
-          <h1 className="page-banner-title">Founder & Inspiration</h1>
+          <h1 className="page-banner-title">Founder</h1>
           <p className="page-banner-subtitle">
-            Honoring the visionary leadership, noble values, and enduring dream behind Maharana Pratap Science Academy.
+            Honoring the visionary founder, founding legacy, and enduring inspiration behind Maharana Pratap Science Academy.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>
             <li>/</li>
-            <li>Founder & Inspiration</li>
+            <li>Founder</li>
           </ul>
         </div>
       </div>
 
-      {/* 1. Founder Hero Section */}
+      {/* 1. Founder Hero Profile Card */}
       <section className="section-padding">
         <div className="container">
           <div className="founder-hero-card">
@@ -66,12 +68,33 @@ export default function Founder() {
                 />
               </div>
               <div className="founder-details">
-                <span className="section-badge">Our Visionary Patron</span>
+                <span className="section-badge">Founder & Visionary Patron</span>
                 <h2 className="founder-name">{fName}</h2>
                 <p className="founder-designation">{fDesignation}</p>
+                {fProfession && (
+                  <p style={{ color: 'var(--accent-gold)', fontWeight: '600', fontSize: '0.95rem', marginBottom: '1rem' }}>
+                    {fProfession}
+                  </p>
+                )}
+
                 <p className="founder-intro-text">
                   {fIntro}
                 </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
+                  {fEducation && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                      <GraduationCap size={16} color="#D4A72C" />
+                      <span><strong>Education:</strong> {fEducation}</span>
+                    </div>
+                  )}
+                  {fExperience && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                      <Briefcase size={16} color="#D4A72C" />
+                      <span><strong>Experience:</strong> {fExperience}</span>
+                    </div>
+                  )}
+                </div>
 
                 <blockquote className="leadership-quote" style={{ marginTop: '1.5rem' }}>
                   "{fVisionQuote}"
@@ -82,38 +105,74 @@ export default function Founder() {
         </div>
       </section>
 
-      {/* 2. Founder Story */}
+      {/* 2. About Founder & Biography */}
       <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
         <div className="container">
           <SectionTitle 
-            badge="The Founder's Journey"
-            title="The Vision Behind Maharana Pratap Science Academy"
-            subtitle="The inspiring story of how a noble dream transformed into a premier educational institution."
+            badge="Founding Story"
+            title="About Our Founder"
+            subtitle="The life, vision, and dedication that built Maharana Pratap Science Academy."
           />
 
-          <div style={{ backgroundColor: 'var(--bg-white)', padding: '3rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)', maxWidth: '900px', margin: '0 auto', lineHeight: '1.8', color: 'var(--text-main)' }}>
-            <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)', marginBottom: '1rem' }}>
-              Our Founding Story & Legacy
-            </h3>
-            {fStoryText.split('\n\n').map((para, idx) => (
-              <p key={idx} style={{ marginBottom: '1.25rem' }}>
-                {para}
-              </p>
-            ))}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
+            <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)', lineHeight: '1.8' }}>
+              <h3 style={{ fontSize: '1.35rem', color: 'var(--primary-navy)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Heart size={22} color="#D4A72C" /> Founding Biography & Journey
+              </h3>
+              {fBiography.split('\n\n').map((para, idx) => (
+                <p key={idx} style={{ marginBottom: '1rem', color: 'var(--text-main)' }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {/* Contribution Card */}
+              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)' }}>
+                <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Award size={20} color="#D4A72C" /> School Contribution
+                </h4>
+                <p style={{ color: 'var(--text-main)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                  {fContribution}
+                </p>
+              </div>
+
+              {/* Vision Card */}
+              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)' }}>
+                <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Lightbulb size={20} color="#D4A72C" /> Educational Vision
+                </h4>
+                <p style={{ color: 'var(--text-main)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                  {fVision}
+                </p>
+              </div>
+
+              {/* Achievements Card */}
+              {fAchievements && (
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)' }}>
+                  <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Trophy size={20} color="#D4A72C" /> Achievements & Highlights
+                  </h4>
+                  <p style={{ color: 'var(--text-main)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                    {fAchievements}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Founder Photo Gallery */}
-      <section className="section-padding">
-        <div className="container">
-          <SectionTitle 
-            badge="Historical Moments"
-            title="Founder Photo Gallery"
-            subtitle="Capturing memorable moments from the school's journey and founder's interactions."
-          />
+      {/* 3. Founder Photo Gallery (If photos uploaded) */}
+      {galleryDataList.length > 0 && (
+        <section className="section-padding">
+          <div className="container">
+            <SectionTitle 
+              badge="Historical Archive"
+              title="Founder Photo Gallery"
+              subtitle="Memorable historical moments and milestone photographs."
+            />
 
-          {galleryDataList.length > 0 ? (
             <div className="gallery-grid">
               {galleryDataList.map((item, idx) => (
                 <div key={item.id || item._id || idx} className="gallery-card" onClick={() => setSelectedGalleryItem(item)}>
@@ -125,41 +184,37 @@ export default function Founder() {
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="no-results-box" style={{ padding: '2.5rem', textAlign: 'center', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-lg)' }}>
-              <ImageOff size={44} color="#64748B" style={{ margin: '0 auto 1rem auto' }} />
-              <h4 style={{ color: 'var(--primary-navy)', fontSize: '1.15rem', marginBottom: '0.5rem' }}>No Founder Gallery Photos Uploaded Yet</h4>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>School management can add historical photos in the Founder Photo Gallery section of the Admin Panel.</p>
-            </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* 4. SCHOOL JOURNEY TIMELINE */}
-      <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
-        <div className="container">
-          <SectionTitle 
-            badge="Milestones"
-            title="Our School Journey Timeline"
-            subtitle="Chronicle of key developmental milestones of Maharana Pratap Science Academy."
-          />
+      {timelineData.length > 0 && (
+        <section className="section-padding" style={{ backgroundColor: 'var(--bg-soft)' }}>
+          <div className="container">
+            <SectionTitle 
+              badge="Milestones"
+              title="Founding Journey Timeline"
+              subtitle="Key historical milestones in the establishment of Maharana Pratap Science Academy."
+            />
 
-          <div className="timeline-wrapper">
-            {timelineData.map((t, idx) => (
-              <div key={idx} className={`timeline-item ${idx % 2 === 0 ? 'left' : 'right'}`}>
-                <div className="timeline-dot"></div>
-                <div className="timeline-box">
-                  <span className="timeline-stage">{t.stage || `Milestone ${idx+1}`} {t.year ? `• ${t.year}` : ''}</span>
-                  <h4>{t.title}</h4>
-                  <p>{t.description}</p>
+            <div className="timeline-wrapper">
+              {timelineData.map((t, idx) => (
+                <div key={idx} className={`timeline-item ${idx % 2 === 0 ? 'left' : 'right'}`}>
+                  <div className="timeline-dot"></div>
+                  <div className="timeline-box">
+                    <span className="timeline-stage">{t.stage || `Milestone ${idx+1}`} {t.year ? `• ${t.year}` : ''}</span>
+                    <h4>{t.title}</h4>
+                    <p>{t.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 5. FOUNDER'S VISION QUOTE */}
+      {/* 5. FOUNDER MESSAGE BANNER */}
       <section className="section-padding">
         <div className="container">
           <div className="admissions-cta-banner" style={{ background: 'linear-gradient(135deg, #123B63, #0A223B)' }}>
@@ -169,7 +224,7 @@ export default function Founder() {
                 "{fVisionQuote}"
               </h2>
               <p style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.1rem' }}>
-                — {fName}
+                — {fName} (Founder, MPSA School)
               </p>
             </div>
           </div>

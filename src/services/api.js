@@ -100,12 +100,36 @@ export const apiService = {
 
   async getFounder() {
     return fetchWithFallback(`${API_BASE_URL}/public/founder`, {
-      name: 'Shri [Founder Name Placeholder]',
-      designation: 'Founder & Visionary Chairman, MPSA School',
+      name: 'Shri [Director / Manager Name Placeholder]',
+      designation: 'Director / Manager, MPSA School',
       photo: NEUTRAL_AVATAR_SVG,
-      intro: 'A visionary educator and philanthropist...',
+      intro: 'A visionary educator and philanthropist steering Maharana Pratap Science Academy...',
       visionQuote: 'Education is the greatest light that can ignite a human mind...',
       storyText: 'The journey of Maharana Pratap Science Academy began with a deep conviction...',
+      timeline: [],
+      gallery: []
+    });
+  },
+
+  async getDirector() {
+    return this.getFounder();
+  },
+
+  async getFounderProfile() {
+    return fetchWithFallback(`${API_BASE_URL}/public/founder-profile`, {
+      name: 'Shri [Founder Name Placeholder]',
+      designation: 'Founder & Visionary Patron, MPSA School',
+      photo: NEUTRAL_AVATAR_SVG,
+      profession: 'Visionary Educator & Philanthropist',
+      biography: 'Founder biography and inspiring journey.',
+      intro: 'A visionary pioneer who laid the foundation of Maharana Pratap Science Academy.',
+      education: 'Higher Degrees in Science & Pedagogy',
+      experience: 'Decades of Educational Service',
+      contribution: 'Conceptualization and foundation of MPSA School.',
+      vision: 'Building nation builders through scientific temper and character discipline.',
+      achievements: 'Established premier science academy in the region.',
+      visionQuote: 'Education is the greatest light that can ignite a human mind.',
+      storyText: 'The noble dream to establish Maharana Pratap Science Academy...',
       timeline: [],
       gallery: []
     });

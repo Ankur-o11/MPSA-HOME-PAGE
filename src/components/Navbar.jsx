@@ -96,6 +96,11 @@ export default function Navbar() {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/director" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>
+                Director
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/founder" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>
                 Founder
               </NavLink>

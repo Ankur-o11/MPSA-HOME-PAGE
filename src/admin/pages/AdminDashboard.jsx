@@ -8,16 +8,11 @@ import {
   Trophy, 
   UserCheck, 
   Award, 
-  Building, 
-  BookOpen, 
-  FileText, 
-  Phone, 
   ChevronRight,
   ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL, getUploadUrl } from '../../config/api';
-
+import { API_BASE_URL } from '../../config/api';
 
 export default function AdminDashboard() {
   const { authFetch, adminUser } = useAuth();
@@ -72,7 +67,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Overview Cards (REQUIREMENT #5) */}
+      {/* Overview Cards */}
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon"><Users size={28} /></div>
@@ -135,17 +130,26 @@ export default function AdminDashboard() {
           <div className="why-card" style={{ textAlign: 'left' }}>
             <ImageIcon size={28} color="#123B63" style={{ marginBottom: '0.75rem' }} />
             <h4>Photo Gallery</h4>
-            <p style={{ marginBottom: '1rem' }}>Upload high-res campus photos, assign categories, and edit captions.</p>
+            <p style={{ marginBottom: '1rem' }}>Upload campus photos, assign categories, and edit captions.</p>
             <Link to="/admin/gallery" className="btn btn-outline btn-sm">
               Manage Gallery <ChevronRight size={14} />
             </Link>
           </div>
 
           <div className="why-card" style={{ textAlign: 'left' }}>
+            <UserCheck size={28} color="#123B63" style={{ marginBottom: '0.75rem' }} />
+            <h4>Director / Manager</h4>
+            <p style={{ marginBottom: '1rem' }}>Update Director / Manager profile, biography, and photo.</p>
+            <Link to="/admin/director" className="btn btn-outline btn-sm">
+              Manage Director <ChevronRight size={14} />
+            </Link>
+          </div>
+
+          <div className="why-card" style={{ textAlign: 'left' }}>
             <Award size={28} color="#123B63" style={{ marginBottom: '0.75rem' }} />
-            <h4>Founder Section</h4>
-            <p style={{ marginBottom: '1rem' }}>Update founder story, vision quotes, timeline items, and photos.</p>
-            <Link to="/admin/founder" className="btn btn-outline btn-sm">
+            <h4>Founder Profile</h4>
+            <p style={{ marginBottom: '1rem' }}>Update Founder profile, contribution, vision, and quotes.</p>
+            <Link to="/admin/founder-profile" className="btn btn-outline btn-sm">
               Manage Founder <ChevronRight size={14} />
             </Link>
           </div>
@@ -156,15 +160,6 @@ export default function AdminDashboard() {
             <p style={{ marginBottom: '1rem' }}>Update principal welcome message, credentials, and vision text.</p>
             <Link to="/admin/principal" className="btn btn-outline btn-sm">
               Manage Principal <ChevronRight size={14} />
-            </Link>
-          </div>
-
-          <div className="why-card" style={{ textAlign: 'left' }}>
-            <Calendar size={28} color="#123B63" style={{ marginBottom: '0.75rem' }} />
-            <h4>School Events</h4>
-            <p style={{ marginBottom: '1rem' }}>Add upcoming science expos, sports meets, and previous event recaps.</p>
-            <Link to="/admin/events" className="btn btn-outline btn-sm">
-              Manage Events <ChevronRight size={14} />
             </Link>
           </div>
         </div>

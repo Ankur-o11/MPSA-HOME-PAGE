@@ -9,6 +9,9 @@ import {
   deleteTeacher,
   updatePrincipal,
   updateFounder,
+  updateDirector,
+  getFounderProfileAdmin,
+  updateFounderProfile,
   getAllGalleryAdmin,
   createGalleryItem,
   updateGalleryItem,
@@ -49,9 +52,12 @@ router.post('/teachers', createTeacher);
 router.put('/teachers/:id', updateTeacher);
 router.delete('/teachers/:id', deleteTeacher);
 
-// Principal & Founder
+// Principal, Director & Founder
 router.put('/principal', updatePrincipal);
 router.put('/founder', updateFounder);
+router.put('/director', updateDirector);
+router.get('/founder-profile', getFounderProfileAdmin);
+router.put('/founder-profile', updateFounderProfile);
 
 // Gallery
 router.get('/gallery', getAllGalleryAdmin);
