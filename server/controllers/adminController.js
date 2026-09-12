@@ -353,22 +353,40 @@ export const handleImageUpload = (req, res) => {
     return res.status(400).json({ message: 'No file uploaded or file format invalid' });
   }
 
-  let fileUrl = `/uploads/${req.file.filename}`;
   try {
-    const filePath = path.join(process.cwd(), 'uploads', req.file.filename);
-    if (fs.existsSync(filePath)) {
-      const fileBuffer = fs.readFileSync(filePath);
-      const mime = req.file.mimetype || 'image/jpeg';
-      fileUrl = `data:${mime};base64,${fileBuffer.toString('base64')}`;
-    }
-  } catch (e) {
-    console.error('Base64 image conversion error:', e);
-  }
+    const mime = req.file.mimetype || 'image/jpeg';
+    const ext = path.extname(req.file.originalname || '.jpg').toLowerCase() || '.jpg';
+    const filename = `mpsa-${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
 
-  res.json({
-    success: true,
-    message: 'Image uploaded successfully',
-    url: fileUrl,
-    filename: req.file.filename
-  });
+    let fileBuffer = req.file.buffer;
+    if (!fileBuffer && req.file.path && fs.existsSync(req.file.path)) {
+      fileBuffer = fs.readFileSync(req.file.path);
+    }
+
+    if (!fileBuffer) {
+      return res.status(500).json({ message: 'Failed to read uploaded image buffer', success: false });
+    }
+
+    const fileUrl = `data:${mime};base64,${fileBuffer.toString('base64')}`;
+
+    // Write to uploads directory if directory is writable (local dev environment backup)
+    try {
+      const uploadDir = path.join(process.cwd(), 'uploads');
+      if (fs.existsSync(uploadDir)) {
+        fs.writeFileSync(path.join(uploadDir, filename), fileBuffer);
+      }
+    } catch (e) {
+      // Ignore write errors in read-only serverless runtimes
+    }
+
+    return res.json({
+      success: true,
+      message: 'Image uploaded successfully',
+      url: fileUrl,
+      filename
+    });
+  } catch (err) {
+    console.error('Image upload processing error:', err);
+    return res.status(500).json({ message: 'Error processing uploaded image file', success: false });
+  }
 };

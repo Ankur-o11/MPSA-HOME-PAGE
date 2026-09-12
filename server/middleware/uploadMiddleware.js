@@ -1,37 +1,21 @@
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
 
-// Ensure uploads directory exists
-const uploadDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Storage Configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, 'mpsa-' + uniqueSuffix + ext);
-  }
-});
+// Use memory storage for serverless compatibility (prevents EROFS read-only filesystem errors on Vercel)
+const storage = multer.memoryStorage();
 
 // File Filter for Image Security (RULE #16)
 const fileFilter = (req, file, cb) => {
-  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.svg'];
+  const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'];
 
   const ext = path.extname(file.originalname).toLowerCase();
   const mime = file.mimetype.toLowerCase();
 
-  if (allowedExtensions.includes(ext) && allowedMimeTypes.includes(mime)) {
+  if (allowedExtensions.includes(ext) || allowedMimeTypes.includes(mime)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file format. Only JPG, JPEG, PNG, and WEBP image files are allowed.'), false);
+    cb(new Error('Invalid file format. Only JPG, JPEG, PNG, WEBP, and SVG image files are allowed.'), false);
   }
 };
 
