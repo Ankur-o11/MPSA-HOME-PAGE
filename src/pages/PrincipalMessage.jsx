@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Quote, Award, BookOpen, GraduationCap, CheckCircle2 } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import { apiService } from '../services/api';
+import { getUploadUrl } from '../config/api';
 
 export default function PrincipalMessage() {
   const [principal, setPrincipal] = useState(null);
@@ -19,7 +20,7 @@ export default function PrincipalMessage() {
 
   const pName = principal?.name || 'Dr. [Principal Name Placeholder]';
   const pDesignation = principal?.designation || 'Principal, MPSA School';
-  const pPhoto = principal?.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop';
+  const pPhoto = getUploadUrl(principal?.photo) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop';
   const pQualifications = principal?.qualifications || 'Ph.D., M.Sc., B.Ed.';
   const pExperience = principal?.experience || '18+ Years in Education';
   const pQuote = principal?.messageQuote || 'At Maharana Pratap Science Academy, we view education as a transformative journey. Our objective is not only to prepare students for examinations, but to equip them with wisdom, resilience, scientific curiosity, and moral courage.';

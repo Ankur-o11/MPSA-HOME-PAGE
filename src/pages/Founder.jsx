@@ -4,6 +4,7 @@ import { Quote, Award, Calendar, ChevronRight, Heart, Sparkles, AlertCircle, Ima
 import SectionTitle from '../components/SectionTitle';
 import Lightbox from '../components/Lightbox';
 import { apiService } from '../services/api';
+import { getUploadUrl } from '../config/api';
 
 export default function Founder() {
   const [founder, setFounder] = useState(null);
@@ -19,7 +20,7 @@ export default function Founder() {
 
   const fName = founder?.name || 'Shri [Founder Name Placeholder]';
   const fDesignation = founder?.designation || 'Founder & Visionary Chairman, MPSA School';
-  const fPhoto = founder?.photo || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop';
+  const fPhoto = getUploadUrl(founder?.photo) || 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop';
   const fIntro = founder?.intro || 'A visionary educator and philanthropist who dedicated life to building an institution where children from all walks of life receive quality science education, strong moral discipline, and character building.';
   const fVisionQuote = founder?.visionQuote || 'Education is the greatest light that can ignite a human mind. When we teach a child science with values, we build not just a professional, but a nation builder.';
   const fStoryText = founder?.storyText || 'The journey of Maharana Pratap Science Academy began with a deep conviction — that every child deserves access to high-caliber scientific education combined with character discipline.';
@@ -113,7 +114,7 @@ export default function Founder() {
             <div className="gallery-grid">
               {galleryDataList.map((item, idx) => (
                 <div key={item.id || item._id || idx} className="gallery-card" onClick={() => setSelectedGalleryItem(item)}>
-                  <img src={item.image} alt={item.title || 'Founder Photo'} className="gallery-card-img" />
+                  <img src={getUploadUrl(item.image)} alt={item.title || 'Founder Photo'} className="gallery-card-img" />
                   <div className="gallery-card-overlay">
                     <h4 className="gallery-card-title">{item.title}</h4>
                     <p className="gallery-card-date">{item.caption || item.date}</p>
