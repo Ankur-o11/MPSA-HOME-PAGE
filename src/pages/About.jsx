@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Target, 
@@ -16,10 +16,25 @@ import {
 
 import SectionTitle from '../components/SectionTitle';
 import { SCHOOL_CONFIG } from '../data/config';
-
+import { apiService } from '../services/api';
+import { getUploadUrl } from '../config/api';
 import { NEUTRAL_IMAGE_SVG, handleImageError } from '../utils/imageUtils';
 
 export default function About() {
+  const [contactSettings, setContactSettings] = useState(SCHOOL_CONFIG);
+
+  useEffect(() => {
+    async function loadAboutContact() {
+      const data = await apiService.getContactSettings();
+      if (data) setContactSettings(data);
+    }
+    loadAboutContact();
+  }, []);
+
+  const aboutImageUrl = contactSettings?.aboutSectionImage 
+    ? getUploadUrl(contactSettings.aboutSectionImage) 
+    : (contactSettings?.campusImage ? getUploadUrl(contactSettings.campusImage) : NEUTRAL_IMAGE_SVG);
+
   return (
     <div className="about-page">
       {/* Banner */}
@@ -43,7 +58,7 @@ export default function About() {
           <div className="about-home-grid">
             <div className="about-home-image-wrapper">
               <img 
-                src={NEUTRAL_IMAGE_SVG} 
+                src={aboutImageUrl} 
                 alt="Maharana Pratap Science Academy Campus" 
                 onError={handleImageError}
               />
