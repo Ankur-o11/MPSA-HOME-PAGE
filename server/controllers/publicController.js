@@ -53,10 +53,37 @@ export const getPublicFounder = async (req, res) => {
 
 export const getPublicGallery = async (req, res) => {
   try {
-    const gallery = await Gallery.find({ isPublished: true }).sort({ displayOrder: 1, createdAt: -1 }).lean();
-    res.json(gallery);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    let limit = Math.max(1, parseInt(req.query.limit) || 20);
+    if (limit > 30) limit = 30;
+
+    const filter = { isPublished: true };
+    const skip = (page - 1) * limit;
+
+    const [total, items] = await Promise.all([
+      Gallery.countDocuments(filter),
+      Gallery.find(filter)
+        .sort({ displayOrder: 1, createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+    ]);
+
+    const hasMore = (skip + items.length) < total;
+
+    return res.json({
+      success: true,
+      data: items,
+      pagination: {
+        page,
+        limit,
+        total,
+        hasMore
+      }
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching gallery images' });
+    console.error('Error fetching public gallery:', err);
+    res.status(500).json({ message: 'Error fetching gallery images', success: false });
   }
 };
 

@@ -110,8 +110,21 @@ export const apiService = {
     });
   },
 
-  async getGallery() {
-    return fetchWithFallback(`${API_BASE_URL}/public/gallery`, galleryData);
+  async getGallery(params = {}) {
+    const page = params.page || 1;
+    const limit = params.limit || 20;
+    const url = `${API_BASE_URL}/public/gallery?page=${page}&limit=${limit}`;
+    const fallbackRes = {
+      success: true,
+      data: galleryData.slice((page - 1) * limit, page * limit),
+      pagination: {
+        page,
+        limit,
+        total: galleryData.length,
+        hasMore: (page * limit) < galleryData.length
+      }
+    };
+    return fetchWithFallback(url, fallbackRes);
   },
 
   async getNotices() {

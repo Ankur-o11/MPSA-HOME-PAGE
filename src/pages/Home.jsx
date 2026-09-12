@@ -61,7 +61,7 @@ export default function Home() {
         apiService.getNotices(),
         apiService.getEvents(),
         apiService.getAchievements(),
-        apiService.getGallery(),
+        apiService.getGallery({ limit: 6 }),
         apiService.getContactSettings(),
         apiService.getPrincipal(),
         apiService.getFounder()
@@ -72,7 +72,8 @@ export default function Home() {
       if (nData && nData.length > 0) setNotices(nData);
       if (eData && eData.length > 0) setEvents(eData);
       if (aData && aData.length > 0) setAchievements(aData);
-      if (gData && gData.length > 0) setGallery(gData);
+      const gItems = Array.isArray(gData) ? gData : (gData?.data || []);
+      if (gItems && gItems.length > 0) setGallery(gItems);
       if (sData) setSiteSettings(sData);
       if (pData) setPrincipal(pData);
       if (fndData) setFounder(fndData);

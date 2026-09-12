@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronDown, Loader2, ImageOff, RefreshCw } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
 import GalleryCard from '../components/GalleryCard';
 import Lightbox from '../components/Lightbox';
@@ -8,16 +9,66 @@ import { apiService } from '../services/api';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState(defaultGallery);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingInitial, setLoadingInitial] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [error, setError] = useState('');
+
   const [activeTab, setActiveTab] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
   useEffect(() => {
-    async function loadGallery() {
-      const data = await apiService.getGallery();
-      if (data && data.length > 0) setGalleryItems(data);
+    async function loadInitialGallery() {
+      setLoadingInitial(true);
+      setError('');
+      try {
+        const res = await apiService.getGallery({ page: 1, limit: 20 });
+        if (res) {
+          const items = Array.isArray(res) ? res : (res.data || []);
+          if (items && items.length > 0) {
+            setGalleryItems(items);
+          }
+          const moreAvailable = res.pagination ? res.pagination.hasMore : (items.length >= 20);
+          setHasMore(moreAvailable);
+          setPage(1);
+        }
+      } catch (err) {
+        setError('Failed to load gallery images. Showing cached default view.');
+      } finally {
+        setLoadingInitial(false);
+      }
     }
-    loadGallery();
+    loadInitialGallery();
   }, []);
+
+  const handleLoadMore = async () => {
+    if (loadingMore || !hasMore) return;
+    setLoadingMore(true);
+    setError('');
+
+    const nextPage = page + 1;
+    try {
+      const res = await apiService.getGallery({ page: nextPage, limit: 20 });
+      if (res) {
+        const newItems = Array.isArray(res) ? res : (res.data || []);
+        if (newItems && newItems.length > 0) {
+          setGalleryItems(prev => {
+            const existingIds = new Set(prev.map(i => i._id || i.id));
+            const uniqueNew = newItems.filter(i => !existingIds.has(i._id || i.id));
+            return [...prev, ...uniqueNew];
+          });
+          setPage(nextPage);
+        }
+        const moreAvailable = res.pagination ? res.pagination.hasMore : (newItems.length >= 20);
+        setHasMore(moreAvailable);
+      }
+    } catch (err) {
+      setError('Could not load more images. Please check connection and retry.');
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   const filteredItems = useMemo(() => {
     if (activeTab === 'All') return galleryItems;
@@ -88,15 +139,50 @@ export default function Gallery() {
           </div>
 
           {/* Grid */}
-          <div className="gallery-grid">
-            {filteredItems.map(item => (
-              <GalleryCard 
-                key={item.id} 
-                item={item} 
-                onClick={handleOpenLightbox}
-              />
-            ))}
-          </div>
+          {filteredItems.length > 0 ? (
+            <div className="gallery-grid">
+              {filteredItems.map(item => (
+                <GalleryCard 
+                  key={item._id || item.id} 
+                  item={item} 
+                  onClick={handleOpenLightbox}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="no-results-box" style={{ padding: '3rem', textAlign: 'center', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-lg)' }}>
+              <ImageOff size={48} color="#64748B" style={{ margin: '0 auto 1rem auto' }} />
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--primary-navy)', marginBottom: '0.5rem' }}>No Photos Found</h3>
+              <p style={{ color: 'var(--text-muted)' }}>No photos available in the "{activeTab}" category.</p>
+            </div>
+          )}
+
+          {/* Load More Pagination Button */}
+          {hasMore && (
+            <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+              {error && (
+                <p style={{ color: '#EF4444', marginBottom: '1rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+                  {error}
+                </p>
+              )}
+              <button 
+                className="btn btn-outline-gold btn-lg"
+                onClick={handleLoadMore}
+                disabled={loadingMore}
+                style={{ minWidth: '220px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+              >
+                {loadingMore ? (
+                  <>
+                    <RefreshCw size={18} className="spin-anim" /> Loading More Photos...
+                  </>
+                ) : (
+                  <>
+                    Load More Photos <ChevronDown size={18} />
+                  </>
+                )}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
