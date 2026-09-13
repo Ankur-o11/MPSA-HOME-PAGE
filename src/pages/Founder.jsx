@@ -20,7 +20,7 @@ export default function Founder() {
     loadData();
   }, []);
 
-  const fName = founderProfile?.name || 'Shri [Founder Name Placeholder]';
+  const fName = founderProfile?.name || 'LATE SHRI UJAGAR SINGH CHAUHAN';
   const fDesignation = founderProfile?.designation || 'Founder & Visionary Patron, MPSA School';
   const fPhoto = getUploadUrl(founderProfile?.photo) || NEUTRAL_AVATAR_SVG;
   const fProfession = founderProfile?.profession || 'Visionary Educator & Philanthropist';

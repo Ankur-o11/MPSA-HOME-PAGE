@@ -8,9 +8,9 @@ function GalleryCard({ item, onClick }) {
 
   return (
     <div className="gallery-card" onClick={() => onClick && onClick(item)}>
-      <img 
-        src={imageUrl} 
-        alt={item.title} 
+      <img
+        src={imageUrl}
+        alt={item.title}
         className="gallery-card-img"
         loading="lazy"
         decoding="async"

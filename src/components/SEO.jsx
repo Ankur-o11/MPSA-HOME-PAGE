@@ -2,6 +2,47 @@ import React, { useEffect } from 'react';
 
 const DEFAULT_DOMAIN = 'https://school-web-rouge-nine.vercel.app';
 
+// Helper function to sanitize URLs by stripping Markdown link syntax like [label](url) or [url](url)
+const cleanUrl = (urlStr) => {
+  if (!urlStr || typeof urlStr !== 'string') return urlStr;
+  let cleaned = urlStr.trim();
+  
+  // 1. Match Markdown link format: [label](https://...)
+  const mdMatch = cleaned.match(/\[.*?\]\((https?:\/\/[^\s\)]+)\)/i);
+  if (mdMatch) {
+    cleaned = mdMatch[1];
+  } else {
+    // 2. Strip any accidental outer Markdown brackets or parens
+    cleaned = cleaned.replace(/^\[+|\]+$|^\(+|\)+$/g, '').trim();
+  }
+
+  // 3. Normalize schema.org context URLs
+  if (cleaned === 'https://schema.org/' || cleaned === 'http://schema.org/' || cleaned === 'http://schema.org') {
+    cleaned = 'https://schema.org';
+  }
+
+  return cleaned;
+};
+
+// Helper function to recursively sanitize JSON-LD schema objects
+const cleanSchema = (obj) => {
+  if (!obj) return obj;
+  if (typeof obj === 'string') {
+    return cleanUrl(obj);
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(cleanSchema);
+  }
+  if (typeof obj === 'object') {
+    const cleaned = {};
+    for (const key of Object.keys(obj)) {
+      cleaned[key] = cleanSchema(obj[key]);
+    }
+    return cleaned;
+  }
+  return obj;
+};
+
 export default function SEO({
   title,
   description,
@@ -50,9 +91,20 @@ export default function SEO({
     updateMetaTag('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
 
     // 5. Canonical Link & OG URL
-    const fullCanonical = canonicalUrl 
-      ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${DEFAULT_DOMAIN}${canonicalUrl}`)
-      : DEFAULT_DOMAIN;
+    const rawCanonical = cleanUrl(canonicalUrl);
+    const baseDomain = cleanUrl(DEFAULT_DOMAIN);
+    
+    let fullCanonical;
+    if (rawCanonical) {
+      if (rawCanonical.startsWith('http')) {
+        fullCanonical = rawCanonical;
+      } else {
+        const path = rawCanonical.startsWith('/') ? rawCanonical : `/${rawCanonical}`;
+        fullCanonical = `${baseDomain}${path}`;
+      }
+    } else {
+      fullCanonical = baseDomain;
+    }
 
     let linkCanonical = document.querySelector('link[rel="canonical"]');
     if (!linkCanonical) {
@@ -65,6 +117,7 @@ export default function SEO({
 
     // 6. JSON-LD Structured Data Schema
     if (schema) {
+      const sanitizedSchema = cleanSchema(schema);
       let scriptSchema = document.querySelector('script[id="json-ld-schema"]');
       if (!scriptSchema) {
         scriptSchema = document.createElement('script');
@@ -72,7 +125,7 @@ export default function SEO({
         scriptSchema.setAttribute('id', 'json-ld-schema');
         document.head.appendChild(scriptSchema);
       }
-      scriptSchema.textContent = JSON.stringify(schema);
+      scriptSchema.textContent = JSON.stringify(sanitizedSchema);
     }
   }, [title, description, keywords, canonicalUrl, ogType, schema]);
 
