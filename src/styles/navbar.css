@@ -235,3 +235,19 @@
     height: 40px;
   }
 }
+
+@media (max-width: 380px) {
+  .navbar-container {
+    padding: 0.6rem 0.6rem;
+  }
+  .brand-logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .brand-full-name {
+    font-size: 0.75rem;
+  }
+  .brand-sub-name {
+    font-size: 0.65rem;
+  }
+}

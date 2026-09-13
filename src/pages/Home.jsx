@@ -624,11 +624,11 @@ export default function Home() {
                 <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-navy)', marginBottom: '0.5rem' }}>
                   {schoolConfig.schoolFullName || schoolConfig.fullName || SCHOOL_CONFIG.fullName} Campus Location
                 </h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 1.5rem auto' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '600px', width: '100%', margin: '0 auto 1.5rem auto', boxSizing: 'border-box', overflowWrap: 'anywhere' }}>
                   {schoolConfig.address || SCHOOL_CONFIG.address}
                 </p>
 
-                <div className="placeholder-notice" style={{ maxWidth: '650px', margin: '0 auto 1.5rem auto' }}>
+                <div className="placeholder-notice" style={{ maxWidth: '650px', width: '100%', margin: '0 auto 1.5rem auto', boxSizing: 'border-box', overflowWrap: 'anywhere' }}>
                   <strong>Map Embed Notice:</strong> Google Maps embed iframe URL will be configured via <code>SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL</code> once exact campus GPS pin is confirmed.
                 </div>
 

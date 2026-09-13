@@ -118,6 +118,15 @@
   font-size: 0.92rem;
   color: #CBD5E1;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.footer-contact-item a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .footer-contact-item svg {

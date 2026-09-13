@@ -101,6 +101,7 @@ button {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
 .section-padding {
@@ -113,11 +114,28 @@ button {
   }
 }
 
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+  .section-padding {
+    padding: 2.5rem 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+}
+
 /* Section Title Component Styles */
 .section-title-wrapper {
   text-align: center;
   max-width: 750px;
   margin: 0 auto 3rem auto;
+  box-sizing: border-box;
+  padding: 0 0.5rem;
 }
 
 .section-title-wrapper.align-left {
@@ -139,6 +157,10 @@ button {
   border-radius: 50px;
   border: 1px solid rgba(212, 167, 44, 0.3);
   margin-bottom: 0.75rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .section-title-text {
@@ -146,6 +168,20 @@ button {
   color: var(--primary-navy);
   margin-bottom: 0.75rem;
   position: relative;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 480px) {
+  .section-title-text {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .section-title-text {
+    font-size: 1.45rem;
+  }
 }
 
 .section-subtitle {
@@ -180,6 +216,12 @@ button {
   transition: all var(--transition-normal);
   text-align: center;
   white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.btn svg {
+  flex-shrink: 0;
 }
 
 .btn-primary {
@@ -269,6 +311,10 @@ button {
   color: #78350F;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   margin: 1rem 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .placeholder-notice code {
@@ -276,6 +322,11 @@ button {
   padding: 0.15rem 0.35rem;
   border-radius: 3px;
   font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  white-space: normal;
+  display: inline-block;
+  max-width: 100%;
 }
 
 /* Scrollbar */

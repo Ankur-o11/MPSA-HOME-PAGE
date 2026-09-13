@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 function FacilityCard({ facility }) {
   return (
-    <div className="why-card" style={{ padding: '0', overflow: 'hidden', textAlign: 'left' }}>
+    <div className="why-card" style={{ padding: '0', overflow: 'hidden', textAlign: 'left', maxWidth: '100%', boxSizing: 'border-box', minWidth: 0 }}>
       <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
         <img 
           src={facility.image} 
@@ -20,11 +20,11 @@ function FacilityCard({ facility }) {
           </span>
         )}
       </div>
-      <div style={{ padding: '1.5rem' }}>
-        <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.5rem' }}>
+      <div style={{ padding: '1.5rem', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
+        <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.5rem', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
           {facility.title}
         </h4>
-        <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+        <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: '1.6', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
           {facility.description}
         </p>
       </div>

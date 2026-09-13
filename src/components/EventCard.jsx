@@ -20,7 +20,10 @@ function EventCard({ event, isPrevious = false, onClick }) {
         display: 'flex',
         flexDirection: 'column',
         cursor: onClick ? 'pointer' : 'default',
-        transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+        boxSizing: 'border-box',
+        maxWidth: '100%',
+        minWidth: 0
       }}
     >
       <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
@@ -76,29 +79,29 @@ function EventCard({ event, isPrevious = false, onClick }) {
         )}
       </div>
 
-      <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.75rem' }}>
+      <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1, minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
+        <h4 style={{ fontSize: '1.15rem', color: 'var(--primary-navy)', marginBottom: '0.75rem', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
           {event.title}
         </h4>
 
         {!isPrevious && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem', minWidth: 0, overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
             {event.time && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Clock size={14} color="#1F5F95" />
+                <Clock size={14} color="#1F5F95" style={{ flexShrink: 0 }} />
                 <span><strong>Time:</strong> {event.time}</span>
               </div>
             )}
             {event.location && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <MapPin size={14} color="#1F5F95" />
+                <MapPin size={14} color="#1F5F95" style={{ flexShrink: 0 }} />
                 <span><strong>Venue:</strong> {event.location}</span>
               </div>
             )}
           </div>
         )}
 
-        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', marginTop: 'auto' }}>
+        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', marginTop: 'auto', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
           {event.description}
         </p>
       </div>

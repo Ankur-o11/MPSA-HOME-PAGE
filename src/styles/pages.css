@@ -131,6 +131,8 @@
   font-size: 2.25rem;
   color: var(--primary-navy);
   margin-bottom: 0.25rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .founder-designation {
@@ -138,12 +140,16 @@
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .founder-intro-text {
   color: var(--text-muted);
   font-size: 1.05rem;
   line-height: 1.7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* TIMELINE FOR FOUNDER & SCHOOL JOURNEY */
@@ -440,6 +446,8 @@
 @media (max-width: 576px) {
   .page-banner-title {
     font-size: 1.85rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
   .page-banner-subtitle {
     font-size: 0.92rem;
@@ -451,19 +459,53 @@
     padding: 1.25rem 1rem;
   }
   .vm-card {
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1rem;
   }
   .form-box {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem;
   }
   .founder-details,
   .message-content-box {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem;
+  }
+  .founder-name {
+    font-size: 1.6rem;
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 480px) {
+  .page-banner {
+    padding: 2.75rem 0 1.75rem 0;
+  }
   .page-banner-title {
-    font-size: 1.65rem;
+    font-size: 1.6rem;
+  }
+  .founder-name {
+    font-size: 1.45rem;
+  }
+  .step-card {
+    padding: 1rem 0.85rem;
+    gap: 0.85rem;
+  }
+  .form-box {
+    padding: 1rem 0.85rem;
+  }
+  .form-control {
+    padding: 0.75rem 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .page-banner-title {
+    font-size: 1.35rem;
+  }
+  .founder-name {
+    font-size: 1.25rem;
+  }
+  .founder-details,
+  .message-content-box,
+  .vm-card,
+  .form-box {
+    padding: 0.85rem 0.65rem;
   }
 }

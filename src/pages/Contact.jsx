@@ -114,33 +114,33 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="why-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', textAlign: 'left', padding: '1.5rem' }}>
+                <div className="why-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', textAlign: 'left', padding: '1.5rem', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
                   <div className="why-icon-box" style={{ margin: 0, flexShrink: 0 }}><Phone size={24} /></div>
-                  <div>
+                  <div style={{ minWidth: 0, overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>Phone Lines</h4>
-                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                       Admission Helpline: {phonePrimary}<br />
                       Office Desk: {phoneSecondary}
                     </p>
                   </div>
                 </div>
 
-                <div className="why-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', textAlign: 'left', padding: '1.5rem' }}>
+                <div className="why-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', textAlign: 'left', padding: '1.5rem', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
                   <div className="why-icon-box" style={{ margin: 0, flexShrink: 0 }}><Mail size={24} /></div>
-                  <div>
+                  <div style={{ minWidth: 0, overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>Email Support</h4>
-                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                       General Inquiries: {emailGeneral}<br />
                       Admissions Desk: {emailAdmissions}
                     </p>
                   </div>
                 </div>
 
-                <div className="why-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', textAlign: 'left', padding: '1.5rem' }}>
+                <div className="why-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', textAlign: 'left', padding: '1.5rem', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
                   <div className="why-icon-box" style={{ margin: 0, flexShrink: 0 }}><Clock size={24} /></div>
-                  <div>
+                  <div style={{ minWidth: 0, overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                     <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-navy)', marginBottom: '0.2rem' }}>School Office Timings</h4>
-                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)' }}>{timingOffice}</p>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>{timingOffice}</p>
                   </div>
                 </div>
               </div>
