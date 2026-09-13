@@ -10,6 +10,8 @@ import Facility from '../models/Facility.js';
 import Academics from '../models/Academics.js';
 import Admissions from '../models/Admissions.js';
 import ContactSettings from '../models/ContactSettings.js';
+import Advantage from '../models/Advantage.js';
+import AboutSettings from '../models/AboutSettings.js';
 
 export const getPublicTeachers = async (req, res) => {
   try {
@@ -117,10 +119,39 @@ export const getPublicNotices = async (req, res) => {
 
 export const getPublicEvents = async (req, res) => {
   try {
-    const events = await Event.find({ isPublished: true }).sort({ createdAt: -1 }).lean();
+    const events = await Event.find({ isPublished: true }).sort({ displayOrder: 1, createdAt: -1 }).lean();
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching events' });
+  }
+};
+
+export const getPublicEventById = async (req, res) => {
+  try {
+    const event = await Event.findOne({ _id: req.params.id, isPublished: true }).lean();
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching event details' });
+  }
+};
+
+export const getPublicAdvantages = async (req, res) => {
+  try {
+    const advantages = await Advantage.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 }).lean();
+    res.json(advantages);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching school advantages' });
+  }
+};
+
+export const getPublicAboutSettings = async (req, res) => {
+  try {
+    let about = await AboutSettings.findOne().lean();
+    if (!about) about = new AboutSettings();
+    res.json(about);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching about page content' });
   }
 };
 

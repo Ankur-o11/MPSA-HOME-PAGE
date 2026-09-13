@@ -23,18 +23,25 @@ import { NEUTRAL_IMAGE_SVG, handleImageError } from '../utils/imageUtils';
 
 export default function About() {
   const [contactSettings, setContactSettings] = useState(SCHOOL_CONFIG);
+  const [aboutSettings, setAboutSettings] = useState(null);
 
   useEffect(() => {
-    async function loadAboutContact() {
-      const data = await apiService.getContactSettings();
-      if (data) setContactSettings(data);
+    async function loadAboutData() {
+      const [cData, aData] = await Promise.all([
+        apiService.getContactSettings(),
+        apiService.getAboutSettings()
+      ]);
+      if (cData) setContactSettings(cData);
+      if (aData) setAboutSettings(aData);
     }
-    loadAboutContact();
+    loadAboutData();
   }, []);
 
-  const aboutImageUrl = contactSettings?.aboutSectionImage 
-    ? getUploadUrl(contactSettings.aboutSectionImage) 
-    : (contactSettings?.campusImage ? getUploadUrl(contactSettings.campusImage) : NEUTRAL_IMAGE_SVG);
+  const aboutImageUrl = aboutSettings?.aboutImage
+    ? getUploadUrl(aboutSettings.aboutImage)
+    : (contactSettings?.aboutSectionImage 
+      ? getUploadUrl(contactSettings.aboutSectionImage) 
+      : (contactSettings?.campusImage ? getUploadUrl(contactSettings.campusImage) : NEUTRAL_IMAGE_SVG));
 
   const aboutSchema = {
     "@context": "https://schema.org",
@@ -82,17 +89,25 @@ export default function About() {
             <div className="about-home-content">
               <span className="section-badge">Educational Ethos</span>
               <h2 className="section-title-text" style={{ textAlign: 'left', marginBottom: '1.25rem' }}>
-                Welcome to Maharana Pratap Science Academy Inter College, Jalaun
+                {aboutSettings?.mainHeading || "Welcome to Maharana Pratap Science Academy Inter College, Jalaun"}
               </h2>
-              <p>
-                <strong>MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE (MPSA School)</strong>, located in Jalaun, Uttar Pradesh, is an educational institution built on the twin pillars of scientific inquiry and strong ethical values.
-              </p>
-              <p>
-                Named in honor of the legendary warrior leader Maharana Pratap, our academy instils courage, discipline, self-reliance, and unwavering dedication in every learner.
-              </p>
-              <p>
-                We foster a student-centered atmosphere where young minds are encouraged to ask questions, explore physical and digital sciences, engage in creative arts, and excel in competitive pursuits.
-              </p>
+              {aboutSettings?.mainDescription ? (
+                aboutSettings.mainDescription.split('\n\n').map((para, idx) => (
+                  <p key={idx}>{para}</p>
+                ))
+              ) : (
+                <>
+                  <p>
+                    <strong>MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE (MPSA School)</strong>, located in Jalaun, Uttar Pradesh, is an educational institution built on the twin pillars of scientific inquiry and strong ethical values.
+                  </p>
+                  <p>
+                    Named in honor of the legendary warrior leader Maharana Pratap, our academy instils courage, discipline, self-reliance, and unwavering dedication in every learner.
+                  </p>
+                  <p>
+                    We foster a student-centered atmosphere where young minds are encouraged to ask questions, explore physical and digital sciences, engage in creative arts, and excel in competitive pursuits.
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -111,24 +126,21 @@ export default function About() {
             <div className="vm-card">
               <div className="vm-icon"><Eye size={32} /></div>
               <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)', marginBottom: '1rem' }}>
-                Our Vision
+                {aboutSettings?.visionHeading || "Our Vision"}
               </h3>
               <p style={{ color: 'var(--text-muted)', lineHeight: '1.7', fontSize: '1.05rem' }}>
-                To be a center of educational excellence that nurtures scientifically temperament, ethically grounded, innovative, and compassionate global leaders capable of contributing positively to society and scientific advancement.
+                {aboutSettings?.visionText || "To be a center of educational excellence that nurtures scientifically temperament, ethically grounded, innovative, and compassionate global leaders capable of contributing positively to society and scientific advancement."}
               </p>
             </div>
 
             <div className="vm-card">
               <div className="vm-icon"><Target size={32} /></div>
               <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-navy)', marginBottom: '1rem' }}>
-                Our Mission
+                {aboutSettings?.missionHeading || "Our Mission"}
               </h3>
-              <ul style={{ paddingLeft: '1.25rem', color: 'var(--text-muted)', lineHeight: '1.8', fontSize: '1rem' }}>
-                <li>Provide holistic and rigorous scientific & academic education.</li>
-                <li>Cultivate critical thinking, problem-solving skills, and research mindsets.</li>
-                <li>Foster ethical values, patriotism, leadership, and emotional intelligence.</li>
-                <li>Offer modern infrastructure, state-of-the-art labs, and athletic grounds.</li>
-              </ul>
+              <p style={{ color: 'var(--text-muted)', lineHeight: '1.7', fontSize: '1.05rem' }}>
+                {aboutSettings?.missionText || "To provide high-caliber science education, modern computer training, state-of-the-art laboratory research, and comprehensive character building."}
+              </p>
             </div>
           </div>
         </div>

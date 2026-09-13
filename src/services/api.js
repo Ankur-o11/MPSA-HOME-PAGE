@@ -179,6 +179,18 @@ export const apiService = {
     return fetchWithFallback(`${API_BASE_URL}/public/admissions`, null);
   },
 
+  async getEventById(id) {
+    return fetchWithFallback(`${API_BASE_URL}/public/events/${id}`, null);
+  },
+
+  async getAdvantages() {
+    return fetchWithFallback(`${API_BASE_URL}/public/advantages`, null);
+  },
+
+  async getAboutSettings() {
+    return fetchWithFallback(`${API_BASE_URL}/public/about-settings`, null);
+  },
+
   async getContactSettings() {
     return fetchWithFallback(`${API_BASE_URL}/public/contact-settings`, SCHOOL_CONFIG);
   },

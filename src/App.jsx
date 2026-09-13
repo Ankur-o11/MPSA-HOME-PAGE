@@ -54,6 +54,8 @@ import ManageAcademics from './admin/pages/ManageAcademics';
 import ManageAdmissions from './admin/pages/ManageAdmissions';
 import ManageContact from './admin/pages/ManageContact';
 import ManageSettings from './admin/pages/ManageSettings';
+import ManageAdvantages from './admin/pages/ManageAdvantages';
+import ManageAbout from './admin/pages/ManageAbout';
 
 // Public Website Layout Wrapper
 function PublicLayout() {
@@ -117,6 +119,8 @@ export default function App() {
           <Route path="events" element={<ManageEvents />} />
           <Route path="achievements" element={<ManageAchievements />} />
           <Route path="facilities" element={<ManageFacilities />} />
+          <Route path="advantages" element={<ManageAdvantages />} />
+          <Route path="about" element={<ManageAbout />} />
           <Route path="academics" element={<ManageAcademics />} />
           <Route path="admissions" element={<ManageAdmissions />} />
           <Route path="contact" element={<ManageContact />} />

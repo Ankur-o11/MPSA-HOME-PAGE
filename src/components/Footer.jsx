@@ -7,7 +7,7 @@ import {
   Mail, 
   ChevronRight 
 } from 'lucide-react';
-import { SCHOOL_CONFIG } from '../data/config';
+import { SCHOOL_CONFIG, formatInstagramUrl } from '../data/config';
 import { apiService } from '../services/api';
 
 export default function Footer() {
@@ -26,6 +26,9 @@ export default function Footer() {
   const phoneSecondary = contactSettings.phoneSecondary || SCHOOL_CONFIG.phoneSecondary;
   const emailGeneral = contactSettings.emailGeneral || SCHOOL_CONFIG.emailGeneral;
   const socialLinks = contactSettings.socialLinks || SCHOOL_CONFIG.socialLinks;
+  const instagramUrl = formatInstagramUrl(
+    contactSettings.instagramUrl || socialLinks?.instagram || SCHOOL_CONFIG.socialLinks.instagram
+  );
 
   return (
     <footer className="footer">
@@ -49,13 +52,13 @@ export default function Footer() {
               Dedicated to empowering young minds through scientific inquiry, academic excellence, strong ethical values, and holistic personality development.
             </p>
             <div className="footer-social-links">
-              <a href={socialLinks?.facebook || SCHOOL_CONFIG.socialLinks.facebook} target="_blank" rel="noreferrer" className="footer-social-btn" title="Facebook">
+              <a href={contactSettings.facebookUrl || socialLinks?.facebook || SCHOOL_CONFIG.socialLinks.facebook} target="_blank" rel="noreferrer" className="footer-social-btn" title="Facebook">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
               </a>
-              <a href={socialLinks?.instagram || SCHOOL_CONFIG.socialLinks.instagram} target="_blank" rel="noreferrer" className="footer-social-btn" title="Instagram">
+              <a href={instagramUrl} target="_blank" rel="noreferrer" className="footer-social-btn" title="Instagram">
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
               </a>
-              <a href={socialLinks?.youtube || SCHOOL_CONFIG.socialLinks.youtube} target="_blank" rel="noreferrer" className="footer-social-btn" title="YouTube">
+              <a href={contactSettings.youtubeUrl || socialLinks?.youtube || SCHOOL_CONFIG.socialLinks.youtube} target="_blank" rel="noreferrer" className="footer-social-btn" title="YouTube">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               </a>
             </div>

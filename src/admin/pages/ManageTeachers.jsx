@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Search, Upload, CheckCircle2, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
+import ImageInputSelector from '../components/ImageInputSelector';
+import { handleAvatarError } from '../../utils/imageUtils';
 
 import { teachersData as defaultTeachers } from '../../data/teachers';
 
@@ -215,8 +217,9 @@ export default function ManageTeachers() {
                 <tr key={t._id || t.id}>
                   <td>
                     <img 
-                      src={t.photo} 
+                      src={getUploadUrl(t.photo)} 
                       alt={t.name} 
+                      onError={handleAvatarError}
                       style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-gold)' }} 
                     />
                   </td>
@@ -297,20 +300,14 @@ export default function ManageTeachers() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label>Photo URL or Upload *</label>
-                <input type="text" className="form-control" value={formData.photo} onChange={e => setFormData({ ...formData, photo: e.target.value })} required />
-                <div className="image-upload-preview">
-                  <img src={formData.photo} alt="Preview" className="preview-thumbnail" />
-                  <div>
-                    <label className="btn btn-outline btn-sm" style={{ cursor: 'pointer' }}>
-                      <Upload size={14} /> Upload Image File {uploading && '...'}
-                      <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
-                    </label>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>Supports JPG, PNG, WEBP max 5MB.</p>
-                  </div>
-                </div>
-              </div>
+              <ImageInputSelector 
+                label="Teacher Profile Photo *"
+                value={formData.photo}
+                onChange={(newUrl) => setFormData(prev => ({ ...prev, photo: newUrl }))}
+                placeholder="Paste photo URL (or upload from computer below)"
+                isAvatar={true}
+                required
+              />
 
               <div className="form-group">
                 <label>Short Introduction</label>

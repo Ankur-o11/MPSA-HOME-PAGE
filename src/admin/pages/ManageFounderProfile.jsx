@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, Upload, Trash2, Plus, Edit, Award, Image } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
+import ImageInputSelector from '../components/ImageInputSelector';
+import { handleImageError, handleAvatarError } from '../../utils/imageUtils';
 
 export default function ManageFounderProfile() {
   const { authFetch } = useAuth();
@@ -131,6 +133,10 @@ export default function ManageFounderProfile() {
 
   const handleGalleryImageUpload = async (index, file) => {
     if (!file) return;
+    if (file.size > 20 * 1024 * 1024) {
+      alert('Image size must be 20 MB or less.');
+      return;
+    }
     const uploadData = new FormData();
     uploadData.append('image', file);
     setUploadingGalleryIdx(index);
@@ -261,32 +267,13 @@ export default function ManageFounderProfile() {
             </div>
           </div>
 
-          {/* Photo Upload Section */}
-          <div className="form-group">
-            <label className="form-label">Founder Photo</label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-              <div style={{ width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', backgroundColor: 'var(--bg-soft)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {formData.photo ? (
-                  <img src={getUploadUrl(formData.photo)} alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  <Award size={36} color="#94A3B8" />
-                )}
-              </div>
-
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <label className="btn btn-outline btn-sm" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Upload size={16} /> {uploading ? 'Uploading...' : 'Upload New Photo'}
-                  <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} disabled={uploading} />
-                </label>
-
-                {formData.photo && (
-                  <button type="button" className="btn btn-outline-danger btn-sm" onClick={handleRemovePhoto}>
-                    <Trash2 size={16} /> Remove Photo
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
+          <ImageInputSelector 
+            label="Founder Main Photograph"
+            value={formData.photo}
+            onChange={(newUrl) => setFormData(prev => ({ ...prev, photo: newUrl }))}
+            placeholder="Paste founder photo URL (or upload from computer below)"
+            isAvatar={true}
+          />
         </div>
 
         {/* 2. Biography, Contribution & Vision */}
@@ -439,35 +426,48 @@ export default function ManageFounderProfile() {
           {formData.gallery.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {formData.gallery.map((item, idx) => (
-                <div key={idx} style={{ padding: '1.25rem', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', display: 'grid', gridTemplateColumns: '80px 2fr 2fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
-                  <div style={{ width: '70px', height: '55px', borderRadius: '6px', overflow: 'hidden', backgroundColor: '#E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {item.image ? (
-                      <img src={getUploadUrl(item.image)} alt="Thumb" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    ) : (
-                      <Image size={24} color="#94A3B8" />
-                    )}
+                <div key={idx} style={{ padding: '1.25rem', backgroundColor: 'var(--bg-soft)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{ width: '70px', height: '55px', borderRadius: '6px', overflow: 'hidden', backgroundColor: '#E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {item.image ? (
+                        <img src={getUploadUrl(item.image)} alt="Thumb" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <Image size={24} color="#94A3B8" />
+                      )}
+                    </div>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Photo Title" 
+                      value={item.title} 
+                      onChange={(e) => handleGalleryChange(idx, 'title', e.target.value)} 
+                    />
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Caption" 
+                      value={item.caption} 
+                      onChange={(e) => handleGalleryChange(idx, 'caption', e.target.value)} 
+                    />
+                    <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => handleRemoveGalleryItem(idx)}>
+                      <Trash2 size={16} />
+                    </button>
                   </div>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Photo Title" 
-                    value={item.title} 
-                    onChange={(e) => handleGalleryChange(idx, 'title', e.target.value)} 
-                  />
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Caption" 
-                    value={item.caption} 
-                    onChange={(e) => handleGalleryChange(idx, 'caption', e.target.value)} 
-                  />
-                  <label className="btn btn-outline btn-sm" style={{ cursor: 'pointer' }}>
-                    <Upload size={14} /> {uploadingGalleryIdx === idx ? '...' : 'Photo'}
-                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleGalleryImageUpload(idx, e.target.files[0])} />
-                  </label>
-                  <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => handleRemoveGalleryItem(idx)}>
-                    <Trash2 size={16} />
-                  </button>
+                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                    <label className="btn btn-outline btn-sm" style={{ cursor: 'pointer', margin: 0, whiteSpace: 'nowrap' }}>
+                      <Upload size={14} /> {uploadingGalleryIdx === idx ? 'Uploading...' : 'Upload File'}
+                      <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleGalleryImageUpload(idx, e.target.files[0])} />
+                    </label>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '700' }}>OR</span>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Paste Photo URL (https://...)" 
+                      value={item.image || ''} 
+                      onChange={(e) => handleGalleryChange(idx, 'image', e.target.value)} 
+                      style={{ fontSize: '0.85rem' }}
+                    />
+                  </div>
                 </div>
               ))}
             </div>

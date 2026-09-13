@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Save, CheckCircle2, Upload } from 'lucide-react';
+import { Save, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL, getUploadUrl } from '../../config/api';
+import { API_BASE_URL } from '../../config/api';
+import ImageInputSelector from '../components/ImageInputSelector';
 
 export default function ManagePrincipal() {
   const { authFetch } = useAuth();
@@ -31,25 +32,6 @@ export default function ManagePrincipal() {
     }
     loadPrincipal();
   }, [authFetch]);
-
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const data = new FormData();
-    data.append('image', file);
-    try {
-      const res = await authFetch(`${API_BASE_URL}/admin/upload`, {
-        method: 'POST',
-        body: data
-      });
-      const result = await res.json();
-      if (result.success) {
-        setFormData(prev => ({ ...prev, photo: getUploadUrl(result.url) }));
-      }
-    } catch (err) {
-      alert('Photo upload failed');
-    }
-  };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -111,19 +93,14 @@ export default function ManagePrincipal() {
             </div>
           </div>
 
-          <div className="form-group">
-            <label>Principal Photo URL or File Upload *</label>
-            <input type="text" className="form-control" value={formData.photo} onChange={e => setFormData({ ...formData, photo: e.target.value })} required />
-            <div className="image-upload-preview">
-              <img src={formData.photo} alt="Principal Preview" className="preview-thumbnail" />
-              <div>
-                <label className="btn btn-outline btn-sm" style={{ cursor: 'pointer' }}>
-                  <Upload size={14} /> Upload Principal Photo
-                  <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
-                </label>
-              </div>
-            </div>
-          </div>
+          <ImageInputSelector 
+            label="Principal Photograph *"
+            value={formData.photo}
+            onChange={(newUrl) => setFormData(prev => ({ ...prev, photo: newUrl }))}
+            placeholder="Paste principal photo URL (or upload from computer below)"
+            isAvatar={true}
+            required
+          />
 
           <div className="form-group">
             <label>Principal Highlight Quote *</label>

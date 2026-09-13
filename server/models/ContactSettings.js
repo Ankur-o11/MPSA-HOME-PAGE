@@ -16,7 +16,7 @@ const contactSettingsSchema = new mongoose.Schema(
     googleMapsEmbedUrl: { type: String, default: '' },
     googleMapsDirectionUrl: { type: String, default: 'https://www.google.com/maps' },
     facebookUrl: { type: String, default: 'https://facebook.com/mpsaschool' },
-    instagramUrl: { type: String, default: 'https://instagram.com/mpsaschool' },
+    instagramUrl: { type: String, default: 'https://www.instagram.com/mpsaschool/' },
     youtubeUrl: { type: String, default: 'https://youtube.com/mpsaschool' },
     logoUrl: { type: String, default: '' },
     heroBannerImage: { type: String, default: '' },

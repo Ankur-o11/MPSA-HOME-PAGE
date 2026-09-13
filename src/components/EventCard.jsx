@@ -1,10 +1,16 @@
 import React, { memo } from 'react';
-import { Calendar, Clock, MapPin } from 'lucide-react';
+import { Calendar, Clock, MapPin, Image as ImageIcon } from 'lucide-react';
+import { getUploadUrl } from '../config/api';
+import { handleImageError } from '../utils/imageUtils';
 
-function EventCard({ event, isPrevious = false }) {
+function EventCard({ event, isPrevious = false, onClick }) {
+  const primaryImage = getUploadUrl(event.image || (typeof event.photos?.[0] === 'string' ? event.photos[0] : event.photos?.[0]?.url));
+  const photoCount = event.photos && event.photos.length > 0 ? event.photos.length : 1;
+
   return (
     <div 
       className="event-card"
+      onClick={() => onClick && onClick(event)}
       style={{
         backgroundColor: 'var(--bg-white)',
         borderRadius: 'var(--radius-lg)',
@@ -12,16 +18,19 @@ function EventCard({ event, isPrevious = false }) {
         boxShadow: 'var(--shadow-md)',
         border: '1px solid var(--border-color)',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        cursor: onClick ? 'pointer' : 'default',
+        transition: 'transform 0.25s ease, box-shadow 0.25s ease'
       }}
     >
       <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
         <img 
-          src={event.image} 
+          src={primaryImage} 
           alt={event.title} 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           loading="lazy"
           decoding="async"
+          onError={handleImageError}
         />
         <div 
           style={{ 
@@ -42,6 +51,29 @@ function EventCard({ event, isPrevious = false }) {
           <Calendar size={14} />
           <span>{event.date}</span>
         </div>
+
+        {photoCount > 1 && (
+          <div 
+            style={{ 
+              position: 'absolute', 
+              bottom: '0.75rem', 
+              right: '0.75rem', 
+              backgroundColor: 'rgba(10, 34, 59, 0.85)', 
+              color: '#fff',
+              padding: '0.25rem 0.6rem',
+              borderRadius: '4px',
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+              backdropFilter: 'blur(4px)'
+            }}
+          >
+            <ImageIcon size={12} />
+            <span>{photoCount} Photos</span>
+          </div>
+        )}
       </div>
 
       <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>

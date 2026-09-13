@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, ShieldCheck, Upload, Trash2, Image as ImageIcon, GraduationCap, Layout, BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
+import ImageInputSelector from '../components/ImageInputSelector';
 import { SCHOOL_CONFIG } from '../../data/config';
 import { NEUTRAL_IMAGE_SVG } from '../../utils/imageUtils';
 
@@ -176,70 +177,13 @@ export default function ManageSettings() {
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
               Upload, replace, or remove the official school logo displayed across the public header, navbar, home page, and footer.
             </p>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '50%',
-                  backgroundColor: '#fff',
-                  border: '3px solid var(--accent-gold)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  margin: '0 auto 0.5rem auto'
-                }}>
-                  {formData.logoUrl ? (
-                    <img src={formData.logoUrl} alt="School Logo Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <GraduationCap size={48} color="var(--primary-navy)" />
-                  )}
-                </div>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-                  {formData.logoUrl ? 'Active Logo' : 'Default Icon'}
-                </span>
-              </div>
-
-              <div style={{ flex: 1, minWidth: '240px' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                  <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Upload size={16} /> {uploadingLogo ? 'Uploading Logo...' : formData.logoUrl ? 'Replace / Change Logo' : 'Upload School Logo'}
-                    <input 
-                      type="file" 
-                      accept="image/jpeg,image/png,image/webp,image/svg+xml,image/jpg" 
-                      style={{ display: 'none' }} 
-                      onChange={handleLogoUpload}
-                      disabled={uploadingLogo}
-                    />
-                  </label>
-
-                  {formData.logoUrl && (
-                    <button 
-                      type="button" 
-                      className="btn" 
-                      style={{ color: '#DC2626', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-                      onClick={() => setFormData(prev => ({ ...prev, logoUrl: '' }))}
-                    >
-                      <Trash2 size={16} /> Delete / Remove Logo
-                    </button>
-                  )}
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '0.82rem' }}>Logo Image URL (Auto-filled on upload)</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="http://localhost:5000/uploads/logo.png" 
-                    value={formData.logoUrl || ''} 
-                    onChange={e => setFormData({ ...formData, logoUrl: e.target.value })} 
-                  />
-                </div>
-              </div>
-            </div>
+            <ImageInputSelector 
+              label="Official School Logo"
+              value={formData.logoUrl}
+              onChange={(newUrl) => setFormData(prev => ({ ...prev, logoUrl: newUrl }))}
+              placeholder="Paste logo image URL (or upload from computer below)"
+              isAvatar={true}
+            />
           </div>
 
           {/* 2. Hero Banner Image Section */}
@@ -248,78 +192,14 @@ export default function ManageSettings() {
               <Layout size={20} color="#D4A72C" /> Home Page Hero Banner Image Management
             </h3>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-              Upload, replace, or delete the dynamic Hero Banner image displayed at the top of the Home Page under the header. Optimized with Sharp and stored securely in MongoDB.
+              Upload, replace, or delete the dynamic Hero Banner image displayed at the top of the Home Page under the header.
             </p>
-
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
-              <div style={{ textAlign: 'center', width: '220px' }}>
-                <div style={{
-                  width: '100%',
-                  height: '120px',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: '#123B63',
-                  backgroundImage: formData.heroBannerImage ? `linear-gradient(135deg, rgba(18, 59, 99, 0.4), rgba(10, 34, 59, 0.6)), url(${formData.heroBannerImage})` : 'none',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  border: '2px solid var(--accent-gold)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  margin: '0 auto 0.5rem auto',
-                  color: '#fff'
-                }}>
-                  {!formData.heroBannerImage && (
-                    <>
-                      <Layout size={32} color="#D4A72C" />
-                      <span style={{ fontSize: '0.75rem', marginTop: '0.4rem', opacity: 0.8 }}>Default Neutral Gradient</span>
-                    </>
-                  )}
-                </div>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-                  {formData.heroBannerImage ? 'Active Hero Banner' : 'Neutral Gradient Active'}
-                </span>
-              </div>
-
-              <div style={{ flex: 1, minWidth: '240px' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                  <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Upload size={16} /> {uploadingHero ? 'Uploading Banner...' : formData.heroBannerImage ? 'Replace Hero Banner Image' : 'Upload Hero Banner Image'}
-                    <input 
-                      type="file" 
-                      accept="image/jpeg,image/png,image/webp,image/jpg" 
-                      style={{ display: 'none' }} 
-                      onChange={handleHeroBannerUpload}
-                      disabled={uploadingHero}
-                    />
-                  </label>
-
-                  {formData.heroBannerImage && (
-                    <button 
-                      type="button" 
-                      className="btn" 
-                      style={{ color: '#DC2626', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-                      onClick={() => setFormData(prev => ({ ...prev, heroBannerImage: '' }))}
-                    >
-                      <Trash2 size={16} /> Delete / Remove Hero Banner
-                    </button>
-                  )}
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '0.82rem' }}>Hero Banner Image URL (Auto-filled on upload)</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="http://localhost:5000/uploads/hero-banner.jpg" 
-                    value={formData.heroBannerImage || ''} 
-                    onChange={e => setFormData({ ...formData, heroBannerImage: e.target.value })} 
-                  />
-                </div>
-              </div>
-            </div>
+            <ImageInputSelector 
+              label="Home Page Hero Banner Image"
+              value={formData.heroBannerImage}
+              onChange={(newUrl) => setFormData(prev => ({ ...prev, heroBannerImage: newUrl }))}
+              placeholder="Paste hero banner image URL (or upload from computer below)"
+            />
           </div>
 
           {/* 3. About Section Image Section */}
@@ -328,72 +208,14 @@ export default function ManageSettings() {
               <BookOpen size={20} color="#D4A72C" /> Home Page About Section Image
             </h3>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-              Upload, replace, or delete the right-side campus image in the Home Page About Section ("Nurturing Scientific Minds & Character Excellence"). Processed with Sharp & saved in MongoDB.
+              Upload, replace, or delete the right-side campus image in the Home Page About Section ("Nurturing Scientific Minds & Character Excellence").
             </p>
-
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
-              <div style={{ textAlign: 'center', width: '220px' }}>
-                <div style={{
-                  width: '100%',
-                  height: '140px',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: '#fff',
-                  border: '2px solid var(--primary-navy)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  margin: '0 auto 0.5rem auto'
-                }}>
-                  <img 
-                    src={formData.aboutSectionImage || NEUTRAL_IMAGE_SVG} 
-                    alt="About Section Preview" 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                  />
-                </div>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-                  {formData.aboutSectionImage ? 'Active Custom Image' : 'Neutral Placeholder Active'}
-                </span>
-              </div>
-
-              <div style={{ flex: 1, minWidth: '240px' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                  <label className="btn btn-primary" style={{ cursor: 'pointer', margin: 0, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Upload size={16} /> {uploadingAbout ? 'Uploading Image...' : formData.aboutSectionImage ? 'Replace About Image' : 'Upload About Image'}
-                    <input 
-                      type="file" 
-                      accept="image/jpeg,image/png,image/webp,image/jpg" 
-                      style={{ display: 'none' }} 
-                      onChange={handleAboutImageUpload}
-                      disabled={uploadingAbout}
-                    />
-                  </label>
-
-                  {formData.aboutSectionImage && (
-                    <button 
-                      type="button" 
-                      className="btn" 
-                      style={{ color: '#DC2626', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-                      onClick={() => setFormData(prev => ({ ...prev, aboutSectionImage: '' }))}
-                    >
-                      <Trash2 size={16} /> Delete / Remove Image
-                    </button>
-                  )}
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '0.82rem' }}>About Image URL (Auto-filled on upload)</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="http://localhost:5000/uploads/about-campus.jpg" 
-                    value={formData.aboutSectionImage || ''} 
-                    onChange={e => setFormData({ ...formData, aboutSectionImage: e.target.value })} 
-                  />
-                </div>
-              </div>
-            </div>
+            <ImageInputSelector 
+              label="Home Page About Section Image"
+              value={formData.aboutSectionImage}
+              onChange={(newUrl) => setFormData(prev => ({ ...prev, aboutSectionImage: newUrl }))}
+              placeholder="Paste about campus image URL (or upload from computer below)"
+            />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>

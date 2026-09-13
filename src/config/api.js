@@ -6,7 +6,7 @@ export const getUploadUrl = (url) => {
   if (cleanUrl.startsWith('http://localhost:5000')) {
     cleanUrl = cleanUrl.replace('http://localhost:5000', '');
   }
-  if (cleanUrl.startsWith('http')) return cleanUrl;
+  if (cleanUrl.startsWith('http') || cleanUrl.startsWith('data:')) return cleanUrl;
   const baseUrl = API_BASE_URL.replace(/\/api$/, '');
   return `${baseUrl}${cleanUrl}`;
 };

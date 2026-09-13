@@ -22,5 +22,21 @@ const fileFilter = (req, file, cb) => {
 export const uploadImage = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+  limits: { fileSize: 25 * 1024 * 1024 } // 25MB limit to safely support 20MB files + multipart overhead
 });
+
+export const uploadSingleImage = (req, res, next) => {
+  uploadImage.single('image')(req, res, (err) => {
+    if (err) {
+      if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).json({ success: false, message: 'Image size must be 20 MB or less.' });
+        }
+        return res.status(400).json({ success: false, message: err.message });
+      }
+      return res.status(400).json({ success: false, message: err.message || 'Image upload failed' });
+    }
+    next();
+  });
+};
+

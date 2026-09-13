@@ -13,6 +13,8 @@ import Facility from '../models/Facility.js';
 import Academics from '../models/Academics.js';
 import Admissions from '../models/Admissions.js';
 import ContactSettings from '../models/ContactSettings.js';
+import Advantage from '../models/Advantage.js';
+import AboutSettings from '../models/AboutSettings.js';
 
 // Dashboard Summary Stats
 export const getAdminDashboardStats = async (req, res) => {
@@ -155,6 +157,34 @@ export const updateFounderProfile = async (req, res) => {
   }
 };
 
+// Helper for optimizing base64 image strings using Sharp
+export const optimizeBase64Image = async (imageStr) => {
+  if (!imageStr || !imageStr.startsWith('data:image')) return imageStr;
+  try {
+    const parts = imageStr.split(';base64,');
+    if (parts.length !== 2) return imageStr;
+
+    const mime = parts[0].replace('data:', '');
+    if (mime.includes('svg')) return imageStr;
+
+    const buffer = Buffer.from(parts[1], 'base64');
+    const optimizedBuffer = await sharp(buffer)
+      .resize({
+        width: 1000,
+        height: 1000,
+        fit: 'inside',
+        withoutEnlargement: true
+      })
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toBuffer();
+
+    return `data:image/jpeg;base64,${optimizedBuffer.toString('base64')}`;
+  } catch (err) {
+    console.warn('Base64 image optimization warning:', err.message);
+    return imageStr;
+  }
+};
+
 // Gallery CRUD
 export const getAllGalleryAdmin = async (req, res) => {
   try {
@@ -167,7 +197,11 @@ export const getAllGalleryAdmin = async (req, res) => {
 
 export const createGalleryItem = async (req, res) => {
   try {
-    const item = new Gallery(req.body);
+    const payload = { ...req.body };
+    if (payload.image) {
+      payload.image = await optimizeBase64Image(payload.image);
+    }
+    const item = new Gallery(payload);
     await item.save();
     res.status(201).json({ success: true, item });
   } catch (err) {
@@ -177,7 +211,11 @@ export const createGalleryItem = async (req, res) => {
 
 export const updateGalleryItem = async (req, res) => {
   try {
-    const item = await Gallery.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const payload = { ...req.body };
+    if (payload.image) {
+      payload.image = await optimizeBase64Image(payload.image);
+    }
+    const item = await Gallery.findByIdAndUpdate(req.params.id, payload, { new: true });
     res.json({ success: true, item });
   } catch (err) {
     res.status(400).json({ message: 'Error updating gallery item' });
@@ -381,6 +419,67 @@ export const updateContactSettings = async (req, res) => {
     res.json({ success: true, settings });
   } catch (err) {
     res.status(400).json({ message: 'Error updating site contact settings' });
+  }
+};
+
+// Advantages CRUD
+export const getAllAdvantagesAdmin = async (req, res) => {
+  try {
+    const advantages = await Advantage.find().sort({ displayOrder: 1, createdAt: 1 });
+    res.json(advantages);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching advantages' });
+  }
+};
+
+export const createAdvantage = async (req, res) => {
+  try {
+    const advantage = new Advantage(req.body);
+    await advantage.save();
+    res.status(201).json({ success: true, advantage });
+  } catch (err) {
+    res.status(400).json({ message: 'Error creating advantage' });
+  }
+};
+
+export const updateAdvantage = async (req, res) => {
+  try {
+    const advantage = await Advantage.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json({ success: true, advantage });
+  } catch (err) {
+    res.status(400).json({ message: 'Error updating advantage' });
+  }
+};
+
+export const deleteAdvantage = async (req, res) => {
+  try {
+    await Advantage.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'Advantage deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting advantage' });
+  }
+};
+
+// About Settings Handlers
+export const getAboutSettingsAdmin = async (req, res) => {
+  try {
+    let about = await AboutSettings.findOne();
+    if (!about) about = new AboutSettings();
+    res.json(about);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching about settings' });
+  }
+};
+
+export const updateAboutSettings = async (req, res) => {
+  try {
+    let about = await AboutSettings.findOne();
+    if (!about) about = new AboutSettings(req.body);
+    else Object.assign(about, req.body);
+    await about.save();
+    res.json({ success: true, about });
+  } catch (err) {
+    res.status(400).json({ message: 'Error updating about settings' });
   }
 };
 

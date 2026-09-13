@@ -5,6 +5,26 @@
  * All school address, map links, contact details, and social links are centralized here.
  */
 
+/**
+ * Helper to ensure Instagram URLs match required absolute HTTPS format: https://www.instagram.com/PROFILE_USERNAME/
+ */
+export const formatInstagramUrl = (urlStr) => {
+  if (!urlStr || typeof urlStr !== 'string') return 'https://www.instagram.com/mpsaschool/';
+  let cleaned = urlStr.trim();
+  if (!cleaned) return 'https://www.instagram.com/mpsaschool/';
+  
+  if (/^https?:\/\/(www\.)?instagram\.com\//i.test(cleaned)) {
+    cleaned = cleaned.replace(/^https?:\/\/(www\.)?instagram\.com\//i, 'https://www.instagram.com/');
+    if (!cleaned.endsWith('/')) {
+      cleaned += '/';
+    }
+    return cleaned;
+  }
+
+  cleaned = cleaned.replace(/^@/, '').replace(/^\/+|\/+$/g, '');
+  return `https://www.instagram.com/${cleaned}/`;
+};
+
 export const SCHOOL_CONFIG = {
   fullName: "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
   shortName: "MPSA School",
@@ -31,7 +51,7 @@ export const SCHOOL_CONFIG = {
   // Social Links
   socialLinks: {
     facebook: "https://facebook.com/mpsaschool",
-    instagram: "https://instagram.com/mpsaschool",
+    instagram: "https://www.instagram.com/mpsaschool/",
     youtube: "https://youtube.com/mpsaschool",
     linkedin: "#"
   },

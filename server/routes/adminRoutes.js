@@ -1,6 +1,6 @@
 import express from 'express';
 import { protectAdmin } from '../middleware/authMiddleware.js';
-import { uploadImage } from '../middleware/uploadMiddleware.js';
+import { uploadSingleImage } from '../middleware/uploadMiddleware.js';
 import {
   getAdminDashboardStats,
   getAllTeachersAdmin,
@@ -35,6 +35,12 @@ import {
   updateAcademics,
   updateAdmissions,
   updateContactSettings,
+  getAllAdvantagesAdmin,
+  createAdvantage,
+  updateAdvantage,
+  deleteAdvantage,
+  getAboutSettingsAdmin,
+  updateAboutSettings,
   handleImageUpload
 } from '../controllers/adminController.js';
 
@@ -89,12 +95,22 @@ router.post('/facilities', createFacility);
 router.put('/facilities/:id', updateFacility);
 router.delete('/facilities/:id', deleteFacility);
 
+// Advantages
+router.get('/advantages', getAllAdvantagesAdmin);
+router.post('/advantages', createAdvantage);
+router.put('/advantages/:id', updateAdvantage);
+router.delete('/advantages/:id', deleteAdvantage);
+
+// About Settings
+router.get('/about-settings', getAboutSettingsAdmin);
+router.put('/about-settings', updateAboutSettings);
+
 // Academics, Admissions, Contact
 router.put('/academics', updateAcademics);
 router.put('/admissions', updateAdmissions);
 router.put('/contact-settings', updateContactSettings);
 
 // Secure Image Upload (RULE #16)
-router.post('/upload', uploadImage.single('image'), handleImageUpload);
+router.post('/upload', uploadSingleImage, handleImageUpload);
 
 export default router;

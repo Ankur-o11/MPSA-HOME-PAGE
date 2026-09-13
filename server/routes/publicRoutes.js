@@ -9,6 +9,9 @@ import {
   getPublicGallery,
   getPublicNotices,
   getPublicEvents,
+  getPublicEventById,
+  getPublicAdvantages,
+  getPublicAboutSettings,
   getPublicAchievements,
   getPublicFacilities,
   getPublicAcademics,
@@ -35,6 +38,9 @@ router.get('/founder-profile', getPublicFounderProfile);
 router.get('/gallery', getPublicGallery);
 router.get('/notices', getPublicNotices);
 router.get('/events', getPublicEvents);
+router.get('/events/:id', getPublicEventById);
+router.get('/advantages', getPublicAdvantages);
+router.get('/about-settings', getPublicAboutSettings);
 router.get('/achievements', getPublicAchievements);
 router.get('/facilities', getPublicFacilities);
 router.get('/academics', getPublicAcademics);

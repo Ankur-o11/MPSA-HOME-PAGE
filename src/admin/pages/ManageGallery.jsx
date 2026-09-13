@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, Upload, CheckCircle2, X, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL, getUploadUrl } from '../../config/api';
+import ImageInputSelector from '../components/ImageInputSelector';
 import { galleryData as defaultGallery, galleryCategories } from '../../data/gallery';
 
 export default function ManageGallery() {
@@ -216,25 +217,18 @@ export default function ManageGallery() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label>Image URL or File Upload *</label>
-                <input type="text" className="form-control" value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} required />
-                <div className="image-upload-preview">
-                  <img src={formData.image} alt="Preview" className="preview-thumbnail" />
-                  <div>
-                    <label className="btn btn-outline btn-sm" style={{ cursor: 'pointer' }}>
-                      <Upload size={14} /> Upload Image File {uploading && '...'}
-                      <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
-                    </label>
-                  </div>
-                </div>
-              </div>
+              <ImageInputSelector 
+                label="Gallery Photo *"
+                value={formData.image}
+                onChange={(newUrl) => setFormData(prev => ({ ...prev, image: newUrl }))}
+                placeholder="Paste image URL (e.g. https://...)"
+                required
+              />
 
               <div className="form-group">
                 <label>Lightbox Caption</label>
                 <textarea rows="3" className="form-control" value={formData.caption} onChange={e => setFormData({ ...formData, caption: e.target.value })}></textarea>
               </div>
-
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '1.5rem' }}>
                 <button type="button" className="btn btn-outline" onClick={() => setShowModal(false)}>Cancel</button>
                 <button type="submit" className="btn btn-primary">Save Photo</button>

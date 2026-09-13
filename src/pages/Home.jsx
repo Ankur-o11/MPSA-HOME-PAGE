@@ -55,10 +55,17 @@ export default function Home() {
   const [principal, setPrincipal] = useState(null);
   const [director, setDirector] = useState(null);
   const [founder, setFounder] = useState(null);
+  const [advantages, setAdvantages] = useState([
+    { title: 'Science & Innovation Focus', description: 'Advanced laboratories and practical-oriented learning enabling early scientific discovery.', icon: 'FlaskConical' },
+    { title: 'Values & Discipline', description: 'Emphasis on character building, moral ethics, punctuality, and mutual respect.', icon: 'ShieldCheck' },
+    { title: 'Sports & Extra-Curricular', description: 'Comprehensive athletic training, inter-house competitions, arts, and robotics clubs.', icon: 'Trophy' },
+    { title: 'Experienced Faculty', description: 'Dedicated post-graduate teachers with personalized mentorship and student care.', icon: 'BookOpen' }
+  ]);
+  const [aboutSettings, setAboutSettings] = useState(null);
 
   useEffect(() => {
     async function loadHomeData() {
-      const [tData, fData, nData, eData, aData, gData, sData, pData, dData, fndData] = await Promise.all([
+      const [tData, fData, nData, eData, aData, gData, sData, pData, dData, fndData, advData, abtData] = await Promise.all([
         apiService.getTeachers(),
         apiService.getFacilities(),
         apiService.getNotices(),
@@ -68,7 +75,9 @@ export default function Home() {
         apiService.getContactSettings(),
         apiService.getPrincipal(),
         apiService.getDirector(),
-        apiService.getFounderProfile()
+        apiService.getFounderProfile(),
+        apiService.getAdvantages(),
+        apiService.getAboutSettings()
       ]);
 
       if (tData && tData.length > 0) setTeachers(tData);
@@ -82,6 +91,8 @@ export default function Home() {
       if (pData) setPrincipal(pData);
       if (dData) setDirector(dData);
       if (fndData) setFounder(fndData);
+      if (advData && advData.length > 0) setAdvantages(advData);
+      if (abtData) setAboutSettings(abtData);
     }
     loadHomeData();
   }, []);
@@ -181,7 +192,7 @@ export default function Home() {
           <div className="about-home-grid">
             <div className="about-home-image-wrapper">
               <img 
-                src={schoolConfig?.aboutSectionImage ? getUploadUrl(schoolConfig.aboutSectionImage) : (schoolConfig?.campusImage ? getUploadUrl(schoolConfig.campusImage) : NEUTRAL_IMAGE_SVG)} 
+                src={aboutSettings?.aboutImage ? getUploadUrl(aboutSettings.aboutImage) : (schoolConfig?.aboutSectionImage ? getUploadUrl(schoolConfig.aboutSectionImage) : (schoolConfig?.campusImage ? getUploadUrl(schoolConfig.campusImage) : NEUTRAL_IMAGE_SVG))} 
                 alt="Maharana Pratap Science Academy Inter College Campus" 
                 onError={handleImageError}
               />
@@ -194,32 +205,51 @@ export default function Home() {
             <div className="about-home-content">
               <span className="section-badge">Welcome to {SCHOOL_CONFIG.shortName}</span>
               <h2 className="section-title-text" style={{ fontSize: '2.5rem', textAlign: 'left', marginBottom: '1.25rem' }}>
-                Nurturing Scientific Minds & Character Excellence
+                {aboutSettings?.mainHeading || "Nurturing Scientific Minds & Character Excellence"}
               </h2>
-              <p>
-                <strong>MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE (MPSA School)</strong>, located in Jalaun, Uttar Pradesh, is committed to nurturing academic rigor, scientific curiosity, and moral integrity in every student.
-              </p>
-              <p>
-                Our modern campus offers state-of-the-art physics, chemistry, biology, and computer laboratories alongside interactive smart classrooms and extensive athletic grounds.
-              </p>
+              {aboutSettings?.mainDescription ? (
+                aboutSettings.mainDescription.split('\n\n').map((para, idx) => (
+                  <p key={idx}>{para}</p>
+                ))
+              ) : (
+                <>
+                  <p>
+                    <strong>MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE (MPSA School)</strong>, located in Jalaun, Uttar Pradesh, is committed to nurturing academic rigor, scientific curiosity, and moral integrity in every student.
+                  </p>
+                  <p>
+                    Our modern campus offers state-of-the-art physics, chemistry, biology, and computer laboratories alongside interactive smart classrooms and extensive athletic grounds.
+                  </p>
+                </>
+              )}
 
               <div className="about-home-features">
-                <div className="feature-check-item">
-                  <CheckCircle2 size={20} />
-                  <span>State-of-the-Art Science Labs</span>
-                </div>
-                <div className="feature-check-item">
-                  <CheckCircle2 size={20} />
-                  <span>Digital Smart Classrooms</span>
-                </div>
-                <div className="feature-check-item">
-                  <CheckCircle2 size={20} />
-                  <span>Interactive Pedagogy</span>
-                </div>
-                <div className="feature-check-item">
-                  <CheckCircle2 size={20} />
-                  <span>Disciplined & Value-Based Environment</span>
-                </div>
+                {(aboutSettings?.features && aboutSettings.features.length > 0) ? (
+                  aboutSettings.features.map((feat, idx) => (
+                    <div key={idx} className="feature-check-item">
+                      <CheckCircle2 size={20} />
+                      <span>{feat.title || feat}</span>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div className="feature-check-item">
+                      <CheckCircle2 size={20} />
+                      <span>State-of-the-Art Science Labs</span>
+                    </div>
+                    <div className="feature-check-item">
+                      <CheckCircle2 size={20} />
+                      <span>Digital Smart Classrooms</span>
+                    </div>
+                    <div className="feature-check-item">
+                      <CheckCircle2 size={20} />
+                      <span>Interactive Pedagogy</span>
+                    </div>
+                    <div className="feature-check-item">
+                      <CheckCircle2 size={20} />
+                      <span>Disciplined & Value-Based Environment</span>
+                    </div>
+                  </>
+                )}
               </div>
 
               <Link to="/about" className="btn btn-secondary">
@@ -346,26 +376,20 @@ export default function Home() {
           />
 
           <div className="why-mpsa-grid">
-            <div className="why-card">
-              <div className="why-icon-box"><FlaskConical size={32} /></div>
-              <h4>Science & Innovation Focus</h4>
-              <p>Advanced laboratories and practical-oriented learning enabling early scientific discovery.</p>
-            </div>
-            <div className="why-card">
-              <div className="why-icon-box"><ShieldCheck size={32} /></div>
-              <h4>Values & Discipline</h4>
-              <p>Emphasis on character building, moral ethics, punctuality, and mutual respect.</p>
-            </div>
-            <div className="why-card">
-              <div className="why-icon-box"><Trophy size={32} /></div>
-              <h4>Sports & Extra-Curricular</h4>
-              <p>Comprehensive athletic training, inter-house competitions, arts, and robotics clubs.</p>
-            </div>
-            <div className="why-card">
-              <div className="why-icon-box"><BookOpen size={32} /></div>
-              <h4>Experienced Faculty</h4>
-              <p>Dedicated post-graduate teachers with personalized mentorship and student care.</p>
-            </div>
+            {advantages.map((adv, idx) => (
+              <div key={adv._id || adv.id || idx} className="why-card">
+                <div className="why-icon-box">
+                  {adv.icon === 'FlaskConical' && <FlaskConical size={32} />}
+                  {adv.icon === 'ShieldCheck' && <ShieldCheck size={32} />}
+                  {adv.icon === 'Trophy' && <Trophy size={32} />}
+                  {adv.icon === 'BookOpen' && <BookOpen size={32} />}
+                  {adv.icon === 'CheckCircle2' && <CheckCircle2 size={32} />}
+                  {!['FlaskConical', 'ShieldCheck', 'Trophy', 'BookOpen', 'CheckCircle2'].includes(adv.icon) && <Award size={32} />}
+                </div>
+                <h4>{adv.title}</h4>
+                <p>{adv.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

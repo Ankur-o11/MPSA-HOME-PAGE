@@ -15,7 +15,8 @@ import {
   Phone, 
   Settings, 
   LogOut,
-  GraduationCap
+  GraduationCap,
+  ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { apiService } from '../../services/api';
@@ -99,6 +100,16 @@ export default function AdminSidebar({ mobileOpen, onCloseMobile }) {
         <li>
           <NavLink to="/admin/facilities" className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`} onClick={onCloseMobile}>
             <Building size={18} /> Facilities
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/advantages" className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`} onClick={onCloseMobile}>
+            <ShieldCheck size={18} /> Advantages
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/about" className={({ isActive }) => `admin-nav-link ${isActive ? 'active' : ''}`} onClick={onCloseMobile}>
+            <FileText size={18} /> About Content
           </NavLink>
         </li>
         <li>

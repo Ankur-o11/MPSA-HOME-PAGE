@@ -15,6 +15,8 @@ import Facility from './models/Facility.js';
 import Academics from './models/Academics.js';
 import Admissions from './models/Admissions.js';
 import ContactSettings from './models/ContactSettings.js';
+import Advantage from './models/Advantage.js';
+import AboutSettings from './models/AboutSettings.js';
 
 import { teachersData } from '../src/data/teachers.js';
 import { noticesData } from '../src/data/notices.js';
@@ -230,7 +232,49 @@ const seedDatabase = async () => {
         googleMapsEmbedUrl: SCHOOL_CONFIG.GOOGLE_MAPS_EMBED_URL,
         googleMapsDirectionUrl: SCHOOL_CONFIG.GOOGLE_MAPS_DIRECTION_URL
       });
-      console.log('[ContactSettings] Seeded initial Contact Settings record.');
+    }
+
+    // 13. Seed School Advantages
+    const advantageCount = await Advantage.countDocuments();
+    if (advantageCount === 0) {
+      await Advantage.insertMany([
+        {
+          title: 'Science & Innovation Focus',
+          description: 'Advanced laboratories and practical-oriented learning enabling early scientific discovery.',
+          icon: 'FlaskConical',
+          displayOrder: 1,
+          isActive: true
+        },
+        {
+          title: 'Values & Discipline',
+          description: 'Emphasis on character building, moral ethics, punctuality, and mutual respect.',
+          icon: 'ShieldCheck',
+          displayOrder: 2,
+          isActive: true
+        },
+        {
+          title: 'Sports & Extra-Curricular',
+          description: 'Comprehensive athletic training, inter-house competitions, arts, and robotics clubs.',
+          icon: 'Trophy',
+          displayOrder: 3,
+          isActive: true
+        },
+        {
+          title: 'Experienced Faculty',
+          description: 'Dedicated post-graduate teachers with personalized mentorship and student care.',
+          icon: 'BookOpen',
+          displayOrder: 4,
+          isActive: true
+        }
+      ]);
+      console.log('[Advantage] Seeded initial 4 School Advantages records.');
+    }
+
+    // 14. Seed About Settings
+    const aboutCount = await AboutSettings.countDocuments();
+    if (aboutCount === 0) {
+      await AboutSettings.create({});
+      console.log('[AboutSettings] Seeded initial About Settings record.');
     }
 
     console.log('[Seed Script] Database setup completed successfully.');
