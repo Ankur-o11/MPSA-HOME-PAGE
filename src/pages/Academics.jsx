@@ -2,16 +2,42 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, FlaskConical, Laptop, Award, FileText, CheckCircle2, ChevronRight } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 
 export default function Academics() {
+  const academicsSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOccupationalProgram",
+    "name": "Academics & Curriculum at Maharana Pratap Science Academy Inter College",
+    "provider": {
+      "@type": "School",
+      "name": "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Chholapur Road, Churkhibal",
+        "addressLocality": "Jalaun",
+        "addressRegion": "Uttar Pradesh",
+        "postalCode": "285123",
+        "addressCountry": "IN"
+      }
+    }
+  };
+
   return (
     <div className="academics-page">
+      <SEO 
+        title="Academics & Curriculum | MPSA Inter College, Jalaun"
+        description="Explore academic curriculum, classes, and learning programs at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh."
+        keywords="Academics MPSA Inter College, Curriculum Jalaun, Science Stream Classes Jalaun, Science Inter College in Jalaun, MPSA School"
+        canonicalUrl="/academics"
+        schema={academicsSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Academics & Curriculum</h1>
           <p className="page-banner-subtitle">
-            Comprehensive academic programs structured for scientific excellence, conceptual clarity, and Board examination distinction.
+            Comprehensive academic programs structured for scientific excellence, conceptual clarity, and Board examination distinction in Jalaun, Uttar Pradesh.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>
@@ -26,7 +52,7 @@ export default function Academics() {
         <div className="container">
           <SectionTitle 
             badge="Academic Levels"
-            title="Classes Offered at MPSA School"
+            title="Classes Offered at MPSA School & Inter College, Jalaun"
             subtitle="Providing a seamless educational continuum from primary foundations to senior secondary science streams."
           />
 
@@ -60,12 +86,12 @@ export default function Academics() {
             </div>
 
             <div className="why-card" style={{ textAlign: 'left' }}>
-              <span className="category-tag">Secondary & Sr. Secondary</span>
+              <span className="category-tag">Secondary & Inter College</span>
               <h4 style={{ fontSize: '1.25rem', marginTop: '0.75rem', marginBottom: '0.5rem' }}>
-                Secondary & Sr. Secondary Science (9th – 12th)
+                Secondary & Sr. Secondary Science (Classes 9th – 12th)
               </h4>
               <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
-                Intensive preparation for Board Examinations and scientific competitive entrance examinations.
+                Intensive preparation for Board Examinations and scientific competitive entrance examinations at the Inter College level.
               </p>
               <strong style={{ fontSize: '0.85rem', color: 'var(--primary-navy)' }}>Key Subjects (Science Stream):</strong>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>

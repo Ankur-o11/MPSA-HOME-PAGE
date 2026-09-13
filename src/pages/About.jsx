@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import { SCHOOL_CONFIG } from '../data/config';
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
@@ -35,14 +36,29 @@ export default function About() {
     ? getUploadUrl(contactSettings.aboutSectionImage) 
     : (contactSettings?.campusImage ? getUploadUrl(contactSettings.campusImage) : NEUTRAL_IMAGE_SVG);
 
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Maharana Pratap Science Academy Inter College",
+    "description": "Learn about Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure.",
+    "url": "https://school-web-rouge-nine.vercel.app/about"
+  };
+
   return (
     <div className="about-page">
+      <SEO 
+        title="About Maharana Pratap Science Academy Inter College | MPSA, Jalaun"
+        description="Learn about Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure."
+        keywords="About Maharana Pratap Science Academy Inter College, MPSA School, MPSA Inter College Jalaun, Maharana Pratap Science Academy Jalaun, Educational Vision Jalaun, Science Inter College in Jalaun"
+        canonicalUrl="/about"
+        schema={aboutSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
-          <h1 className="page-banner-title">About Maharana Pratap Science Academy</h1>
+          <h1 className="page-banner-title">About Maharana Pratap Science Academy Inter College</h1>
           <p className="page-banner-subtitle">
-            Established with a commitment to academic excellence, scientific innovation, and moral values.
+            Established in Jalaun, Uttar Pradesh with a commitment to academic excellence, scientific innovation, and moral values.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>
@@ -59,17 +75,17 @@ export default function About() {
             <div className="about-home-image-wrapper">
               <img 
                 src={aboutImageUrl} 
-                alt="Maharana Pratap Science Academy Campus" 
+                alt="Maharana Pratap Science Academy Inter College Campus Jalaun" 
                 onError={handleImageError}
               />
             </div>
             <div className="about-home-content">
               <span className="section-badge">Educational Ethos</span>
               <h2 className="section-title-text" style={{ textAlign: 'left', marginBottom: '1.25rem' }}>
-                Welcome to Maharana Pratap Science Academy
+                Welcome to Maharana Pratap Science Academy Inter College, Jalaun
               </h2>
               <p>
-                <strong>MAHARANA PRATAP SCIENCE ACADEMY (MPSA School)</strong> is a premier educational institution built on the twin pillars of scientific inquiry and strong ethical values.
+                <strong>MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE (MPSA School)</strong>, located in Jalaun, Uttar Pradesh, is an educational institution built on the twin pillars of scientific inquiry and strong ethical values.
               </p>
               <p>
                 Named in honor of the legendary warrior leader Maharana Pratap, our academy instils courage, discipline, self-reliance, and unwavering dedication in every learner.

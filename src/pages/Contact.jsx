@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import { SCHOOL_CONFIG as defaultConfig } from '../data/config';
 import { apiService } from '../services/api';
 
@@ -55,14 +56,29 @@ export default function Contact() {
     setIsSent(true);
   };
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Maharana Pratap Science Academy Inter College",
+    "description": "Contact Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh.",
+    "url": "https://school-web-rouge-nine.vercel.app/contact"
+  };
+
   return (
     <div className="contact-page">
+      <SEO 
+        title="Contact MPSA Inter College | Maharana Pratap Science Academy, Jalaun"
+        description="Contact Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Address, office hours, phone numbers, and contact form."
+        keywords="Contact MPSA Inter College, Maharana Pratap Science Academy Address Jalaun, Phone Number MPSA Inter College Jalaun, Contact Form MPSA School"
+        canonicalUrl="/contact"
+        schema={contactSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Contact Us</h1>
           <p className="page-banner-subtitle">
-            We are here to answer your questions regarding admissions, academics, campus visits, and school inquiries.
+            We are here to answer your questions regarding admissions, academics, campus visits, and school inquiries at our Jalaun campus.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

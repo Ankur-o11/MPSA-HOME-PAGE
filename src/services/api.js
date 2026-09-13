@@ -127,7 +127,7 @@ export const apiService = {
       experience: 'Decades of Educational Service',
       contribution: 'Conceptualization and foundation of MPSA School.',
       vision: 'Building nation builders through scientific temper and character discipline.',
-      achievements: 'Established premier science academy in the region.',
+      achievements: 'Established Maharana Pratap Science Academy Inter College in the region.',
       visionQuote: 'Education is the greatest light that can ignite a human mind.',
       storyText: 'The noble dream to establish Maharana Pratap Science Academy...',
       timeline: [],

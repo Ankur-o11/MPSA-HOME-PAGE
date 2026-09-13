@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import FacilityCard from '../components/FacilityCard';
 import { facilitiesData as defaultFacilities } from '../data/facilities';
 import { apiService } from '../services/api';
@@ -16,14 +17,28 @@ export default function Facilities() {
     loadFacilities();
   }, []);
 
+  const facilitiesSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Campus Facilities & Infrastructure - Maharana Pratap Science Academy Inter College",
+    "description": "Explore science laboratories, computer lab, library, sports grounds, and campus infrastructure at Maharana Pratap Science Academy Inter College, Jalaun."
+  };
+
   return (
     <div className="facilities-page">
+      <SEO 
+        title="Campus Facilities & Infrastructure | MPSA Inter College, Jalaun"
+        description="Explore science laboratories, computer lab, library, sports grounds, and campus infrastructure at Maharana Pratap Science Academy Inter College, Jalaun."
+        keywords="Facilities MPSA Inter College Jalaun, Science Labs Jalaun, Infrastructure MPSA Inter College Jalaun, School Facilities Jalaun"
+        canonicalUrl="/facilities"
+        schema={facilitiesSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Campus Facilities</h1>
           <p className="page-banner-subtitle">
-            Explore the modern infrastructure, laboratories, sports grounds, and safety systems at Maharana Pratap Science Academy.
+            Explore the modern infrastructure, laboratories, sports grounds, and safety systems at Maharana Pratap Science Academy in Jalaun, Uttar Pradesh.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

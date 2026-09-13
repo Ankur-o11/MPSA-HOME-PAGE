@@ -20,6 +20,7 @@ import {
 import Hero from '../components/Hero';
 import SectionTitle from '../components/SectionTitle';
 import FounderSection from '../components/FounderSection';
+import SEO from '../components/SEO';
 import TeacherCard from '../components/TeacherCard';
 import FacilityCard from '../components/FacilityCard';
 import NoticeCard from '../components/NoticeCard';
@@ -109,8 +110,32 @@ export default function Home() {
   const fPhoto = getUploadUrl(founder?.photo) || NEUTRAL_AVATAR_SVG;
   const fQuote = founder?.quote || founder?.vision || 'A dream to establish an institution where scientific inquiry meets moral discipline and every child discovers their inner brilliance.';
 
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@type": ["School", "EducationalOrganization"],
+    "name": "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
+    "alternateName": ["MPSA School", "MPSA Inter College", "Maharana Pratap Science Academy"],
+    "url": "https://school-web-rouge-nine.vercel.app/",
+    "description": "Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Chholapur Road, Churkhibal",
+      "addressLocality": "Jalaun",
+      "addressRegion": "Uttar Pradesh",
+      "postalCode": "285123",
+      "addressCountry": "IN"
+    }
+  };
+
   return (
     <div className="home-page">
+      <SEO 
+        title="Maharana Pratap Science Academy Inter College | MPSA School, Jalaun"
+        description="Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information."
+        keywords="Maharana Pratap Science Academy Inter College, MPSA School, MPSA School Jalaun, MPSA Inter College Jalaun, Maharana Pratap Science Academy Jalaun, Maharana Pratap Science Academy Inter College Jalaun, Inter College in Jalaun"
+        canonicalUrl="/"
+        schema={homeSchema}
+      />
       {/* 2. Hero Section */}
       <Hero />
 
@@ -136,14 +161,14 @@ export default function Home() {
               <div className="highlight-icon"><ShieldCheck size={28} /></div>
               <div className="highlight-text">
                 <h4>Safe & Caring</h4>
-                <p>CCTV secured GPS transport campus</p>
+                <p>CCTV secured transport campus</p>
               </div>
             </div>
             <div className="highlight-item">
               <div className="highlight-icon"><Award size={28} /></div>
               <div className="highlight-text">
                 <h4>Holistic Development</h4>
-                <p>Sports, robotics, arts & leadership</p>
+                <p>Sports, arts & leadership</p>
               </div>
             </div>
           </div>
@@ -157,7 +182,7 @@ export default function Home() {
             <div className="about-home-image-wrapper">
               <img 
                 src={schoolConfig?.aboutSectionImage ? getUploadUrl(schoolConfig.aboutSectionImage) : (schoolConfig?.campusImage ? getUploadUrl(schoolConfig.campusImage) : NEUTRAL_IMAGE_SVG)} 
-                alt="Maharana Pratap Science Academy Campus" 
+                alt="Maharana Pratap Science Academy Inter College Campus" 
                 onError={handleImageError}
               />
               <div className="about-home-experience-badge">
@@ -172,7 +197,7 @@ export default function Home() {
                 Nurturing Scientific Minds & Character Excellence
               </h2>
               <p>
-                <strong>MAHARANA PRATAP SCIENCE ACADEMY (MPSA School)</strong> is a premier educational institution committed to nurturing academic rigor, scientific curiosity, and moral integrity in every student.
+                <strong>MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE (MPSA School)</strong>, located in Jalaun, Uttar Pradesh, is committed to nurturing academic rigor, scientific curiosity, and moral integrity in every student.
               </p>
               <p>
                 Our modern campus offers state-of-the-art physics, chemistry, biology, and computer laboratories alongside interactive smart classrooms and extensive athletic grounds.

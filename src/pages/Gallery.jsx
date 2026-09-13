@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Loader2, ImageOff, RefreshCw } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import GalleryCard from '../components/GalleryCard';
 import Lightbox from '../components/Lightbox';
 import { galleryCategories } from '../data/gallery';
@@ -101,12 +102,18 @@ export default function Gallery() {
 
   return (
     <div className="gallery-page">
+      <SEO 
+        title="Campus Photo Gallery | MPSA Inter College, Jalaun"
+        description="A visual tour of campus infrastructure, practicals, activities, and events at Maharana Pratap Science Academy Inter College, Jalaun."
+        keywords="Gallery MPSA Inter College Jalaun, Photos Maharana Pratap Science Academy, Campus Images Jalaun, MPSA School"
+        canonicalUrl="/gallery"
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Campus Photo Gallery</h1>
           <p className="page-banner-subtitle">
-            A visual tour of school infrastructure, science practicals, cultural functions, and sports events.
+            A visual tour of school infrastructure, science practicals, cultural functions, and sports events at MPSA School &amp; Inter College, Jalaun.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

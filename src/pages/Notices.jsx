@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Bell, X, Download, Calendar } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import NoticeCard from '../components/NoticeCard';
 import { noticesData as defaultNotices } from '../data/notices';
 import { apiService } from '../services/api';
@@ -33,12 +34,18 @@ export default function Notices() {
 
   return (
     <div className="notices-page">
+      <SEO 
+        title="Latest Notices & Circulars | MPSA Inter College, Jalaun"
+        description="Stay updated with official announcements, exam dates, circulars, and holiday notifications from Maharana Pratap Science Academy Inter College, Jalaun."
+        keywords="Notices MPSA Inter College Jalaun, Circulars Maharana Pratap Science Academy, Announcements Jalaun, MPSA School"
+        canonicalUrl="/notices"
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Official Notices & Circulars</h1>
           <p className="page-banner-subtitle">
-            Stay updated with official school announcements, exam dates, circulars, and holiday notifications.
+            Stay updated with official school announcements, exam dates, circulars, and holiday notifications from MPSA School &amp; Inter College, Jalaun.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

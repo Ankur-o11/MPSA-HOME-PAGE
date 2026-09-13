@@ -6,16 +6,16 @@
  */
 
 export const SCHOOL_CONFIG = {
-  fullName: "MAHARANA PRATAP SCIENCE ACADEMY",
+  fullName: "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
   shortName: "MPSA School",
   tagline: "Learning Today, Leading Tomorrow",
   establishedYear: "2010",
   affiliation: "CBSE / State Board (Placeholder)",
   schoolCode: "MPSA-ACC-2026",
   
-  // Contact details (Editable Placeholders)
-  address: "Maharana Pratap Science Academy Campus, Educational Belt, District Centre, State - 000000 (Placeholder)",
-  landmark: "Near Science Park & Knowledge Enclave",
+  // Contact details
+  address: "Maharana Pratap Science Academy Inter College, Chholapur Road, Churkhibal, Jalaun, Uttar Pradesh - 285123, India",
+  landmark: "Chholapur Road, Churkhibal, Jalaun",
   phonePrimary: "+91 98765 43210",
   phoneSecondary: "+91 01234 56789",
   emailGeneral: "info@mpsaschool.edu.in",

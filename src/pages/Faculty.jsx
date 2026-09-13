@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, RefreshCw, UserCheck, Loader2 } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import TeacherCard from '../components/TeacherCard';
 import { apiService } from '../services/api';
 import { NEUTRAL_AVATAR_SVG } from '../utils/imageUtils';
@@ -64,14 +65,28 @@ export default function Faculty() {
     setClassFilter('All');
   };
 
+  const facultySchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Faculty Directory - Maharana Pratap Science Academy Inter College",
+    "description": "Meet the dedicated educators and teaching staff at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh."
+  };
+
   return (
     <div className="faculty-page">
+      <SEO 
+        title="Faculty & Teaching Staff | MPSA Inter College, Jalaun"
+        description="Meet the dedicated educators and teaching staff at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh."
+        keywords="Faculty MPSA Inter College Jalaun, Teachers Maharana Pratap Science Academy, Educators Jalaun, Science Teachers Jalaun, MPSA School"
+        canonicalUrl="/faculty"
+        schema={facultySchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Faculty & Teachers Directory</h1>
           <p className="page-banner-subtitle">
-            Meet our highly qualified, experienced, and passionate educators at Maharana Pratap Science Academy.
+            Meet our highly qualified, experienced, and passionate educators at Maharana Pratap Science Academy in Jalaun, Uttar Pradesh.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

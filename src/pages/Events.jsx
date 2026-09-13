@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import EventCard from '../components/EventCard';
 import { upcomingEvents as defaultUpcoming, previousEvents as defaultPrevious } from '../data/events';
 import { apiService } from '../services/api';
@@ -24,12 +25,18 @@ export default function Events() {
 
   return (
     <div className="events-page">
+      <SEO 
+        title="Upcoming Events & Activities | MPSA Inter College, Jalaun"
+        description="Explore academic expos, sports events, science workshops, and cultural activities at Maharana Pratap Science Academy Inter College, Jalaun."
+        keywords="Events MPSA Inter College, Maharana Pratap Science Academy Events, Activities Jalaun, MPSA School"
+        canonicalUrl="/events"
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Events & Activities</h1>
           <p className="page-banner-subtitle">
-            Explore academic expos, inter-school sports tournaments, robotics workshops, and cultural fests at MPSA.
+            Explore academic expos, inter-school sports tournaments, robotics workshops, and cultural fests at MPSA School &amp; Inter College, Jalaun.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

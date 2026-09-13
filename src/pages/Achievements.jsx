@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import AchievementCard from '../components/AchievementCard';
 import { achievementsData as defaultAchievements } from '../data/achievements';
 import { apiService } from '../services/api';
@@ -26,12 +27,18 @@ export default function Achievements() {
 
   return (
     <div className="achievements-page">
+      <SEO 
+        title="Achievements & Excellence | MPSA Inter College, Jalaun"
+        description="Explore academic milestones, student achievements, and awards at Maharana Pratap Science Academy Inter College, Jalaun, UP."
+        keywords="Achievements MPSA Inter College, Maharana Pratap Science Academy Awards, Student Honors Jalaun, MPSA School"
+        canonicalUrl="/achievements"
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Achievements & Excellence</h1>
           <p className="page-banner-subtitle">
-            Celebrating academic milestones, sports championships, and institutional awards achieved by MPSA School.
+            Celebrating academic milestones, sports championships, and institutional awards achieved by MPSA School &amp; Inter College, Jalaun.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

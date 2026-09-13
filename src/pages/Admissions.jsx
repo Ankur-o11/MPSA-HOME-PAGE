@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import { SCHOOL_CONFIG } from '../data/config';
 
 export default function Admissions() {
@@ -38,14 +39,40 @@ export default function Admissions() {
     setIsSubmitted(true);
   };
 
+  const admissionsSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOccupationalProgram",
+    "name": "Admissions at Maharana Pratap Science Academy Inter College",
+    "description": "Apply for admission at Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh.",
+    "provider": {
+      "@type": "School",
+      "name": "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Chholapur Road, Churkhibal",
+        "addressLocality": "Jalaun",
+        "addressRegion": "Uttar Pradesh",
+        "postalCode": "285123",
+        "addressCountry": "IN"
+      }
+    }
+  };
+
   return (
     <div className="admissions-page">
+      <SEO 
+        title="Admissions | MPSA School & Inter College, Jalaun"
+        description="Apply for admission at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh. Admission process, eligibility, documents, and online registration."
+        keywords="Admissions MPSA School, MPSA Inter College Admission Jalaun, School Admission Jalaun, Inter College Admission Jalaun"
+        canonicalUrl="/admissions"
+        schema={admissionsSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Admissions 2026–2027</h1>
           <p className="page-banner-subtitle">
-            Begin your child's journey toward academic distinction, scientific inquiry, and strong moral character.
+            Begin your child's journey toward academic distinction, scientific inquiry, and strong moral character at MPSA School &amp; Inter College, Jalaun.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

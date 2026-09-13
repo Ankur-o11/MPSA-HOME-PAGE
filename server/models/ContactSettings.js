@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const contactSettingsSchema = new mongoose.Schema(
   {
-    schoolFullName: { type: String, default: 'MAHARANA PRATAP SCIENCE ACADEMY' },
+    schoolFullName: { type: String, default: 'MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE' },
     schoolShortName: { type: String, default: 'MPSA School' },
     tagline: { type: String, default: 'Learning Today, Leading Tomorrow' },
-    address: { type: String, default: 'Maharana Pratap Science Academy Campus, Educational Belt, District Centre, State - 000000 (Placeholder)' },
-    landmark: { type: String, default: 'Near Science Park & Knowledge Enclave' },
+    address: { type: String, default: 'Maharana Pratap Science Academy Inter College, Chholapur Road, Churkhibal, Jalaun, Uttar Pradesh - 285123, India' },
+    landmark: { type: String, default: 'Chholapur Road, Churkhibal, Jalaun' },
     phonePrimary: { type: String, default: '+91 98765 43210' },
     phoneSecondary: { type: String, default: '+91 01234 56789' },
     emailGeneral: { type: String, default: 'info@mpsaschool.edu.in' },
@@ -21,8 +21,8 @@ const contactSettingsSchema = new mongoose.Schema(
     logoUrl: { type: String, default: '' },
     heroBannerImage: { type: String, default: '' },
     aboutSectionImage: { type: String, default: '' },
-    seoTitle: { type: String, default: 'Maharana Pratap Science Academy | MPSA School' },
-    seoDescription: { type: String, default: 'Official public website of Maharana Pratap Science Academy (MPSA School).' }
+    seoTitle: { type: String, default: 'Maharana Pratap Science Academy Inter College | MPSA School, Jalaun' },
+    seoDescription: { type: String, default: 'Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information.' }
   },
   { timestamps: true }
 );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Quote, Award, BookOpen, GraduationCap, CheckCircle2 } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
 import { NEUTRAL_AVATAR_SVG, handleAvatarError } from '../utils/imageUtils';
@@ -28,14 +29,28 @@ export default function PrincipalMessage() {
   const pFullMessage = principal?.fullMessage || 'Dear Parents, Guardians, and Dearest Students,\n\nIt is my privilege to welcome you to MAHARANA PRATAP SCIENCE ACADEMY (MPSA School). As an educational institution focused on scientific excellence, our fundamental purpose is to foster an environment where curiosity thrives and excellence becomes a habit.';
   const pVision = principal?.educationalVision || 'Fostering conceptual clarity, laboratory research, athletic endeavors, and moral discipline across all classes.';
 
+  const principalSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": `Principal's Message - ${pName}`,
+    "description": "Read the Principal's message on educational commitment and student growth at Maharana Pratap Science Academy Inter College, Jalaun."
+  };
+
   return (
     <div className="principal-page">
+      <SEO 
+        title="Principal's Message | MPSA Inter College, Jalaun"
+        description="Read the Principal's message on educational commitment and student growth at Maharana Pratap Science Academy Inter College, Jalaun."
+        keywords="Principal Message MPSA Inter College, Principal Maharana Pratap Science Academy, Leadership Jalaun, MPSA School Principal"
+        canonicalUrl="/principal-message"
+        schema={principalSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Principal's Message</h1>
           <p className="page-banner-subtitle">
-            A message of welcoming, educational philosophy, and commitment to student growth from our Principal.
+            A message of welcoming, educational philosophy, and commitment to student growth from our Principal at MPSA School &amp; Inter College, Jalaun.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

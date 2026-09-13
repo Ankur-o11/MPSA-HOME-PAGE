@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Quote, Award, GraduationCap, Briefcase, Heart, Sparkles, Trophy, Lightbulb, ImageOff } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import Lightbox from '../components/Lightbox';
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
@@ -36,14 +37,28 @@ export default function Founder() {
   const timelineData = founderProfile?.timeline || [];
   const galleryDataList = founderProfile?.gallery || [];
 
+  const founderSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": `Founder Profile - ${fName}`,
+    "description": "Learn about the founder's vision and legacy behind Maharana Pratap Science Academy Inter College in Jalaun, Uttar Pradesh."
+  };
+
   return (
     <div className="founder-page">
+      <SEO 
+        title="Founder's Profile & Legacy | MPSA Inter College, Jalaun"
+        description="Learn about the founder's vision and legacy behind Maharana Pratap Science Academy Inter College in Jalaun, Uttar Pradesh."
+        keywords="Founder MPSA Inter College, Founder Maharana Pratap Science Academy Jalaun, Legacy MPSA Inter College Jalaun, Visionary Patron Jalaun"
+        canonicalUrl="/founder"
+        schema={founderSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Founder</h1>
           <p className="page-banner-subtitle">
-            Honoring the visionary founder, founding legacy, and enduring inspiration behind Maharana Pratap Science Academy.
+            Honoring the visionary founder, founding legacy, and enduring inspiration behind Maharana Pratap Science Academy in Jalaun, Uttar Pradesh.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>

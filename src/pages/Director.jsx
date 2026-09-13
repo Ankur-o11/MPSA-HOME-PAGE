@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Quote, ImageOff } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
+import SEO from '../components/SEO';
 import Lightbox from '../components/Lightbox';
 import { apiService } from '../services/api';
 import { getUploadUrl } from '../config/api';
@@ -35,14 +36,28 @@ export default function Director() {
 
   const galleryDataList = director?.gallery || [];
 
+  const directorSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": `Director / Manager Profile - ${dName}`,
+    "description": "Read the message and vision from the Director / Manager of Maharana Pratap Science Academy Inter College, Jalaun, Uttar Pradesh."
+  };
+
   return (
     <div className="director-page">
+      <SEO 
+        title="Director / Manager's Profile | MPSA Inter College, Jalaun"
+        description="Read the message and vision from the Director / Manager of Maharana Pratap Science Academy Inter College, Jalaun, Uttar Pradesh."
+        keywords="Director MPSA Inter College Jalaun, Manager Maharana Pratap Science Academy, Leadership MPSA Inter College Jalaun, Executive Leadership Jalaun"
+        canonicalUrl="/director"
+        schema={directorSchema}
+      />
       {/* Banner */}
       <div className="page-banner">
         <div className="container">
           <h1 className="page-banner-title">Director / Manager Profile</h1>
           <p className="page-banner-subtitle">
-            Honoring the executive leadership, strategic direction, and guidance at Maharana Pratap Science Academy.
+            Honoring the executive leadership, strategic direction, and guidance at Maharana Pratap Science Academy in Jalaun, Uttar Pradesh.
           </p>
           <ul className="breadcrumb-list">
             <li><Link to="/">Home</Link></li>
