@@ -41,7 +41,13 @@ export default function Founder() {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     "name": `Founder Profile - ${fName}`,
-    "description": "Learn about the founder's vision and legacy behind Maharana Pratap Science Academy Inter College in Jalaun, Uttar Pradesh."
+    "description": "Learn about the founder's vision and legacy behind Maharana Pratap Science Academy Inter College in Jalaun, Uttar Pradesh.",
+    "mainEntity": {
+      "@type": "Person",
+      "name": fName,
+      "jobTitle": founderProfile?.designation || "Founder & Retired Subedar, Indian Army",
+      "description": founderProfile?.intro || "Founder of Maharana Pratap Science Academy Inter College, Jalaun, Uttar Pradesh."
+    }
   };
 
   return (
