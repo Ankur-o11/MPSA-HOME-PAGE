@@ -126,7 +126,7 @@ export default function Home() {
     "@type": ["School", "EducationalOrganization"],
     "name": "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
     "alternateName": ["MPSA School", "MPSA Inter College", "Maharana Pratap Science Academy"],
-    "url": "https://school-web-rouge-nine.vercel.app/",
+    "url": "https://mpsa-home-page.vercel.app/",
     "description": "Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information.",
     "address": {
       "@type": "PostalAddress",

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://school-web-rouge-nine.vercel.app/sitemap.xml
+Sitemap: https://mpsa-home-page.vercel.app/sitemap.xml

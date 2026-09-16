@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const DEFAULT_DOMAIN = 'https://school-web-rouge-nine.vercel.app';
+const DEFAULT_DOMAIN = 'https://mpsa-home-page.vercel.app';
 
 // Helper function to sanitize URLs by stripping Markdown link syntax like [label](url) or [url](url)
 const cleanUrl = (urlStr) => {

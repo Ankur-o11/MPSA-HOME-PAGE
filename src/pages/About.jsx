@@ -48,7 +48,7 @@ export default function About() {
     "@type": "AboutPage",
     "name": "About Maharana Pratap Science Academy Inter College",
     "description": "Learn about Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure.",
-    "url": "https://school-web-rouge-nine.vercel.app/about"
+    "url": "https://mpsa-home-page.vercel.app/about"
   };
 
   return (
