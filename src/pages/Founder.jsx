@@ -53,9 +53,9 @@ export default function Founder() {
   return (
     <div className="founder-page">
       <SEO 
-        title="Founder's Profile & Legacy | MPSA Inter College, Jalaun"
-        description="Learn about the founder's vision and legacy behind Maharana Pratap Science Academy Inter College in Jalaun, Uttar Pradesh."
-        keywords="Founder MPSA Inter College, Founder Maharana Pratap Science Academy Jalaun, Legacy MPSA Inter College Jalaun, Visionary Patron Jalaun"
+        title="Founder's Profile & Legacy | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Learn about the founder's vision and legacy behind Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh."
+        keywords="Founder MPSA Inter College, Founder Maharana Pratap Science Academy Jalaun, MPSA School Founder, Legacy MPSA Jalaun"
         canonicalUrl="/founder"
         schema={founderSchema}
       />

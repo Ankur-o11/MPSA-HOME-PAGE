@@ -124,10 +124,10 @@ export default function Home() {
   const homeSchema = {
     "@context": "https://schema.org",
     "@type": ["School", "EducationalOrganization"],
-    "name": "MAHARANA PRATAP SCIENCE ACADEMY INTER COLLEGE",
-    "alternateName": ["MPSA School", "MPSA Inter College", "Maharana Pratap Science Academy"],
+    "name": "Maharana Pratap Science Academy",
+    "alternateName": ["MPSA School", "MPSA Inter College", "MPSA", "Maharana Pratap Science Academy Inter College"],
     "url": "https://mpsa-home-page.vercel.app/",
-    "description": "Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information.",
+    "description": "Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Chholapur Road, Churkhibal",
@@ -141,9 +141,9 @@ export default function Home() {
   return (
     <div className="home-page">
       <SEO 
-        title="Maharana Pratap Science Academy Inter College | MPSA School, Jalaun"
-        description="Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information."
-        keywords="Maharana Pratap Science Academy Inter College, MPSA School, MPSA School Jalaun, MPSA Inter College Jalaun, Maharana Pratap Science Academy Jalaun, Maharana Pratap Science Academy Inter College Jalaun, Inter College in Jalaun"
+        title="Maharana Pratap Science Academy (MPSA) | MPSA School, Jalaun"
+        description="Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh. Explore academics, faculty, admissions, facilities, achievements, events and campus information."
+        keywords="Maharana Pratap Science Academy, MPSA, MPSA School, MPSA Inter College, MPSA Jalaun, MPSA School Jalaun, MPSA Inter College Jalaun, Maharana Pratap Science Academy Jalaun, Maharana Pratap Science Academy Inter College Jalaun"
         canonicalUrl="/"
         schema={homeSchema}
       />

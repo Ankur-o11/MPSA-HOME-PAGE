@@ -35,9 +35,9 @@ export default function Notices() {
   return (
     <div className="notices-page">
       <SEO 
-        title="Latest Notices & Circulars | MPSA Inter College, Jalaun"
-        description="Stay updated with official announcements, exam dates, circulars, and holiday notifications from Maharana Pratap Science Academy Inter College, Jalaun."
-        keywords="Notices MPSA Inter College Jalaun, Circulars Maharana Pratap Science Academy, Announcements Jalaun, MPSA School"
+        title="Latest Notices & Circulars | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Stay updated with official announcements, exam dates, circulars, and holiday notifications from Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun."
+        keywords="Notices MPSA Inter College Jalaun, Circulars Maharana Pratap Science Academy, MPSA School Notices, Announcements MPSA Jalaun"
         canonicalUrl="/notices"
       />
       {/* Banner */}

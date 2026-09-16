@@ -26,9 +26,9 @@ export default function Academics() {
   return (
     <div className="academics-page">
       <SEO 
-        title="Academics & Curriculum | MPSA Inter College, Jalaun"
-        description="Explore academic curriculum, classes, and learning programs at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh."
-        keywords="Academics MPSA Inter College, Curriculum Jalaun, Science Stream Classes Jalaun, Science Inter College in Jalaun, MPSA School"
+        title="Academics & Curriculum | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Explore academic curriculum, science labs, and learning programs at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun, Uttar Pradesh."
+        keywords="Academics MPSA Inter College, MPSA School Curriculum, Maharana Pratap Science Academy Academics, Science Stream Jalaun, MPSA Jalaun"
         canonicalUrl="/academics"
         schema={academicsSchema}
       />

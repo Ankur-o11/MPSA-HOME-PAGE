@@ -33,15 +33,15 @@ export default function PrincipalMessage() {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     "name": `Principal's Message - ${pName}`,
-    "description": "Read the Principal's message on educational commitment and student growth at Maharana Pratap Science Academy Inter College, Jalaun."
+    "description": "Read the Principal's message on educational commitment and student growth at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun."
   };
 
   return (
     <div className="principal-page">
       <SEO 
-        title="Principal's Message | MPSA Inter College, Jalaun"
-        description="Read the Principal's message on educational commitment and student growth at Maharana Pratap Science Academy Inter College, Jalaun."
-        keywords="Principal Message MPSA Inter College, Principal Maharana Pratap Science Academy, Leadership Jalaun, MPSA School Principal"
+        title="Principal's Message | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Read the Principal's message on educational commitment and student growth at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun."
+        keywords="Principal Message MPSA Inter College, Principal Maharana Pratap Science Academy, MPSA School Principal, Leadership MPSA Jalaun"
         canonicalUrl="/principal-message"
         schema={principalSchema}
       />

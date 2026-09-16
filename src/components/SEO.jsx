@@ -87,7 +87,7 @@ export default function SEO({
       updateMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     }
     updateMetaTag('meta[property="og:type"]', 'property', 'og:type', ogType);
-    updateMetaTag('meta[property="og:site_name"]', 'property', 'og:site_name', 'Maharana Pratap Science Academy');
+    updateMetaTag('meta[property="og:site_name"]', 'property', 'og:site_name', 'Maharana Pratap Science Academy (MPSA)');
     updateMetaTag('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
 
     // 5. Canonical Link & OG URL

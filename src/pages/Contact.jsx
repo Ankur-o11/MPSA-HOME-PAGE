@@ -59,17 +59,17 @@ export default function Contact() {
   const contactSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Maharana Pratap Science Academy Inter College",
-    "description": "Contact Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh.",
+    "name": "Contact Maharana Pratap Science Academy",
+    "description": "Contact Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh.",
     "url": "https://mpsa-home-page.vercel.app/contact"
   };
 
   return (
     <div className="contact-page">
       <SEO 
-        title="Contact MPSA Inter College | Maharana Pratap Science Academy, Jalaun"
-        description="Contact Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Address, office hours, phone numbers, and contact form."
-        keywords="Contact MPSA Inter College, Maharana Pratap Science Academy Address Jalaun, Phone Number MPSA Inter College Jalaun, Contact Form MPSA School"
+        title="Contact MPSA School & Inter College | Maharana Pratap Science Academy, Jalaun"
+        description="Contact Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh. Address, office hours, phone numbers, and contact form."
+        keywords="Contact MPSA School, Contact MPSA Inter College, Maharana Pratap Science Academy Address Jalaun, Phone Number MPSA Inter College Jalaun, MPSA Jalaun"
         canonicalUrl="/contact"
         schema={contactSchema}
       />

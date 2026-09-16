@@ -75,9 +75,9 @@ export default function Faculty() {
   return (
     <div className="faculty-page">
       <SEO 
-        title="Faculty & Teaching Staff | MPSA Inter College, Jalaun"
-        description="Meet the dedicated educators and teaching staff at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh."
-        keywords="Faculty MPSA Inter College Jalaun, Teachers Maharana Pratap Science Academy, Educators Jalaun, Science Teachers Jalaun, MPSA School"
+        title="Faculty & Teaching Staff | MPSA School & Inter College, Jalaun"
+        description="Meet the dedicated educators and teaching staff at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun, Uttar Pradesh."
+        keywords="Faculty MPSA School, Teachers Maharana Pratap Science Academy, MPSA Inter College Faculty Jalaun, Educators MPSA Jalaun"
         canonicalUrl="/faculty"
         schema={facultySchema}
       />

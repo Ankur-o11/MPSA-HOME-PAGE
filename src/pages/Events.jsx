@@ -91,9 +91,9 @@ export default function Events() {
   return (
     <div className="events-page">
       <SEO 
-        title="Upcoming Events & Activities | MPSA Inter College, Jalaun"
-        description="Explore academic expos, sports events, science workshops, and cultural activities at Maharana Pratap Science Academy Inter College, Jalaun."
-        keywords="Events MPSA Inter College, Maharana Pratap Science Academy Events, Activities Jalaun, MPSA School"
+        title="Upcoming Events & Activities | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Explore academic expos, sports events, science workshops, and cultural activities at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun."
+        keywords="Events MPSA Inter College, Maharana Pratap Science Academy Events, MPSA School Events, Activities MPSA Jalaun"
         canonicalUrl="/events"
       />
       {/* Banner */}

@@ -46,17 +46,17 @@ export default function About() {
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    "name": "About Maharana Pratap Science Academy Inter College",
-    "description": "Learn about Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure.",
+    "name": "About Maharana Pratap Science Academy",
+    "description": "Learn about Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure.",
     "url": "https://mpsa-home-page.vercel.app/about"
   };
 
   return (
     <div className="about-page">
       <SEO 
-        title="About Maharana Pratap Science Academy Inter College | MPSA, Jalaun"
-        description="Learn about Maharana Pratap Science Academy Inter College (MPSA School) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure."
-        keywords="About Maharana Pratap Science Academy Inter College, MPSA School, MPSA Inter College Jalaun, Maharana Pratap Science Academy Jalaun, Educational Vision Jalaun, Science Inter College in Jalaun"
+        title="About Maharana Pratap Science Academy | MPSA School, Jalaun"
+        description="Learn about Maharana Pratap Science Academy (MPSA School / MPSA Inter College) in Jalaun, Uttar Pradesh. Discover our educational ethos, vision, mission, and campus infrastructure."
+        keywords="About Maharana Pratap Science Academy, MPSA, MPSA School, MPSA Inter College, MPSA Jalaun, Maharana Pratap Science Academy Jalaun, Educational Vision Jalaun"
         canonicalUrl="/about"
         schema={aboutSchema}
       />

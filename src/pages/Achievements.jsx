@@ -28,9 +28,9 @@ export default function Achievements() {
   return (
     <div className="achievements-page">
       <SEO 
-        title="Achievements & Excellence | MPSA Inter College, Jalaun"
-        description="Explore academic milestones, student achievements, and awards at Maharana Pratap Science Academy Inter College, Jalaun, UP."
-        keywords="Achievements MPSA Inter College, Maharana Pratap Science Academy Awards, Student Honors Jalaun, MPSA School"
+        title="Achievements & Excellence | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Explore academic milestones, student achievements, and awards at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun, UP."
+        keywords="Achievements MPSA Inter College, Maharana Pratap Science Academy Awards, MPSA School Achievements, Student Honors MPSA Jalaun"
         canonicalUrl="/achievements"
       />
       {/* Banner */}

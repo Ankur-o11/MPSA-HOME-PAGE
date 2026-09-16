@@ -27,9 +27,9 @@ export default function Facilities() {
   return (
     <div className="facilities-page">
       <SEO 
-        title="Campus Facilities & Infrastructure | MPSA Inter College, Jalaun"
-        description="Explore science laboratories, computer lab, library, sports grounds, and campus infrastructure at Maharana Pratap Science Academy Inter College, Jalaun."
-        keywords="Facilities MPSA Inter College Jalaun, Science Labs Jalaun, Infrastructure MPSA Inter College Jalaun, School Facilities Jalaun"
+        title="Campus Facilities & Infrastructure | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Explore science laboratories, computer lab, library, sports grounds, and campus infrastructure at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun."
+        keywords="Facilities MPSA Inter College Jalaun, MPSA School Facilities, Science Labs Maharana Pratap Science Academy, Campus Infrastructure MPSA Jalaun"
         canonicalUrl="/facilities"
         schema={facilitiesSchema}
       />

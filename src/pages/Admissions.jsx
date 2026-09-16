@@ -61,9 +61,9 @@ export default function Admissions() {
   return (
     <div className="admissions-page">
       <SEO 
-        title="Admissions | MPSA School & Inter College, Jalaun"
-        description="Apply for admission at Maharana Pratap Science Academy Inter College (MPSA School), Jalaun, Uttar Pradesh. Admission process, eligibility, documents, and online registration."
-        keywords="Admissions MPSA School, MPSA Inter College Admission Jalaun, School Admission Jalaun, Inter College Admission Jalaun"
+        title="Admissions 2026–2027 | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Apply for admission at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun, Uttar Pradesh. Admission process, eligibility, documents, and online registration."
+        keywords="Admissions MPSA School, MPSA Inter College Admission Jalaun, Maharana Pratap Science Academy Admissions, MPSA Jalaun Admissions"
         canonicalUrl="/admissions"
         schema={admissionsSchema}
       />

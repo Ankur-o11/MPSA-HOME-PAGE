@@ -103,9 +103,9 @@ export default function Gallery() {
   return (
     <div className="gallery-page">
       <SEO 
-        title="Campus Photo Gallery | MPSA Inter College, Jalaun"
-        description="A visual tour of campus infrastructure, practicals, activities, and events at Maharana Pratap Science Academy Inter College, Jalaun."
-        keywords="Gallery MPSA Inter College Jalaun, Photos Maharana Pratap Science Academy, Campus Images Jalaun, MPSA School"
+        title="Campus Photo Gallery | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="A visual tour of campus infrastructure, practicals, activities, and events at Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun."
+        keywords="Gallery MPSA Inter College Jalaun, MPSA School Gallery, Photos Maharana Pratap Science Academy, Campus Images MPSA Jalaun"
         canonicalUrl="/gallery"
       />
       {/* Banner */}

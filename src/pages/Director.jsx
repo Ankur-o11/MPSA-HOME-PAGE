@@ -40,15 +40,15 @@ export default function Director() {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     "name": `Director / Manager Profile - ${dName}`,
-    "description": "Read the message and vision from the Director / Manager of Maharana Pratap Science Academy Inter College, Jalaun, Uttar Pradesh."
+    "description": "Read the message and vision from the Director / Manager of Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun, Uttar Pradesh."
   };
 
   return (
     <div className="director-page">
       <SEO 
-        title="Director / Manager's Profile | MPSA Inter College, Jalaun"
-        description="Read the message and vision from the Director / Manager of Maharana Pratap Science Academy Inter College, Jalaun, Uttar Pradesh."
-        keywords="Director MPSA Inter College Jalaun, Manager Maharana Pratap Science Academy, Leadership MPSA Inter College Jalaun, Executive Leadership Jalaun"
+        title="Director / Manager Profile | Maharana Pratap Science Academy (MPSA), Jalaun"
+        description="Read the message and vision from the Director / Manager of Maharana Pratap Science Academy (MPSA School / MPSA Inter College), Jalaun, Uttar Pradesh."
+        keywords="Director MPSA Inter College Jalaun, Manager Maharana Pratap Science Academy, MPSA School Director, Leadership MPSA Jalaun"
         canonicalUrl="/director"
         schema={directorSchema}
       />
