@@ -45,6 +45,10 @@ export const syncAdminCredentials = async () => {
 
 export const connectDB = async () => {
   try {
+    if (mongoose.connection.readyState >= 1) {
+      return mongoose.connection;
+    }
+
     const connStr = process.env.MONGODB_URI;
     if (!connStr) {
       console.warn('MongoDB Warning: MONGODB_URI is not defined in .env environment variables.');
