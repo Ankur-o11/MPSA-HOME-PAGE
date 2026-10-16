@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: mpsa-home-page-backend
+    name: mpsa-home-page
     runtime: node
     plan: free
     branch: main

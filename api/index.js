@@ -34,7 +34,7 @@ const allowedOrigins = [
 
 if (process.env.CLIENT_URL) {
   process.env.CLIENT_URL.split(',').forEach((url) => {
-    const trimmed = url.trim();
+    const trimmed = url.trim().replace(/\/+$/, '');
     if (trimmed && !allowedOrigins.includes(trimmed)) {
       allowedOrigins.push(trimmed);
     }
@@ -44,9 +44,10 @@ if (process.env.CLIENT_URL) {
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
+    const cleanOrigin = origin.replace(/\/+$/, '');
     if (
-      allowedOrigins.includes(origin) ||
-      /^https:\/\/mpsa-home-page.*\.vercel\.app$/.test(origin) ||
+      allowedOrigins.includes(cleanOrigin) ||
+      /^https:\/\/mpsa-home-page.*\.vercel\.app$/.test(cleanOrigin) ||
       process.env.NODE_ENV !== 'production'
     ) {
       return callback(null, true);
@@ -55,7 +56,8 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+  optionsSuccessStatus: 200
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));

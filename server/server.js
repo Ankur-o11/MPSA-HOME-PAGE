@@ -37,7 +37,7 @@ const allowedOrigins = [
 
 if (process.env.CLIENT_URL) {
   process.env.CLIENT_URL.split(',').forEach((url) => {
-    const trimmed = url.trim();
+    const trimmed = url.trim().replace(/\/+$/, '');
     if (trimmed && !allowedOrigins.includes(trimmed)) {
       allowedOrigins.push(trimmed);
     }
@@ -49,10 +49,12 @@ app.use(cors({
     // Allow non-browser requests (curl, server-to-server, health monitors)
     if (!origin) return callback(null, true);
 
+    const cleanOrigin = origin.replace(/\/+$/, '');
+
     // Allow explicit origins or any Vercel deployment preview for this app
     if (
-      allowedOrigins.includes(origin) ||
-      /^https:\/\/mpsa-home-page.*\.vercel\.app$/.test(origin) ||
+      allowedOrigins.includes(cleanOrigin) ||
+      /^https:\/\/mpsa-home-page.*\.vercel\.app$/.test(cleanOrigin) ||
       process.env.NODE_ENV !== 'production'
     ) {
       return callback(null, true);
@@ -62,7 +64,8 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+  optionsSuccessStatus: 200
 }));
 
 app.use(express.json({ limit: '30mb' }));
@@ -83,7 +86,7 @@ app.use('/api/public', (req, res, next) => {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
-    service: 'mpsa-home-page-backend',
+    service: 'mpsa-home-page',
     school: 'MAHARANA PRATAP SCIENCE ACADEMY',
     timestamp: new Date().toISOString()
   });
